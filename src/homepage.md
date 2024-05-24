@@ -4,7 +4,9 @@
 
 The **Archean Wiki** is a good resource for anyone looking to dive deep into the game, providing information on every component and mechanics available.  
 
-><font color="red">This documentation is still under development, feel free to contact us if you have any questions or suggestions.</font>
+> - <font color="red">This documentation is still under development, feel free to contact us if you have any questions or suggestions.</font>
+> - Help us improve this documentation by submitting a pull request on our [GitHub repository](https://github.com/batcholi/Archean_wiki).
+
 
 ---
 
