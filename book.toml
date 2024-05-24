@@ -8,7 +8,6 @@ src = "src"
 default-theme = "Ayu"
 preferred-dark-theme = "Ayu"
 no-section-label = true
-toc = true
 
 [output.html.fold]
 enable = true
