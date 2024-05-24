@@ -1,0 +1,19 @@
+[book]
+title = "Archean Wiki"
+language = "en"
+multilingual = false
+src = "src"
+
+[output.html]
+default-theme = "Ayu"
+preferred-dark-theme = "Ayu"
+no-section-label = true
+toc = true
+
+[output.html.fold]
+enable = true
+
+[preprocessor.toc]
+command = "mdbook-toc"
+renderer = ["html"]
+max-level = 1
