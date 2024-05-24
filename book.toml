@@ -12,8 +12,3 @@ toc = true
 
 [output.html.fold]
 enable = true
-
-[preprocessor.toc]
-command = "mdbook-toc"
-renderer = ["html"]
-max-level = 1
