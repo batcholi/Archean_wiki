@@ -12,6 +12,3 @@
 
 # Description
 The Data Bridge is a component that simply allows the relocation of a Data end point to another position.
-
-# Usage
-When placing a Data Bridge, arrows appear on the hologram that determine the direction of operation. Typically, the incoming arrow should be connected to a computer, button... etc., while the outgoing arrow should be connected to the component to be controlled or to read data from.
