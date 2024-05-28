@@ -13,6 +13,6 @@
 # Description
 The Data Bridge is a component that simply allows the relocation of a Data end point to another position.
 
-> The data brige literally relocates the Data endpoint to the data bridge itself.
+> The Data Brige literally relocates the Data endpoint to the data bridge itself.
 >
 > In order to reference said data, the Data Bridge should be referenced by Alias as opposed to the component you are attempting to read from.
