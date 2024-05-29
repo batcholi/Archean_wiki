@@ -63,10 +63,12 @@
 
 	- [Items]()
 		- [Item Junction](components/items/ItemJunction.md)
+		- [Item Conveyor](components/items/ItemConveyor.md)
 	
 	- [Mining]()
 		- [Mining Drill](components/mining/MiningDrill.md)
 		- [Ore Scanner](components/mining/OreScanner.md)
+		- [Crusher](components/mining/Crusher.md)
 
 	- [Navigation]()
 		- [Nav Instrument](components/navigation/NavInstrument.md)
@@ -105,6 +107,7 @@
 		- [Ground Anchor](components/miscellaneous/GroundAnchor.md)
 		- [OwnerPad](components/miscellaneous/OwnerPad.md)
 		- [Container](components/miscellaneous/Container.md)
+		- [Crafter](components/miscellaneous/Crafter.md)
 #
 #
 # XenonCode
