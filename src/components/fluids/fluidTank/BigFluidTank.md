@@ -7,6 +7,7 @@
 |**Module**|`ARCHEAN_tank`|
 |**Mass**|1000 kg|
 |[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|250 x 250 x 250 cm|
+|**Push/Pull Fluid**|Initiate Push, accept Push/Pull|
 #
 ---
 

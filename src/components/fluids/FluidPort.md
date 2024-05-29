@@ -7,6 +7,7 @@
 |**Module**|`ARCHEAN_chemical`|
 |**Mass**|1 kg|
 |[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|25 x 25 x 25 cm|
+|**Push/Pull Fluid**|Accept Push/Pull|
 #
 ---
 

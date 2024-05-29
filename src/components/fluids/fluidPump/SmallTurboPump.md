@@ -7,6 +7,7 @@
 |**Module**|`ARCHEAN_thruster`|
 |**Mass**|25 kg|
 |[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|25 x 25 x 50 cm|
+|**Push/Pull Fluid**|Initiate Push/Pull|
 #
 ---
 

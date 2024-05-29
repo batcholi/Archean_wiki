@@ -7,6 +7,7 @@
 |**Module**|`ARCHEAN_rcs`|
 |**Mass**|10 kg|
 |[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|25 x 50 x 50 cm|
+|**Push/Pull Fluid**|Accept Push|
 #
 ---
 

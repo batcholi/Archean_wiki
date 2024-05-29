@@ -7,6 +7,7 @@
 |**Module**|`ARCHEAN_celestial`|
 |**Mass**|400 kg|
 |[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|200 x 200 x 100 cm|
+|**Push/Pull Item**|Initiate Push|
 #
 ---
 
@@ -18,6 +19,7 @@ To function, it needs to be installed on a build that must be anchored to the gr
 You need to connect it to a Container of anything else that takes in Items, to collect the mined rocks.
 
 Depending on the energy type, it can extract rocks at different speeds.
+
 |Energy|Power required|Speed|Depth|
 |---|---|---|---|
 |Low Voltage|10 kw|Up to 10 rocks per second|0.01 meter per second|
