@@ -7,6 +7,7 @@
 |**Module**|`ARCHEAN_storage`|
 |**Mass**|100 kg|
 |[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|100 x 100 x 200 cm|
+|**Push/Pull Item**|Accept Push/Pull|
 #
 ---
 
