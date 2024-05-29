@@ -26,6 +26,10 @@ Here is an image illustrating the two panels.
 
 ![DockableDoorDemo](DockableDoorExample.png)
 
+### Usage with aliases
+Using default aliases isn't possible for both ports simultaneously because the object will only display a single alias field in its information window (`V`). Similarly, the [router](../computers/Router.md) only displays a single alias field per component.
+To separately use data ports with aliases, you need to use a [data bridge](../computers/DataBridge.md) or [data junction](../computers/DataJunction.md). This allows you to assign aliases to these objects instead of the docking ports.
+
 ### List of inputs
 |Channel|Function|
 |---|---|
