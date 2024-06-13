@@ -1,8 +1,8 @@
 <p align="center">
-  <img src="FluidBridge.png" />
+  <img src="ItemBridge.png" />
 </p>
 
-|Component|`FluidBridge`|
+|Component|`ItemBridge`|
 |---|---|
 |**Module**|`ARCHEAN_junction`|
 |**Mass**|1 kg|
@@ -12,4 +12,4 @@
 ---
 # Description
 
-The Fluid Bridge is a component that simply allows the relocation a fluid end point to another position.
+The Item Bridge is a component that simply allows the relocation of an item end point to another position.

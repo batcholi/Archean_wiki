@@ -37,4 +37,20 @@ However, you can host a game while playing it if you configure `server.ini` with
 - `accept_remote_connections = yes`  
 
 Then, whenever you hit `Play` in the launcher, a public server will be listed and others can join.  
-Again, don't forget to open your port 8881 (or anything have set in `listen_port`).  
+Again, don't forget to open your port 8881 (or anything have set in `listen_port`).
+
+# Managing Administrators
+## Information
+An administration panel is accessible in the game with the `F4` key.
+It displays the server load and its speed in ticks per second. *(25 ticks/s being the default maximum tick rate guaranteeing optimal performance)*
+
+A checkbox `Admin Privileges` allows, among other things, to spawn blueprints for free when the game mode is set to `Adventure`.
+
+The panel also offers two tabs:
+- **Players**: Allows you to see the list of connected players, teleport to them, and/or kick them.
+- **Entities**: Allows you to see the list of entities present on the server, delete them, and/or teleport to them.
+
+## Adding/Removing an Administrator
+To add an administrator, simply modify the file `/Archean-data/server/admins.txt`.
+This file should contain a list of player IDs, one per line.
+If the player uses Steam, their Steam64 ID should be used.

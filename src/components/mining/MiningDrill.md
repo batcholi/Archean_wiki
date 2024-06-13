@@ -25,6 +25,12 @@ Depending on the energy type, it can extract rocks at different speeds.
 |Low Voltage|10 kw|Up to 10 rocks per second|0.01 meter per second|
 |High Voltage|100kw|Up to 100 rocks per second|0.1 meter per second|
 
+## Data retrieval
+The Mining Drill allows retrieving information about the composition at its position at any time.
+The returned value is a [Key-Value objects](../../xenoncode/documentation.md#key-value-objects) that is presented in the following format, for example: `.C{0.12}.Fe{0.05}.Si{0.03}.Cu{0.80}`.
+This means that the position contains 12% carbon, 5% iron, 3% silicon, and 80% copper.
+
+
 ## Efficiency & depletion
 The mined area is not unlimited, it gradually depletes as it goes deeper and the efficiency decreases accordingly.  
 You will have to relocate it once in a while.

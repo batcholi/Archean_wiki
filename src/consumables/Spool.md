@@ -32,6 +32,14 @@ You can also add a flexible cable between two components of the same build by ho
 ## Deleting a cable
 You can delete a cable with a `right-click` as long as the tool in your hand is the appropriate cable spool.
 
+## Painting cables
+You can paint cables using the [Paint Tool](../tools/PaintTool.md) just like you would with blocks.
+Cables offer two additional customization options:
+- `Shift` to paint a cable and make it transparent
+- `X` to paint a cable normally with a striped effect
+  
+You can also combine both effects by holding down both keys.
+
 ---
 >- *When creating your cable, if it refuses to be created, it is likely that you do not have enough available length in your current spool to create the cable.*
 >- *Cables have no transfer limit nor loss related to length.*

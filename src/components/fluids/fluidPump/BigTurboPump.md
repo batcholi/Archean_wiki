@@ -15,10 +15,6 @@
 The Big Turbo pump is a component used to transfer high-density fluid up to 100 kg per second.
 
 # Usage
-The pump has two fluid ports, one on each side, marked by colors:
-- Blue corresponds to the input
-- Red corresponds to the output
-
 ## Power Supply
 To use the pump, it needs to be powered by high-voltage. It consumes up to 100 kw when running at full speed.
 

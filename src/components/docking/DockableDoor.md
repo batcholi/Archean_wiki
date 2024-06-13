@@ -42,3 +42,6 @@ To separately use data ports with aliases, you need to use a [data bridge](../co
 |---|---|
 |0|Door State|
 |1|Dock State|
+
+> Informations:
+> The Dockable Door can only be docked to another Dockable Door.

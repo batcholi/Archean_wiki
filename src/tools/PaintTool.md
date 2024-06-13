@@ -22,3 +22,4 @@ The Paint Tool is a tool that allows you to paint blocks, cables, labels or comp
 ---
 >- *Components can have up to two paintable zones.*
 >- *Applying a color to a block is done per face.*
+>- *Cables have additional customization options, see [Spool](../consumables/Spool.md#painting-cables).* 

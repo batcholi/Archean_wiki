@@ -8,6 +8,7 @@
 # Gameplay & Mechanics
 - [Game modes](gamemode.md)
 #
+#
 - [Tools]()
 	- [Constructor Tool](tools/ConstructorTool.md)
 	- [Dashboard Tool](tools/DashboardTool.md)
@@ -31,6 +32,7 @@
 		- [Push Button](components/controllers/PushButton.md)
 		- [Toggle Button](components/controllers/ToggleButton.md)
 		- [Throttle Lever](components/controllers/ThrottleLever.md)
+		- [Numpad](components/controllers/Numpad.md)
 		- [Pilot Seat](components/controllers/PilotSeat.md)
 
 	- [Energy]()
@@ -64,6 +66,7 @@
 	- [Items]()
 		- [Item Junction](components/items/ItemJunction.md)
 		- [Item Conveyor](components/items/ItemConveyor.md)
+		- [Item Bridge](components/items/ItemBridge.md)
 	
 	- [Mining]()
 		- [Mining Drill](components/mining/MiningDrill.md)
@@ -73,6 +76,7 @@
 	- [Navigation]()
 		- [Nav Instrument](components/navigation/NavInstrument.md)
 		- [Beacon](components/navigation/Beacon.md)
+		- [Terrain Scanner](components/navigation/TerrainScanner.md)
 
 	- [Propulsion]()
 		- [Thrusters]()
@@ -87,6 +91,10 @@
 		- [Altitude Sensor](components/sensors/AltitudeSensor.md)
 		- [Speed Sensor](components/sensors/SpeedSensor.md)
 		- [Tilt Sensor](components/sensors/TiltSensor.md)
+		- [Linear Velocity Sensor](components/sensors/LinearVelocitySensor.md)
+		- [Angular Velocity Sensor](components/sensors/AngularVelocitySensor.md)
+		- [Vehicle Physics Sensor](components/sensors/VehiclePhysicsSensor.md)
+		- [Solar Sensor](components/sensors/SolarSensor.md)
 
 	- [Joints]()
 		- [Small Pivot](components/joints/SmallPivot.md)
@@ -102,6 +110,7 @@
 
 	- [Miscellaneous]()
 		- [Gyroscope](components/miscellaneous/Gyroscope.md)
+		- [Buzzer](components/miscellaneous/Buzzer.md)
 		- [Aileron](components/miscellaneous/Aileron.md)  
 		- [TrashCan](components/miscellaneous/TrashCan.md)
 		- [Ground Anchor](components/miscellaneous/GroundAnchor.md)
@@ -115,6 +124,7 @@
 - [Archean](xenoncode/archean.md)
 - [XenonCode IDE](xenoncode/ide.md)
 	- [List of nodes](xenoncode/nodes.md)
+<!-- - [XenonCode FAQ](xenoncode/faq.md) -->
 <!-- - [Examples](xenoncode/examples.md) -->
 #
 #
