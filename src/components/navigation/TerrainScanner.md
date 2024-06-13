@@ -16,6 +16,8 @@ The terrain scanner is a component that allows you to retrieve the altitude of t
 # Usage
 From a technical point of view, the scanner is very simple. You send it a number in channel 0 that corresponds to the distance in meters at which you want to scan the terrain, and the scanner will return a number corresponding to the altitude at that distance in the direction of the sensor.
 
+The returned altitude in the case of Earth is relative to the sea level.
+
 Its strength lies in the ability to send it multiple distances in different channels to scan multiple points simultaneously on each server tick (25 times per second by default).
 
 ## Example
@@ -35,7 +37,7 @@ Keep in mind that there will be a 1 tick delay between sending to the output and
 Basically, the Scanner will give you the results based on the values you sent it in the previous tick, so don't shuffle your distance values between channels and don't use any random values, try to keep them consistent accross multiple ticks.
 
 ## Go further
-The terrain scanner scans the terrain in the direction of its sensor. You can install it on a small pivot to, for example, rotate it and create an altitude map around its position using a XenonCode program and the in-game screens.
+The terrain scanner scans the terrain in the direction of its sensor. You can install it on a small pivot to, for example, rotate it and create a heightmap around its position using a XenonCode program and the in-game screens.
 
 ## Energy
 The terrain scanner consumes low voltage energy to function. Its consumption is directly proportional to the number of channels you use. The more positions you scan in a single tick, the more energy you consume, which is 100 watts per channel per tick.

@@ -12,10 +12,12 @@
 ---
 
 # Description
-The solar sensor is a component that measures the angle of incidence of the sun and the received solar power.
+The solar sensor is a component that measures the angle of incidence of the sun and the potential solar power.
 
 # Usage*
-Once placed on your construction, the sensor can be connected to a computer to retrieve a normalized value of the angle of incidence, typically indicating the position of the sun relative to the sensor's position. The sensor also allows retrieving the potential value of received solar power in watts/m².
+Once placed on your build, the sensor can be connected to a computer to retrieve a normalized value of the angle of incidence, typically indicating the position of the sun relative to the sensor's position. The sensor also allows retrieving the potential value of received solar power in watts/m².
+
+> - It is possible to make a solar panel track the sun without using a computer by connecting these sensors directly to hinges.
 
 
 ### List of outputs

@@ -17,10 +17,10 @@ The Vehicle Physics Sensor is a component that provides information about the ve
 # Usage
 Once placed on your build, the sensor can be connected to a computer to retrieve information about the vehicle's physics. Here are the information you can retrieve:
 - Active Physics: Indicates whether the physics is active or not.
-- Mass: The mass of the vehicle in kg.
-- Size (X,Y,Z): The bounding size of the vehicle in meters.
-- Center of Mass (X,Y,Z): The position of the center of mass relative to the sensor's position in meters.
-- G-force (X,Y,Z): The G-force relative to the sensor's position in G.
+- Mass: The mass of the vehicle.
+- Size (X,Y,Z): The bounding size of the vehicle.
+- Center of Mass (X,Y,Z): The position of the center of mass relative to the sensor's position.
+- G-force (X,Y,Z): The G-force relative to the sensor's orientation.
 
 ### List of Outputs
 |Channel|Function|Value|

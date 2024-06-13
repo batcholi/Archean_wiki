@@ -54,4 +54,4 @@ The beacon has a data port that allows it to be used from a computer or other co
 >- The signal of a beacon is not affected by obstacles.
 
 > Hints:
->- The beacon can only transmit a single data at a time, either a number or text. But you can use the [Key-Value objects](../../xenoncode/documentation.md#key-value-objects) system to transmit as many data as needed.
+>- The beacon can only transmit a single data at a time, either a number or text. But you can use the [Key-Value objects](../../xenoncode/documentation.md#key-value-objects) system to transmit as much data as needed.

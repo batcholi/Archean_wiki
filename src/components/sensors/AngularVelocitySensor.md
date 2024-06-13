@@ -15,8 +15,7 @@
 The angular velocity sensor is a component that measures the angular velocity on 3 axes (X, Y, Z) in rotations per second.
 
 # Usage
-Once placed on your construction, the sensor can be connected to a computer to retrieve the angular velocity.
-The measured velocity is the velocity at the position of the sensor, not the velocity of the build.
+Once placed on your build, the sensor can be connected to a computer to retrieve the angular velocity.
 
 ### List of outputs
 |Channel|Function|Value|

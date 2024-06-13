@@ -17,9 +17,6 @@ The Linear Velocity Sensor is a component that measures linear velocity on 3 axe
 
 # Usage
 Once placed on your build, the sensor can be connected to a computer to retrieve the linear velocity.
-The measured velocity is the velocity at the position of the sensor, not the velocity of the build.
-
->- The pointed side of the object corresponds to the +Z axis.
 
 ### List of outputs
 |Channel|Function|value|

@@ -24,4 +24,4 @@ The tone can be changed through the buzzer's configuration interface accessible 
 |0|Amplitude|0 to 1|
 |1|Frequency (Hz)|0 to 20000 (default: 440Hz)|
 
-> - To play multiple sounds simultaneously or multiple tones, you must use multiple buzzers.
+> - To play multiple frequencies simultaneously or multiple tones, you must use multiple buzzers.
