@@ -18,6 +18,8 @@ The docking port is a component that allows two builds to be connected together.
 The docking port does not need to be powered.
 The separate data connector allows controlling the docking port, while the other connectors allow connecting various cables that will transfer data, energy, or fluids to/from the other docking port.
 
+> The Docking Port can only be docked to another Docking Port.
+
 ### Usage with aliases
 Using default aliases isn't possible for both ports simultaneously because the object will only display a single alias field in its information window (`V`). Similarly, the [router](../computers/Router.md) only displays a single alias field per component.
 To separately use data ports with aliases, you need to use a [data bridge](../computers/DataBridge.md) or [data junction](../computers/DataJunction.md). This allows you to assign aliases to these objects instead of the docking ports.
@@ -32,5 +34,3 @@ To separately use data ports with aliases, you need to use a [data bridge](../co
 |---|---|
 |0|Arm/Disarm Docking
 
-> Informations:
-> The Docking Port can only be docked to another Docking Port.

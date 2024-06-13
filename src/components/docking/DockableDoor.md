@@ -14,7 +14,8 @@
 # Description
 The Dockable Door is a large door that can dock to a similar door to connect two build together. Docking allows for the transfer of data, energy, and fluids between the connected build, but also constrains the two builds together in terms of physics. They are stuck together.
 
->Dockable Doors can only be installed on the face of frames.
+> - Dockable Doors can only be installed on the face of frames.
+> - The Dockable Door can only be docked to another Dockable Door.
 
 # Usage
 To function properly, the Dockable Door needs to be powered via low voltage. It consumes 20 watts when inactive and up to 250 watts when the doors are in motion.
@@ -42,6 +43,3 @@ To separately use data ports with aliases, you need to use a [data bridge](../co
 |---|---|
 |0|Door State|
 |1|Dock State|
-
-> Informations:
-> The Dockable Door can only be docked to another Dockable Door.
