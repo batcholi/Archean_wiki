@@ -1,3 +1,6 @@
+<p align="center">
+    <img src="LinearVelocitySensor.png" />
+</p>
 
 |Component|`LinearVelocitySensor`|
 |---|---|
@@ -10,9 +13,17 @@
 ---
 
 # Description
-
+The Linear Velocity Sensor is a component that measures linear velocity on 3 axes (X, Y, Z) in meters per second.
 
 # Usage
+Once placed on your build, the sensor can be connected to a computer to retrieve the linear velocity.
+The measured velocity is the velocity at the position of the sensor, not the velocity of the build.
 
+>- The pointed side of the object corresponds to the +Z axis.
 
 ### List of outputs
+|Channel|Function|value|
+|---|---|---|
+|0|Linear Velocity X|m/s|
+|1|Linear Velocity Y|m/s|
+|2|Linear Velocity Z|m/s|

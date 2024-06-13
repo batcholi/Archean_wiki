@@ -31,3 +31,6 @@ To separately use data ports with aliases, you need to use a [data bridge](../co
 |Channel|Function
 |---|---|
 |0|Arm/Disarm Docking
+
+> Informations:
+> The Docking Port can only be docked to another Docking Port.
