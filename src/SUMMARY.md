@@ -11,11 +11,13 @@
 #
 - [Tools]()
 	- [Constructor Tool](tools/ConstructorTool.md)
-	- [Dashboard Tool](tools/DashboardTool.md)
 	- [Destructor Tool](tools/DestructorTool.md)
+	- [Dashboard Tool](tools/DashboardTool.md)
 	- [Paint Tool](tools/PaintTool.md)
 	- [Label Tool](tools/LabelTool.md)
+	- [RockRake Tool](tools/RockRakeTool.md)
 	- [Blueprint Tool](tools/BlueprintTool.md)
+  
 
 - [Consumables]()
 	- [Spools of cable/pipe](consumables/Spool.md)
