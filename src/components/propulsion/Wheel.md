@@ -40,10 +40,16 @@ In this configuration, the wheel consumes up to 20 kw.
 In this configuration, the wheel consumes up to 200 kw.
 
 ### List of inputs
-|Channel|Function|Range|
+|Channel|Function|Value|
 |---|---|---|
 |0|Accelerate|-1.0 to +1.0|
 |1|Steer|-1.0 to +1.0|
 |2|Regen|0 or 1|
 |3|Brake|0.0 to 1.0|
 |4|Gearbox|-1.0 to +1.0|
+
+### List of outputs
+|Channel|Function|Value|
+|---|---|---|
+|0|Wheel Rotation Speed|rot/s|
+|1|Ground Friction|0 to 1|
