@@ -2662,7 +2662,7 @@ hljs.registerLanguage("x86asm",function(){"use strict";return function(s){return
     
     /** @type LanguageFn */
     function xenoncode(hljs) {
-      const KEYWORDS = 'function storage array var const include return if foreach while else elseif init shutdown input timer tick click update output repeat frequency interval break continue and or xor';
+      const KEYWORDS = 'recursive recurse function storage array var const include return if foreach while else elseif init shutdown input timer tick click update output repeat frequency interval break continue and or xor';
       const LITERAL = '';
       const BUILT_IN = '';
       const COMMENT = { variants: [
