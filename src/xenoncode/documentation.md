@@ -1,6 +1,3 @@
-<!-- toc -->
----
-
 # XenonCode - Documentation
 
 **XenonCode** is a lightweight programming language designed as high level scripting within games for virtual computing devices (ie: a programmable computer within a game).
@@ -66,11 +63,7 @@ init
 	$myArray.sort()
 
 	; Iterate over an array
-	foreach $myArray ($item)
-		$myVar3 += $item
-
-	; Iterate over an array with index
-	foreach $myArray ($item, $index)
+	foreach $myArray ($index, $item)
 		$myVar4 &= $index:text & ": " & $item:text & ", "
 
 	; Output to a virtual device (ie: a console at input port 0)

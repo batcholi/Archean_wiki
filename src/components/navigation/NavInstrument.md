@@ -21,7 +21,7 @@ The NavInstrument requires low-voltage power and consumes 200 watts.
 Each mode has a unique display on the NavInstrument screen. To switch between modes, simply click on the screen with the `F` key.
 
 
-### List of outputs
+### List of inputs
 |Channel|Function|Value|
 |---|---|---|
 |0|Locate Celestial|text|
@@ -31,7 +31,7 @@ Each mode has a unique display on the NavInstrument screen. To switch between mo
 |4|Locate Direction Z|number|
 |5|Forward vector config|0 = forward, +1 = up, -1 = down|
 
-### List of inputs
+### List of outputs
 |Channel|Function|Value|
 |---|---|---|
 |0|Forward Airspeed (m/s)|number|
