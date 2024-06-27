@@ -28,4 +28,10 @@ In velocity mode, the device operates continuously in the direction indicated by
 
 > Builds installed on a moving part cannot collide with a parent or sibling build. They can only collide with the terrain or other separate builds.
 
+### List of outputs
+|Channel|Function|Value|
+|---|---|---|
+|0|Angle|0 to 1|
+|1|Speed|rot/s| 
+
 ![SmallPivotDemo](pivot.gif)

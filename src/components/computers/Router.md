@@ -30,3 +30,12 @@ Each component displays a label where you can enter the alias that will be used 
 It is possible to assign an alias to a component directly by displaying its information window using the `V` key, as shown in the example below.
 
 ![Router](routerillus2.png)
+
+# Controlling multiple components with a single alias
+In certain situations, it can be practical to control multiple components serving the same purpose with a single alias. To do this, simply add an asterisk `*` at the end of the alias in nodes/Xenoncode. For example, if you are building an airplane and have four ailerons on the left wing, you can name them as follows:
+- `leftAileron1`
+- `leftAileron2`
+- `leftAileron3`
+- `leftAileron4`
+
+You can then control them using the alias `leftAileron*`. The asterisk `*` allows you to select all components whose alias begins with `leftAileron`.
