@@ -18,4 +18,4 @@ Its effectiveness is closely related to the density of the medium in which it op
 # Usage
 The aileron does not require any energy to operate, only a value between `-1.0` and `+1.0` through its data port.
 
->- The aileron are not aerodynamically affected by blocks or components, which means they function even through these obstacles. This allows for optimizing the flight efficiency of a vehicle by integrating them into hidden places, such as inside the wings.
+>- The ailerons don't compute occlusions like blocks do. This allows for optimizing the flight efficiency of a vehicle by hiding them in larger surfaces, such as inside the wings.
