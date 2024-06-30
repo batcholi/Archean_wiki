@@ -24,4 +24,10 @@ The device rotates to a precise position determined by the data received through
 
 > Builds installed on a moving part cannot collide with a parent or sibling build. They can only collide with the terrain or other separate builds.
 
+### List of outputs
+|Channel|Function|Value|
+|---|---|---|
+|0|Angle|-1.0 to +1.0|
+|1|Speed|rot/s|
+
 ![SmallPivotDemo](hinge.gif)
