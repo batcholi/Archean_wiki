@@ -39,6 +39,8 @@ However, you can host a game while playing it if you configure `server.ini` with
 Then, whenever you hit `Play` in the launcher, a public server will be listed and others can join.  
 Again, don't forget to open your port 8881 (or anything have set in `listen_port`).
 
+> When you configure your game (locally) to be publicly accessible, if you have changed the default port (8881) in the `server.ini` file, you will also need to change the port in the `client.ini` file so that you can connect to your own local server.
+
 # Managing Administrators
 ## Information
 An administration panel is accessible in the game with the `F4` key.

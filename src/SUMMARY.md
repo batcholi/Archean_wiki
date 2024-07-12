@@ -64,6 +64,7 @@
 		- [Fluid Junction](components/fluids/FluidJunction.md)
 		- [Fluid Bridge](components/fluids/FluidBridge.md)
 		- [Fluid Port](components/fluids/FluidPort.md)
+		- [Fluid Valve](components/fluids/FluidValve.md)
 
 	- [Items]()
 		- [Item Junction](components/items/ItemJunction.md)
