@@ -15,4 +15,4 @@
 The fluid valve is a component that allows control of the flow of fluid passing through it.
 
 # Usage
-By default, the valve is open and allows the fluid to pass through. To control the fluid flow, send a data signal between `0 (Open)` and `1 (Closed)`.
+By default, the valve is close and allows the fluid to pass through. To control the fluid flow, send a data signal between `0 (Close)` and `1 (Open)`.
