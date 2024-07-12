@@ -21,7 +21,10 @@ It requires a low-voltage power supply to operate and consumes 50 watts.
 When the router is powered on and connected to components, it allows assigning aliases to components via a three-dimensional visual interface, which can later be used to identify these components from computer code.
 
 You can open the router interface using the `F` key.
-The interface appears as a 3D environment (see image below) in which you can navigate using the standard movement keys and right-click of the mouse to locate the different connected components. The components are positioned at their actual 3D position relative to each other in the build, and will include all connected components from all routers in the chain.
+
+The interface appears as a 3D environment (see the image below) in which you can navigate using the standard movement keys `WASD`, `right-click` to move the camera, and `Shift` to accelerate movement.
+
+The components are positioned at their actual 3D position relative to each other in the build, and will include all connected components from all routers in the chain.
 
 ![Router](routerillus1.png)
 

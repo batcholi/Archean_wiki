@@ -25,6 +25,10 @@ The available options are:
 |**Stack Size**|0 to 1000000|Number of items to move per tick, 0 to move stack by stack|
 |**Filter**|text|Allows whitelisting of items to be moved. For example, if "Wire" is specified, only wires will be allowed to pass|
 
+> - The item conveyor can only move one type of item at a time. If you need to move multiple types of items, you will need to use multiple conveyors.
+> - The filter is case-sensitive and cannot have multiple values.
+
+
 ### List of inputs
 |Channel|Function|Value|
 |---|---|---|
