@@ -22,7 +22,7 @@ When the router is powered on and connected to components, it allows assigning a
 
 You can open the router interface using the `F` key.
 
-The interface appears as a 3D environment (see the image below) in which you can navigate while holding right-click, using the standard movement keys `WASD`, `CONTROL/SPACE` to go Down/Up, and `Shift` to accelerate movement.
+The interface appears as a 3D environment (see the image below) in which you can navigate while holding `Mouse Right-Click`, using the standard movement keys `WASD`, `CONTROL/SPACE` to go Down/Up, and `Shift` to accelerate movement.
 
 The components are positioned at their actual 3D position relative to each other in the build, and will include all connected components from all routers in the chain.
 
