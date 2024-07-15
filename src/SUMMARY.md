@@ -124,6 +124,7 @@
 #
 # XenonCode
 - [Documentation](xenoncode/documentation.md)
+	- [Component Specific Doumentation](xenoncode/devicedocumentation.md)
 - [Archean](xenoncode/archean.md)
 - [XenonCode IDE](xenoncode/ide.md)
 	- [List of nodes](xenoncode/nodes.md)
