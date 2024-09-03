@@ -42,3 +42,8 @@ In certain situations, it can be practical to control multiple components servin
 - `leftAileron4`
 
 You can then control them using the alias `leftAileron*`. The asterisk `*` allows you to select all components whose alias begins with `leftAileron`.
+
+# Additional information:
+- The routers that communicate directly with a computer must be powered, other routers in the chain dont require power. This also allows to use a MiniRouter as if it was a [Data Bridge](/src/components/computers/DataBridge.md) (without power) but unlike the DataBridge it actually is capable of resolving aliases and screen references.
+
+- For data routing, a router must absolutely be connected to a computer or another router. You cannot have this kind of pattern `Computer > Data(Bridge|Junction) > Router`.

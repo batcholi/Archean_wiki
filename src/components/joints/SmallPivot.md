@@ -26,7 +26,9 @@ In servo mode, the device rotates to a precise position determined by the data r
 ## Velocity Mode
 In velocity mode, the device operates continuously in the direction indicated by the data from its port, accepting values between `-1.0` to `+1.0` to determine it's speed and rotation direction. `1.0` means Max Rotation Speed.
 
-> Builds installed on a moving part cannot collide with a parent or sibling build. They can only collide with the terrain or other separate builds.
+> - Builds installed on a moving part cannot collide with a parent or sibling build. They can only collide with the terrain or other separate builds.
+> - To destroy the Small Pivot, you must absolutely remove all the child blocks/components it contains.
+
 
 ### List of outputs
 |Channel|Function|Value|

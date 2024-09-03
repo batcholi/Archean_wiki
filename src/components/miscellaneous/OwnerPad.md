@@ -30,3 +30,9 @@ In addition to `@Everyone` and `dksm (OWNER)` in the example, the list of all co
 A `Give Ownership` button is present next to each connected player to transfer ownership to the player of your choice. You will then have no rights on the build until the new owner grants you roles.
 
 ![OwnerPadDemo](RolesUI.png)
+
+### Control via the data port
+The OwnerPad has a data port to allow control from a computer or remotely via a beacon, for example.
+You must send a text in channel 0 containing the keyword `"save"` or `"reset"` depending on the action you want to perform.
+
+You must send an empty text `""` to reset the state before you can send another command.
