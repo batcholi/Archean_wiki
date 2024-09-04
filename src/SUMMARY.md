@@ -27,6 +27,7 @@
 		- [Computer](components/computers/Computer.md)
 		- [Mini Computer](components/computers/MiniComputer.md)
 		- [Router](components/computers/Router.md)
+		- [Mini Router](components/computers/MiniRouter.md)
 		- [Data Junction](components/computers/DataJunction.md)
 		- [Data Bridge](components/computers/DataBridge.md)
 

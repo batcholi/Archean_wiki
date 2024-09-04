@@ -22,8 +22,8 @@ When using V to open the information interface, there are two configurations pos
 
 The device rotates to a precise position determined by the data received through its data port. It accepts normalized values between `-1.0` and `+1.0`, which correspond to rotations of `-90°` and `+90°`, respectively.
 
-> Builds installed on a moving part cannot collide with a parent or sibling build. They can only collide with the terrain or other separate builds.
-
+> - Builds installed on a moving part cannot collide with a parent or sibling build. They can only collide with the terrain or other separate builds.
+> - To destroy the Small Hinge, you must absolutely remove all the child blocks/components it contains.
 ### List of outputs
 |Channel|Function|Value|
 |---|---|---|
