@@ -34,3 +34,5 @@ Once placed on your build, the sensor can be connected to a computer to retrieve
 |6|Center of Mass Y|meters|
 |7|Center of Mass Z|meters|
 |8|G-force X|G|
+|9|G-force Y|G|
+|10|G-force Z|G|
