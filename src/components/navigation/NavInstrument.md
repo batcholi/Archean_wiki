@@ -30,6 +30,7 @@ Each mode has a unique display on the NavInstrument screen. To switch between mo
 |3|Locate Direction Y|number|
 |4|Locate Direction Z|number|
 |5|Forward vector config|0 = forward, +1 = up, -1 = down|
+|6|Set mode (0 = Off, 1 = Flight, 2 = Orbit, 3 = Locator)|number|
 
 ### List of outputs
 |Channel|Function|Value|
