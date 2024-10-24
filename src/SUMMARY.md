@@ -36,6 +36,7 @@
 		- [Toggle Button](components/controllers/ToggleButton.md)
 		- [Throttle Lever](components/controllers/ThrottleLever.md)
 		- [Numpad](components/controllers/Numpad.md)
+		- [Keyboard](components/controllers/Keyboard.md)
 		- [Pilot Seat](components/controllers/PilotSeat.md)
 
 	- [Energy]()

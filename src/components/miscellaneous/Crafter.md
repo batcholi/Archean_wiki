@@ -33,15 +33,24 @@ It can be manually controlled through its integrated touch screen and/or through
 |0|Progress|-1 or 0 to 1|
 |1|Craft Selection|text|
 
-> Informations:
+> #### Informations:
 >- When `progress` in the output data is `-1`, it means that the recipe cannot be performed either due to missing resources or the requested craft does not exist in the game.
 >- Even though the Crafter only has two fluid ports, it can use as much fluid as needed for recipes by using [Fluid Junctions](../fluids/FluidJunction.md), which can be connected to all necessary fluid sources. The Crafter will simply use them when needed.
-
-> Hints:
+>
+> #### Hints:
 > - You can simply use a [Toggle Button](../controllers/ToggleButton.md) to start continuous crafting as long as the button is active and there are enough resources in the connected inventory.
+>
 
 # Built-in Program
 The interface and logic of the Crafter are implemented using a built-in XenonCode program. You can use this program as inspiration to understand how the Crafter works and create your own program on a computer to control the Crafter in a more advanced way.
+
+
+### Go further with the crafter:
+The crafter offers three XenonCode functions to retrieve information about available recipes:
+- `get_recipes_categories("crafter")`: Returns the list of recipe categories available in the crafter.
+- `get_recipes("crafter", "PARTS")`: Returns the list of recipes available for the `PARTS` category.
+- `get_recipe("crafter", "PARTS", "Circuit")`: Returns the list of ingredients needed for the `Circuit` recipe.
+With these functions, you can create a XenonCode program to control the crafter in a more advanced way, such as creating an auto-crafting system.
 
 ```xc
 var $cursor = 0
