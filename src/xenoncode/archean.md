@@ -168,4 +168,7 @@ var $somePixelColor = pixel(10, 10) ; get the current color of the pixel at coor
 var $dash = screen(0,1) ; declare a screen plugged into port 0 using the channel 1
 $dash.draw_circle($dash.width/2, $dash.height/2, 50, green) ; draw a green circle with a radius of 50 pixels in the middle of the external screen
 ; Note that screen_w and screen_h are now width and height respectively. Everything else is the same.
+
+; Copy a zone from one screen to another screen
+screen_copy($sprites, $dash, $src_x, $src_y, $dst_x, $dst_y, $width, $height, $color) ; here $color is an optional argument to apply additional tint (multiply)
 ```

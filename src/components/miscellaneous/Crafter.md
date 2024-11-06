@@ -50,6 +50,7 @@ The crafter offers three XenonCode functions to retrieve information about avail
 - `get_recipes_categories("crafter")`: Returns the list of recipe categories available in the crafter.
 - `get_recipes("crafter", "PARTS")`: Returns the list of recipes available for the `PARTS` category.
 - `get_recipe("crafter", "PARTS", "Circuit")`: Returns the list of ingredients needed for the `Circuit` recipe.
+
 With these functions, you can create a XenonCode program to control the crafter in a more advanced way, such as creating an auto-crafting system.
 
 ```xc

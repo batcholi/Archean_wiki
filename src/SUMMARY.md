@@ -63,6 +63,7 @@
 			- [Small Turbo Pump](components/fluids/fluidPump/SmallTurboPump.md)
 			- [Big Turbo Pump](components/fluids/fluidPump/BigTurboPump.md)
 		- [Electrolyser](components/fluids/Electrolyser.md)
+		- [Sabatier Reactor](components/fluids/SabatierReactor.md)
 		- [Fluid Junction](components/fluids/FluidJunction.md)
 		- [Fluid Bridge](components/fluids/FluidBridge.md)
 		- [Fluid Port](components/fluids/FluidPort.md)
