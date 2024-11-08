@@ -44,3 +44,9 @@ In this configuration, the propeller consumes up to 500 kw.
 |---|---|---|
 |0|Speed|-1.0 to +1.0|
 |1|Pitch|-1.0 to +1.0|
+
+### List of outputs
+|Channel|Function|Value|
+|---|---|---|
+|0|Rotation Speed|rot/s|
+|1|Thrust|Newtons|
