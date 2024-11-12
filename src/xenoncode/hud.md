@@ -7,7 +7,7 @@ HUDs are entirely managed by the client, which means that each player has their 
 It is important to note that since HUDs are completely client-side, they will be available on all servers/worlds you connect to. You cannot set them for a specific server/world except manually as indicated in the next section.
 
 > Additional Information:
-> - When using a button or any other interaction on a HUD, the `right click` is preferred to avoid taking control of the player.
+> - When using a button or any other interaction on a HUD, the `right click` is preferred to avoid grabbing the mouse look.
 
 ## Creating a HUD
 Since HUDs are a completely client-side feature, they do not have items directly associated with them in the game. To create a HUD, you need to go through the game settings menu `F1` and go to the `HUD` tab.
@@ -46,7 +46,7 @@ init
 ```xc
 screen_w ; returns the width of the game window
 screen_h ; returns the height of the game window
-fov ; returns the player's camera field of view
+fov ; returns the player's camera field of view (radians)
 
 mouse_x ; returns the x position of the mouse on the game window
 mouse_y ; returns the y position of the mouse on the game window
@@ -55,11 +55,11 @@ mouse_y ; returns the y position of the mouse on the game window
 
 ### Functions related to panels
 ```xc
-var $myPanel = panel(center, width, height) ; creates a panel centered on the screen of size width, height
+var $myPanel = panel(center, $width, $height) ; creates a panel centered on the screen of size width, height
 ; 'Center' can be replaced by 'Top', 'top_left', 'top_right', 'bottom', 'bottom_left'...
 
-$myPanel.set_position(x, y) ; moves the panel to position x, y
-$myPanel.set_size(width, height) ; resizes the panel to size width, height
+$myPanel.set_position($x, $y) ; moves the panel to position x, y
+$myPanel.set_size($width, $height) ; resizes the panel to size width, height
 
 $myPanel.width ; returns the width of the panel
 $myPanel.height ; returns the height of the panel
@@ -70,21 +70,21 @@ click.$myPanel ($x:number, $y:number) ; returns the click position within the pa
 
 ### Functions related to the integrated computer
 ```xc
-set_cps(25) ; sets the number of HUD refreshes per second
+set_cps(25) ; sets the number of HUD cycles per second
 ```
 
 ### Functions related to communication
 ```xc
-var $beacon = beacon(transmitFreq, receiveFreq) ; Allows sending/receiving data
+var $beacon = beacon($transmitFreq, $receiveFreq) ; Allows sending/receiving data
 
 var $data = $beacon.data ; returns the data received by the beacon
-var $distance = $beacon.distance ; returns the distance between the player and the defined beacon
-var $dir_x = $beacon.direction_x ; returns the x direction between the player and the defined beacon
-var $dir_y = $beacon.direction_y ; returns the y direction between the player and the defined beacon
-var $dir_z = $beacon.direction_z ; returns the z direction between the player and the defined beacon
-var $is_recv = $beacon.is_receiving ; returns if the player is receiving data
+var $distance = $beacon.distance ; returns the distance between the player and the remote beacon
+var $dir_x = $beacon.direction_x ; returns the x direction between the player and the remote beacon
+var $dir_y = $beacon.direction_y ; returns the y direction between the player and the remote beacon
+var $dir_z = $beacon.direction_z ; returns the z direction between the player and the remote beacon
+var $is_recv = $beacon.is_receiving ; whether this beacon is receiving data on the receiving frequency
 
-$beacon.transmit(text/number) ; sends data on the defined transmission frequency
+$beacon.transmit($text|$number) ; sends data on the transmission frequency
 ```
 
 # Shared Values
@@ -132,7 +132,7 @@ tick
 var $panel = panel(center, 50,50)
 var $beacon = beacon("", "target")
 
-function @follow_beacon($b:beacon, $p:panel, $width:number, $height:number, $color:number)
+function @target_beacon($b:beacon, $p:panel, $width:number, $height:number, $color:number)
     if $b.direction_z > 0
         var $f = screen_w / (2 * tan(fov / 2))
         var $rz = $b.direction_z * (screen_w / screen_h)
@@ -148,7 +148,7 @@ function @follow_beacon($b:beacon, $p:panel, $width:number, $height:number, $col
         $p.write(text("{0.0} m", $b.distance))
 
 tick
-    @follow_beacon($beacon, $panel, 50, 50, green)
+    @target_beacon($beacon, $panel, 50, 50, green)
 ```
 <video controls width="600">
     <source src="hud-img/targetDemo.mp4" type="video/mp4">
