@@ -128,6 +128,8 @@
 # XenonCode
 - [Documentation](xenoncode/documentation.md)
 - [Archean](xenoncode/archean.md)
+	- [Dashboard](xenoncode/dashboard.md)
+	- [HUD](xenoncode/hud.md)
 - [XenonCode IDE](xenoncode/ide.md)
 	- [List of nodes](xenoncode/nodes.md)
 <!-- - [XenonCode FAQ](xenoncode/faq.md) -->
