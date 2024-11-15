@@ -139,4 +139,6 @@
 # Multiplayer
 - [Setting up a server](multiplayer/settingup.md)
 #
+# Misc
+- [Chat & Commands](misc/chat.md)
 #
