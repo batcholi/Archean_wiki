@@ -84,7 +84,7 @@ var $dir_y = $beacon.direction_y ; returns the y direction between the player an
 var $dir_z = $beacon.direction_z ; returns the z direction between the player and the remote beacon
 var $is_recv = $beacon.is_receiving ; whether this beacon is receiving data on the receiving frequency
 
-$beacon.transmit($text|$number) ; sends data on the transmission frequency
+$beacon.transmit($data) ; sends data on the transmission frequency
 ```
 
 # Shared Values
@@ -98,6 +98,7 @@ var $density = get("avatar_sensor_density") ; returns the density of the player'
 var $gravity = get("avatar_sensor_gravity") ; returns the gravity of the player's environment
 var $speed = get("avatar_sensor_speed") ; returns the player's speed in m/s
 var $alt = get("avatar_sensor_altitude") ; returns the player's altitude in meters
+var $alt = get("avatar_sensor_altitude_absolute") ; returns the player's absolute altitude in meters
 
 var $inv = get("avatar_inventory") ; returns the player's inventory as a string of key values
 var $belt = get("avatar_belt") ; returns the content of the belt as a string of key values

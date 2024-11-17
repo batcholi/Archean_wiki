@@ -79,6 +79,7 @@ $num_value = click_y ; the y coordinate of the mouse cursor on the virtual monit
 
 $num_value = system_frequency ; the frequency of the system clock in hertz (ticks per second)
 $num_value = programs_count ; the number of programs currently on the virtual HDD
+$num_value = ipc ; the number of instructions per cycle (IPC) of the virtual CPU
 
 $num_value = pi ; 3.14159265.....
 $num_value = 2pi ; 3.14159265 * 2
