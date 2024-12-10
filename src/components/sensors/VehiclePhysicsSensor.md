@@ -4,7 +4,7 @@
 
 |Component|`VehiclePhysicsSensor`|
 |---|---|
-|**Module**|`ARCHEAN_sensor`|
+|**Module**|`ARCHEAN_sensor1`|
 |**Mass**| 1 kg|
 |[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|25 x 25 x 25 cm|
 #

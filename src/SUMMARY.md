@@ -100,6 +100,7 @@
 		- [Linear Velocity Sensor](components/sensors/LinearVelocitySensor.md)
 		- [Angular Velocity Sensor](components/sensors/AngularVelocitySensor.md)
 		- [Vehicle Physics Sensor](components/sensors/VehiclePhysicsSensor.md)
+		- [Density Sensor](components/sensors/DensitySensor.md)
 		- [Solar Sensor](components/sensors/SolarSensor.md)
 
 	- [Joints]()
