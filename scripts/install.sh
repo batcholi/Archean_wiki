@@ -1,2 +1,2 @@
 cd `dirname $0`/..
-cargo install --locked --path .
+cargo install mdbook --locked --path .
