@@ -1,17 +1,17 @@
 <p align="center">
-  <img src="Wheel.png" />
+  <img src="BigWheel.png" />
 </p>
 
-|Component|`Wheel`|
+|Component|`BigWheel`|
 |---|---|
 |**Module**|`ARCHEAN_wheel`|
-|**Mass**|100 kg|
-|[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|50 x 75 x 100 cm|
+|**Mass**|400 kg|
+|[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|50 x 100 x 100 cm|
 #
 ---
 
 # Description
-The wheel is a component that allows a build to accelerate forward/backward as well as turn and brake. It includes a configurable suspension and gearbox.
+The  big wheel is a component that allows a build to accelerate forward/backward as well as turn and brake. It includes a configurable suspension and gearbox.
 
 # Usage
 It can be configured through its configuration interface accessible via the `V` key.
@@ -27,16 +27,12 @@ It provides information about the wheel and allows for configuration.
 - `Gear Ratio`: Wheel speed ratio.
 
 #### Configuration
-- `Mudguard`: Show/Hide the mudguard.
 - `Grip`: Adjusts the wheel's grip.
 - `Suspension`: Adjusts the wheel's suspension.
 
 ### Energy
-The wheel has a low-voltage energy port and a high-voltage energy port.
-### Low-Voltage Energy
-In this configuration, the wheel consumes up to 20 kw.
-#### High-Voltage Energy
-In this configuration, the wheel consumes up to 200 kw.
+The big wheel can only be powered by high voltage unlike the [Wheel](Wheel.md).
+It will consume up to 400 kW at full power.
 
 ### List of inputs
 |Channel|Function|Value|

@@ -17,7 +17,7 @@ Commands allow you to perform specific actions by typing them in the chat, prece
 #### List of commands available to administrators:
 - `/save` - Saves the current state of the game.
 - `/setspawn <username>` - Sets the spawn point for a specific user.
-- `/give [<stack>] [<moduleName>:]<itemType> [<inventoryAlias|username>]` - Gives items to a player.
+- `/give [<stack>] [<moduleName>.]<itemType> [<inventoryAlias|username>]` - Gives items to a player.
 - `/kick <username>` - Kicks a player from the server.
 - `/timeadd [-]<hours>` - Adds or subtracts time in the game.
 - `/profiler <start|stop>` - Starts or stops the profiler.

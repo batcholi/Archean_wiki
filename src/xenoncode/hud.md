@@ -47,6 +47,7 @@ init
 screen_w ; returns the width of the game window
 screen_h ; returns the height of the game window
 fov ; returns the player's camera field of view (radians)
+aim_distance ; returns the distance of whatever the player is aiming at in meters
 
 mouse_x ; returns the x position of the mouse on the game window
 mouse_y ; returns the y position of the mouse on the game window
@@ -67,6 +68,7 @@ $myPanel.height ; returns the height of the panel
 ; ENTRY POINT
 click.$myPanel ($x:number, $y:number) ; returns the click position within the panel
 ```
+Note: The way to draw on the panel is similar to the [dashboard screen](../xenoncode/dashboard.md#screen-rendering-functions)
 
 ### Functions related to the integrated computer
 ```xc

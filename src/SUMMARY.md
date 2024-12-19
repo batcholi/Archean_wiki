@@ -89,6 +89,7 @@
 			- [Small Thruster](components/propulsion/thruster/SmallThruster.md)
 			- [Big Thruster](components/propulsion/thruster/BigThruster.md)
 		- [RCS](components/propulsion/RCS.md)
+		- [Big Wheel](components/propulsion/BigWheel.md)
 		- [Wheel](components/propulsion/Wheel.md)
 		- [Small Wheel](components/propulsion/SmallWheel.md)
 		- [Propeller](components/propulsion/Propeller.md)
@@ -129,6 +130,7 @@
 # XenonCode
 - [Documentation](xenoncode/documentation.md)
 - [Archean](xenoncode/archean.md)
+	- [Computer](xenoncode/computer.md)
 	- [Dashboard](xenoncode/dashboard.md)
 	- [HUD](xenoncode/hud.md)
 - [XenonCode IDE](xenoncode/ide.md)
