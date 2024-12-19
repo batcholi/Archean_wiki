@@ -20,7 +20,8 @@ The creation of a cable starts and ends on a component connector.
 
 The placement of cables is completely free and allows adding as many points as you want (as long as you spool's remaining length) to customize its shape. During the creation of a cable, if you have placed multiple points, you can remove points using the `right-click` to refine the placement or completely cancel the creation of the cable if there are no more existing points.
 
-Cables can be stacked on top of other existing cables and on components. (To snap it on the surface of a component, you must hold the `Shift` key).
+- Cables can be stacked on top of other existing cables and on components. (To snap it on the surface of a component, you must hold the `Shift` key).
+- You can place the cable on the inner face of the block/component by holding the `X` key.
 
 ## Creating a Flexible Cable
 You may want to connect components of different builds together temporarily or simply attach two builds together.  
