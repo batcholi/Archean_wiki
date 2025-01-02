@@ -626,10 +626,10 @@ Trailing math functions will use the leading variable as its first argument and 
 ### Text functions
 - `substring`(inputText, start, length) returns a new string
 - `text`(inputTextWithFormatting, vars ...)
-- `size`(inputText) returns the number of characters in $myText
-- `last`(inputText) returns the last character in $myText
-- `lower`(inputText) returns the lowercase version of $myText
-- `upper`(inputText) returns the uppercase version of $myText
+- `size`($myText) returns the number of characters in $myText
+- `last`($myText) returns the last character in $myText
+- `lower`($myText) returns the lowercase version of $myText
+- `upper`($myText) returns the uppercase version of $myText
 
 #### Formatting
 The `text` function takes a format as the first argument.  
@@ -674,6 +674,13 @@ Using the trail operator `.`, we can also return a specific information about ce
 - `contains`($myText, "str") returns 1 if $myText contains "str", otherwise 0
 - `find`($myText, "str") returns the index of the first character of the first occurance of "str" in $myText, otherwise -1 if not found
 These also work on arrays.  
+- `isnumeric`($myText) returns 1 if $myText is a number, otherwise 0
+
+### Ternary operator
+The ternary operator is a shorthand conditional expression that returns a value depending on the evaluation of a condition.
+```xc
+$myVar = if($cond, $valTrue, $valFalse)
+```
 
 ### Device functions
 An implementation should define application-specific device functions.  
@@ -733,4 +740,4 @@ Note that this `-run` command is meant to quickly test the language and will onl
 Also, make sure that your editor is configured to use tabs and not spaces, for correct parsing of indentation.  
 
 If you want to integrate XenonCode into your C++ project, you can include `XenonCode.hpp`.  
-Further documentation will be coming soon for this, in the meantime you may use `main.cpp` as an example but its usage is still subject to change.  
+Further documentation will be coming soon for this, in the meantime you may use `main.cpp` as an example but its usage is still subject to change.

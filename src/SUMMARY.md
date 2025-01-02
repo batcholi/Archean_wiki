@@ -116,6 +116,10 @@
 		- [SpotLight](components/lights/SpotLight.md)
 		- [Lamp](components/lights/Lamp.md)
 
+	- [Storage]()
+		- [Container](components/storage/Container.md)
+		- [Small Container](components/storage/SmallContainer.md)
+
 	- [Miscellaneous]()
 		- [Gyroscope](components/miscellaneous/Gyroscope.md)
 		- [Buzzer](components/miscellaneous/Buzzer.md)
@@ -123,7 +127,6 @@
 		- [TrashCan](components/miscellaneous/TrashCan.md)
 		- [Ground Anchor](components/miscellaneous/GroundAnchor.md)
 		- [OwnerPad](components/miscellaneous/OwnerPad.md)
-		- [Container](components/miscellaneous/Container.md)
 		- [Crafter](components/miscellaneous/Crafter.md)
 #
 #
