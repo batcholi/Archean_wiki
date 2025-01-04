@@ -16,14 +16,5 @@ The Throttle Lever is a type of control that constantly sends an analog value be
 # Usage
 The lever is controlled with the mouse by holding the `F` key and moving the `mouse up/down`.
 
->There is resistance in the center of the lever to help find the precise center position.
-
----
-
-### Tip
-You can use a function in a computer to give it a classic accelerator behavior, where the low position returns `0` and the high position returns `1`.
-
-```xc
-; Where `a` is the throttle output
-(a+1)/2
-```
+> - There is resistance in the center of the lever to help find the precise center position.
+> - It is possible to configure the **Min** and **Max** values of the lever, as well as the **snap-to-center** feature from the configuration menu accessible with the `V` key.

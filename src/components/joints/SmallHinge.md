@@ -13,6 +13,8 @@
 # Description
 The Small Hinge is a component that includes a buildable block on a hinge.
 
+> <font color="green"> *This component is related to the pressurization of builds, please refer to the [Pressurization](../../pressurization.md) page for more information.*</font>
+
 # Usage
 The Small Hinge only operates in servo mode.
 

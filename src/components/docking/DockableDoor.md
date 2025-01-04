@@ -16,6 +16,7 @@ The Dockable Door is a large door that can dock to a similar door to connect two
 
 > - Dockable Doors can only be installed on the face of frames.
 > - The Dockable Door can only be docked to another Dockable Door.
+> - <font color="green"> *This component is related to the pressurization of builds, please refer to the [Pressurization](../../pressurization.md) page for more information.*</font>
 
 # Usage
 To function properly, the Dockable Door needs to be powered via low voltage. It consumes 20 watts when inactive and up to 250 watts when the doors are in motion.

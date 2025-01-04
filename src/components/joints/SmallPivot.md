@@ -13,6 +13,8 @@
 # Description
 The Small Pivot is a component that includes a buildable rotating block. It is designed to allow rotation of objects on a build.
 
+> <font color="green"> *This component is related to the pressurization of builds, please refer to the [Pressurization](../../pressurization.md) page for more information.*</font>
+
 # Usage
 The Small Pivot can operate in two modes: Servo (default) and Velocity. To switch between modes, press the V key to open the component's information interface.
 
