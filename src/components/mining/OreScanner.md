@@ -14,9 +14,11 @@
 The ore scanner is a component that allows you to retrieve the composition of the terrain at one or more positions (by distance) in the direction of its sensor. It only works on planets and moons and is mainly used to find ores for use in the crafting system.
 
 # Usage
-From a technical point of view, the scanner is very simple. You send it a number in channel 0 that corresponds to the distance in meters at which you want to scan the terrain, and the scanner will return a text object corresponding to the composition at that distance in the direction of the sensor.
+From a technical point of view, the scanner is very simple. You send it a number in channel 0 that corresponds to the distance in meters at which you want to scan the terrain horizontally, and the scanner will return a text object corresponding to the composition at that distance in the direction of the sensor.
 
 Its strength lies in the ability to send it multiple distances in different channels to scan multiple points simultaneously on each server tick (25 times per second by default).
+
+> Never point it down/up, it works best when scanning horizontally.
 
 ## Example
 To scan the terrain at a distance of 10m, you need to send the value 10 in input channel 0. The scanner will return a text object that corresponds to the composition at 10m distance in the corresponding output channel.

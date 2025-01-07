@@ -14,11 +14,13 @@
 The terrain scanner is a component that allows you to retrieve the altitude of the terrain at one or more positions (by distance) in the direction of its sensor. It only works on planets and moons.
 
 # Usage
-From a technical point of view, the scanner is very simple. You send it a number in channel 0 that corresponds to the distance in meters at which you want to scan the terrain, and the scanner will return a number corresponding to the altitude at that distance in the direction of the sensor.
+From a technical point of view, the scanner is very simple. You send it a number in channel 0 that corresponds to the distance in meters at which you want to scan the terrain horizontally, and the scanner will return a number corresponding to the altitude at that distance in the direction of the sensor.
 
 The returned altitude in the case of Earth is relative to the sea level.
 
 Its strength lies in the ability to send it multiple distances in different channels to scan multiple points simultaneously on each server tick (25 times per second by default).
+
+> Never point it down/up, it works best when scanning horizontally.
 
 ## Example
 To scan the terrain at a distance of 10m, you need to send the value 10 in input channel 0. The scanner will return a number that corresponds to the altitude at 10m distance in the corresponding output channel.

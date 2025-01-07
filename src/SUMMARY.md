@@ -8,6 +8,7 @@
 # Gameplay & Mechanics
 - [Game modes](gamemode.md)
 - [Pressurization](pressurization.md)
+- [N-Body Physics](nbody.md)
 #
 #
 - [Tools]()
@@ -39,6 +40,10 @@
 		- [Push Button](components/controllers/PushButton.md)
 		- [Toggle Button](components/controllers/ToggleButton.md)
 		- [Throttle Lever](components/controllers/ThrottleLever.md)
+
+	- [Docking]()
+		- [Dockable Door](components/docking/DockableDoor.md)
+		- [Docking Port](components/docking/DockingPort.md)
 
 	- [Energy]()
 		- [Battery]()
@@ -76,6 +81,14 @@
 		- [Item Conveyor](components/items/ItemConveyor.md)
 		- [Item Junction](components/items/ItemJunction.md)
 	
+	- [Joints]()
+		- [Small Hinge](components/joints/SmallHinge.md)
+		- [Small Pivot](components/joints/SmallPivot.md)
+
+	- [Lights]()
+		- [Lamp](components/lights/Lamp.md)
+		- [SpotLight](components/lights/SpotLight.md)
+
 	- [Mining]()
 		- [Crusher](components/mining/Crusher.md)
 		- [Mining Drill](components/mining/MiningDrill.md)
@@ -106,23 +119,11 @@
 		- [Tilt Sensor](components/sensors/TiltSensor.md)
 		- [Vehicle Physics Sensor](components/sensors/VehiclePhysicsSensor.md)
 
-	- [Joints]()
-		- [Small Hinge](components/joints/SmallHinge.md)
-		- [Small Pivot](components/joints/SmallPivot.md)
-
-	- [Docking]()
-		- [Dockable Door](components/docking/DockableDoor.md)
-		- [Docking Port](components/docking/DockingPort.md)
-	
-	- [Lights]()
-		- [Lamp](components/lights/Lamp.md)
-		- [SpotLight](components/lights/SpotLight.md)
-
 	- [Storage]()
 		- [Container](components/storage/Container.md)
 		- [Small Container](components/storage/SmallContainer.md)
 
-	- [Miscellaneous]()
+	- [-- Miscellaneous --]()
 		- [Aileron](components/miscellaneous/Aileron.md)  
 		- [Crafter](components/miscellaneous/Crafter.md)
 		- [Buzzer](components/miscellaneous/Buzzer.md)
@@ -130,6 +131,7 @@
 		- [Gyroscope](components/miscellaneous/Gyroscope.md)
 		- [OwnerPad](components/miscellaneous/OwnerPad.md)
 		- [TrashCan](components/miscellaneous/TrashCan.md)
+
 #
 #
 # XenonCode
