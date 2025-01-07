@@ -24,3 +24,8 @@ Archean can run with an AMD graphics card (RDNA2 architecture or newer - RX 6000
 
 Some glitches and artifacts may appear with AMD cards. If you need help optimizing your settings with an AMD card, feel free to join our [Discord community](https://discord.gg/GeuskE6CmF) for assistance and additional information.
 </font>
+
+## Intel ARC Graphics Cards
+<font color="red">
+Intel ARC graphics cards are not compatible with Archean due to the lack of support for double precision floats in shaders (shaderfloat64).
+</font>
