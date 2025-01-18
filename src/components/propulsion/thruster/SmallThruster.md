@@ -44,4 +44,4 @@ The small thruster's nozzle can gimbal with a variation of -10 to +10 degrees in
 |1|Burned flow|kg/s|
 |2|Unburned flow|kg/s|
 
-> If your fuel tank is pre-mixte, you don't need to use both fluid ports.
+> If your fuel tank is pre-mixed, you don't need to use both fluid ports.

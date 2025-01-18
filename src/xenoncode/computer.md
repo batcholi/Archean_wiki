@@ -76,6 +76,7 @@ write(0, char_h, blue, "Hey") ; write a blue Hey message just under the first me
 text_size(2) ; sets text size to two times native, only valid for following writes in the current cycle until the next call to text_size()
 text_align(top_left) ; sets text alignment to top_left, only valid for following writes in the current cycle until the next call to text_align()
 ;(top_left, top, top_right, left, center, right, bottom_left, bottom, bottom_right)
+newline_spacing(3) ; sets the spacing between lines when using "\n" to make new line in write(), only valid for following writes in the current cycle until the next call to newline_spacing()
 
 ; Draw functions take positions X and Y where 0,0 = top-left, in pixels.
 ; draw_point(x, y, color)

@@ -57,6 +57,7 @@ $screen.write(0, $screen.char_h, blue, "Hey") ; write a blue Hey message just un
 $screen.text_size(2) ; sets text size to two times native, only valid for following writes in the current cycle until the next call to text_size()
 $screen.text_align(top_left) ; sets text alignment to top_left, only valid for following writes in the current cycle until the next call to text_align()
 ;(top_left, top, top_right, left, center, right, bottom_left, bottom, bottom_right)
+$screen.newline_spacing(3) ; sets the spacing between lines when using "\n" to make new line in write(), only valid for following writes in the current cycle until the next call to newline_spacing()
 
 
 ; Draw functions take positions X and Y where 0,0 = top-left, in pixels.
