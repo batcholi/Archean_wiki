@@ -20,4 +20,3 @@ Commands allow you to perform specific actions by typing them in the chat, prece
 - `/give [<stack>] [<moduleName>.]<itemType> [<inventoryAlias|username>]` - Gives items to a player.
 - `/kick <username>` - Kicks a player from the server.
 - `/timeadd [-]<hours>` - Adds or subtracts time in the game.
-- `/profiler <start|stop>` - Starts or stops the profiler.

@@ -9,6 +9,10 @@
 - [Game modes](gamemode.md)
 - [Pressurization](pressurization.md)
 - [N-Body Physics](nbody.md)
+- [Celestial bodies & resources]()
+	- [Sun](celestialbodies/sun.md)
+	- [Earth](celestialbodies/earth.md)
+	- [Moon](celestialbodies/moon.md)
 #
 #
 - [Tools]()
@@ -103,9 +107,10 @@
 		- [Thrusters]()
 			- [Small Thruster](components/propulsion/thruster/SmallThruster.md)
 			- [Big Thruster](components/propulsion/thruster/BigThruster.md)
-		- [Small Wheel](components/propulsion/SmallWheel.md)
-		- [Wheel](components/propulsion/Wheel.md)
-		- [Big Wheel](components/propulsion/BigWheel.md)
+		- [Wheels]()
+			- [Small Wheel](components/propulsion/wheel/SmallWheel.md)
+			- [Wheel](components/propulsion/wheel/Wheel.md)
+			- [Big Wheel](components/propulsion/wheel/BigWheel.md)
 		- [Propeller](components/propulsion/Propeller.md)
 		- [RCS](components/propulsion/RCS.md)
 

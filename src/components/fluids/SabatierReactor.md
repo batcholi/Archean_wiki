@@ -22,3 +22,4 @@ To start the conversion process, simply connect a hydrogen source to its yellow 
 ### Production
 The Sabatier reactor can process up to 0.1 kg of hydrogen per second, providing 0.2 kg of methane per second.
 
+> The Sabatier reactor releases water (H2O) into its environment during the reaction. This water is usually not visible, but in a sealed volume, it will start to accumulate.

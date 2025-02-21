@@ -10,8 +10,8 @@ This setup may change depending on the platform used (Windows, Linux, etc.) and 
 # Network
 Regardless of the operating system choice, you must ensure that port `8881` is open for both `UDP` & `TCP`.
 
-# Operating System
-## Linux
+# Setting Up a Server
+### Docker
 To set up a dedicated server on a Linux server, you will need `curl` as well as `Docker` in order to execute the automatic installation script.
 
 Installing Docker can significantly vary depending on the distribution used. We recommend consulting the Wiki of your distribution for guidance on successful installation.
@@ -27,19 +27,22 @@ chmod +x install_archean_server.sh
 # Run this script to Install or Update the server
 ./install_archean_server.sh
 ```
+> Note: It is possible to use this method on Windows using WSL (Windows Subsystem for Linux), but some users have encountered potential performance issues.
 
-## Windows
-Standalone windows servers are not supported yet, but coming soon.  
+### Manual Installation
+For both Linux and Windows, a standalone executable is available to run an Archean server.
 
-However, you can host a game while playing it if you configure `server.ini` with the following:  
+To start the server, simply run the `Archean_server[.exe]` file located in the `Archean-game` folder. The server will launch in console mode and will ask you for a series of information to configure it. This information will no longer be requested once the `server_public_name` value is set in the `server.ini` file.
+
+### Allow Access to Your Single-Player Game
+You can allow access to your single-player game if you manually configure the `server.ini` file with the following parameters:
 - `server_online = yes`
 - `server_public_name = <Any name you want>`
-- `accept_remote_connections = yes`  
+- `accept_remote_connections = yes`
 
-Then, whenever you hit `Play` in the launcher, a public server will be listed and others can join.  
-Again, don't forget to open your port 8881 (or anything have set in `listen_port`).
-
-> When you configure your game (locally) to be publicly accessible, if you have changed the default port (8881) in the `server.ini` file, you will also need to change the port in the `client.ini` file so that you can connect to your own local server.
+Then, each time you press `Play` in the launcher, a public server will be listed and other players will be able to join you.
+> - Don't forget to open your port 8881 (or any other port you have configured in `listen_port`).
+> - You do not have to set the `server_online` parameter to `yes` to allow other players to join your game. You can also invite them by giving them your IP address and the port of your server, which they will need to enter manually in the game launcher. You only need to set `accept_remote_connections = yes`.
 
 # Managing Administrators
 ## Information

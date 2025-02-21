@@ -18,3 +18,4 @@ The lever is controlled with the mouse by holding the `F` key and moving the `mo
 
 > - There is resistance in the center of the lever to help find the precise center position.
 > - It is possible to configure the **Min** and **Max** values of the lever, as well as the **snap-to-center** feature from the configuration menu accessible with the `V` key.
+> - The throttle lever can be controlled from another component through its data port by enabling the "Allow IO Input" mode in the configuration menu.
