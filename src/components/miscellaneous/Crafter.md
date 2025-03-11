@@ -32,12 +32,12 @@ It can be manually controlled through its integrated touch screen and/or through
 |---|---|---|
 |0|Progress|-1 or 0 to 1|
 |1|Craft Selection|text|
-|2|Fluid Contents|text|
+|2|Fluid Levels|text|
 
 > #### Informations:
 >- When `progress` in the output data is `-1`, it means that the recipe cannot be performed either due to missing resources or the requested craft does not exist in the game.
 >- Even though the Crafter only has two fluid ports, it can use as much fluid as needed for recipes by using [Fluid Junctions](../fluids/FluidJunction.md), which can be connected to all necessary fluid sources. The Crafter will simply use them when needed.
->- `Fluid contents` is a key-value object containing values between 0 and 1 for `h2`, `o2` and `h2o`
+>- `Fluid Levels` is a key-value object containing values between 0 and 1 for `h2`, `o2` and `h2o`
 >
 > #### Hints:
 > - You can simply use a [Toggle Button](../controllers/ToggleButton.md) to start continuous crafting as long as the button is active and there are enough resources in the connected inventory.
