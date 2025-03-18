@@ -71,6 +71,8 @@ $screen.draw_rect(50, 50, 60, 60, red) ; draw a red square starting at coordinat
 $screen.draw_triangle($screen.width/2, 0, 0, $screen.height, $screen.width, $screen.height, blue) ; draw a blue triangle from the top middle to the bottom corners of the screen
 ; draw_circle(x, y, radius, color [, fillcolor])
 $screen.draw_circle($screen.width/2, $screen.height/2, 50, green) ; draw a green circle with a radius of 50 pixels in the middle of the screen
+; draw_poly(color, x1, y1, x2, y2, x3, y3, x4, y4)
+$screen.draw_poly(yellow, 0, 0, 50, 50, 100, 0) ; draw a yellow polygon with 3 points. There is no limit to the number of points, allowing for the creation of complex shapes.
 
 ; Draw functions may also be turned into Buttons. Works with rect, triangle and circle.
 if $screen.button_rect(0, 0, 40, 10, gray) ; draw a gray rectangle button in the top left corner of the screen. Evaluates to true if clicked.

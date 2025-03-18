@@ -107,6 +107,7 @@
 		- [Thrusters]()
 			- [Small Thruster](components/propulsion/thruster/SmallThruster.md)
 			- [Big Thruster](components/propulsion/thruster/BigThruster.md)
+			- [Mini Thruster](components/propulsion/thruster/MiniThruster.md)
 		- [Wheels]()
 			- [Small Wheel](components/propulsion/wheel/SmallWheel.md)
 			- [Wheel](components/propulsion/wheel/Wheel.md)
@@ -118,6 +119,7 @@
 		- [Altitude Sensor](components/sensors/AltitudeSensor.md)
 		- [Angular Velocity Sensor](components/sensors/AngularVelocitySensor.md)
 		- [Density Sensor](components/sensors/DensitySensor.md)
+		- [Temperature Sensor](components/sensors/TemperatureSensor.md)
 		- [Linear Velocity Sensor](components/sensors/LinearVelocitySensor.md)
 		- [Solar Sensor](components/sensors/SolarSensor.md)
 		- [Speed Sensor](components/sensors/SpeedSensor.md)
@@ -136,6 +138,7 @@
 		- [Gyroscope](components/miscellaneous/Gyroscope.md)
 		- [OwnerPad](components/miscellaneous/OwnerPad.md)
 		- [TrashCan](components/miscellaneous/TrashCan.md)
+		- [Step](components/miscellaneous/Step.md)
 
 #
 #

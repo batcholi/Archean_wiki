@@ -17,7 +17,7 @@ The Fluid Junction is a component that allows for the separation or combination 
 # Usage
 The Fluid Junction transfers fluids with the logic shown in the example image below. The ports on the face that contains 4 ports only communicate with the port on the face that contains only one.
 
-When fluid enters through the bottom port, it is divided based on the number of connected components on the top.
+When fluid enters through the single bottom port, it is distributed among the four top ports based on the acceptance capacity of the connected components. If all ports are open, the fluid is evenly divided. However, if one or more ports are closed (e.g., due to a [fluid valve](./FluidValve.md)), the total amount of fluid is redistributed only among the remaining ports that can still receive the flow.
 
 <p align="center">
   <img src="diagrFluidJunction.png" />

@@ -89,6 +89,8 @@ draw_rect(50, 50, 60, 60, red) ; draw a red square starting at coordinates 50,50
 draw_triangle(screen_w/2, 0, 0, screen_h, screen_w, screen_h, blue) ; draw a blue triangle from the top middle to the bottom corners of the screen
 ; draw_circle(x, y, radius, color [, fillcolor])
 draw_circle(screen_w/2, screen_h/2, 50, green) ; draw a green circle with a radius of 50 pixels in the middle of the screen
+; draw_poly(color, x1, y1, x2, y2, x3, y3, x4, y4)
+draw_poly(yellow, 0, 0, 50, 50, 100, 0) ; draw a yellow polygon with 3 points. There is no limit to the number of points, allowing for the creation of complex shapes.
 
 ; Draw functions may also be turned into Buttons. Works with rect, triangle and circle.
 if button_rect(0, 0, 40, 10, gray) ; draw a gray rectangle button in the top left corner of the screen. Evaluates to true if clicked.

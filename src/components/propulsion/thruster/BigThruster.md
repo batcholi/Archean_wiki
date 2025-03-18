@@ -22,8 +22,8 @@ Connect high flow oxydizer and fuel to the fluid ports, high voltage for ignitio
 
 Initial ignition will only occur when the flow rate is between 1 g/s and 50 kg/s, for either the fuel or the oxydizer.
 
-When the fuel is H2, the optimal flow ratio is 8:1 (LOX:H2) and and ratio of < 1:1 may result in a flame out (no combustion).
-When the fuel is CH4, the optimal flow ratio is 4:1 (LOX:CH4) and and ratio of < 1:1 may result in a flame out (no combustion).
+When the fuel is H2, the optimal flow ratio is 8:1 (LOX:H2) and ratio of < 1:1 may result in a flame out (no combustion).
+When the fuel is CH4, the optimal flow ratio is 4:1 (LOX:CH4) and ratio of < 1:1 may result in a flame out (no combustion).
 
 The igniter does not need to be kept on once combustion has begun, although it's a good idea to leave it on in case of a flame out.
 Ignition consumes 1000 watts continuously when on.
