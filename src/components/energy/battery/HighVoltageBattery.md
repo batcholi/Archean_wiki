@@ -18,7 +18,7 @@
 - Data port: 1 port for battery status monitoring
 
 # Usage
-With the battery providing 10,000 amps per port, you can get up to 5 MW on each port to power components.
+With the battery providing 10,000 amps per port, you can get up to 100 MW on each port to power components.
 
 ### List of outputs
 |Channel|Function|
