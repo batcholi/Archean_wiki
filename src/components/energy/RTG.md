@@ -50,7 +50,6 @@ The RTG has two electrical ports, which allows you to connect two components sim
 
 # Additional Information
 
-In reality, the production of plutonium from uranium fuel is a complex and heavy industrial process.  
-It requires advanced nuclear infrastructure and specialized facilities.
+In reality, processing plutonium from spent nuclear fuel is an extremely complex and demanding industrial operation, requiring advanced infrastructure and specialized facilities. For this reason, plutonium recovery and reprocessing are not currently supported in Archean.
 
-However, the current process is intentionally more demanding than previous game versions, making RTGs less trivial to obtain while remaining accessible.
+Instead, RTGs use a simplified form of plutonium specifically produced for energy generation. While this alternative remains easier to handle than real-world plutonium, its production is intentionally more challenging than in previous versions of the game, making RTGs less trivial to obtain while still accessible to advanced players.

@@ -17,6 +17,7 @@
 |Lead (Pb)|Very rare|Low altitude (Deep in the sea)|
 |Tungsten (W)|Very rare|Low altitude (Deep in the sea)|
 |Uranium (U)|Very rare|Low altitude (Deep in the sea)|
+|Fluorite (F)|Very rare|Low altitude (Deep in the sea)|
 
 
 ### Celestial body parameters
