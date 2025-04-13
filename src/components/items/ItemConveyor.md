@@ -15,23 +15,24 @@
 The item conveyor is a component that allows moving items from one point to another. It operates by pulling items at the input and pushing them at the output. It can be used, for example, to transport items from one container to another.
 
 # Usage
-The item conveyor requires low voltage power and consumes 100 watts, with power consumption directly proportional to the number of items being transferred.
+The item conveyor requires low voltage power and consumes 100 watts, with power consumption directly proportional to the amount of items being moved.
 
-It can be configured through its information window accessed with the `V` key or through its data port.
-The available options are:
+It can be configured either through its information window (accessible with the `V` key) or through its data port.
+The available configuration options are:
 
 |Option|Value|Description|
 |---|---|---|
-|**Stack Size**|1 to 1000|Number of items to move per second|
-|**Filter**|text|Allows whitelisting of items to be moved. For example, if "Wire" is specified, only wires will be allowed to pass|
+|**Pull n items/sec**|1 to 1000|Maximum number of items to move per second|
+|**Pull x kg/sec**|0 to 1000 kg|Maximum mass of items to move per second|
+|**Filter**|text|Allows whitelisting a specific type of item. For example, if "Wire" is specified, only wires will be allowed to pass|
 
 > - The item conveyor can only filter one type of item at a time. If you need to move multiple types of items, you will need to use multiple conveyors.
 > - The filter is case-sensitive.
-
 
 ### List of inputs
 |Channel|Function|Value|
 |---|---|---|
 |0|ON|0 or 1|
-|1|Stack Size|1 to 1000|
+|1|Pull n items/second|1 to 1000|
 |2|Filter|text|
+|3|MPull x kg/second|0 to 1000|

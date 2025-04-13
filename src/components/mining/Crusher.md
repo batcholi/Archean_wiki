@@ -19,6 +19,6 @@ The Crusher requires high voltage power and consumes 10 kW.
 
 To use the Crusher, simply send rocks to be crushed through its item input port. It will not pull from its input but it is capable of pushing the obtained ores into any container that accepts items.
 
-The Crusher is capable of processing 400 rocks per second, matching the output of 4 mining drills operating at full power.
+The Crusher is capable of processing 400 kg of rocks per second, matching the output of 4 mining drills operating at full power.
 
 > When the composition of rocks contains a low concentration of certain ores, the Crusher will accumulate the ores at a low concentration until it is possible to produce at least one unit of the ore.
