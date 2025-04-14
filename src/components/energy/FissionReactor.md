@@ -129,6 +129,7 @@ During operation, rods automatically accumulate fission products:
 - **Plutonium (Pu)**
 
 These elements directly appear in the rod's composition as it ages.
+> It is important to note that these fission products currently have no use in the game. To obtain plutonium for crafting the RTG, you must use the plutonium manufacturing process described on the RTG page [RTG](./RTG.md#how-to-produce-plutonium).
 
 ### Depleted Rod
 When a uranium rod's **U235** concentration drops below **4.45%**, it becomes *depleted*.
@@ -201,9 +202,14 @@ The lifespan of uranium rods depends entirely on:
 |Step|Inputs|Outputs|Temperature|
 |---|---|---|---|
 |Crusher (Fluorite Powder)|Fluorite Ore: 1000 g|Fluorite powder (F₂) : 1000 g|-|
-|ChemicalFurnace (Hydrogen Fluoride (HF))|Fluorine (F₂) : 0.038 g, Hydrogen (H₂) : 0.002 g|Hydrogen fluoride (HF) : 0.040 g|300K - 400K|
+|ChemicalFurnace (Hydrogen Fluoride (HF)) <font color="orange">*</font>|Fluorine (F₂) : 0.038 g, Hydrogen (H₂) : 0.002 g|Hydrogen fluoride (HF) : 0.040 g|300K - 400K|
 |ChemicalFurnace (Uranium Tetrafluoride (UF₄))|Hydrogen fluoride (HF) : 0.080 g, Uranium dioxide (UO₂) : 0.270 g|Uranium tetrafluoride (UF₄) : 0.314 g, Water (H₂O) : 0.036 g|750K - 950K|
 |ChemicalFurnace (Uranium Hexafluoride (UF₆))|Uranium tetrafluoride (UF₄) : 0.314 g, Fluorine (F₂) : 0.038 g|Uranium hexafluoride (UF₆) : 0.352 g|550K - 750K|
+
+<font color="orange">*</font> The production of Hydrogen Fluoride (HF) triggers a highly exothermic reaction. In this specific case, the resulting temperature, even if the chemical furnace displays values around 3000K, does not affect the output. However, in subsequent processes, you will need to cool down HF before it can be used, typically with an [Active Radiator](../fluids/radiator/ActiveRadiator.md) or a similar cooling device.
+
+
+
 
 ---
 
