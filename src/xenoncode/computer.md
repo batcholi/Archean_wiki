@@ -103,7 +103,11 @@ if button_rect(0, 0, 40, 10, gray) ; draw a gray rectangle button in the top lef
 var $somePixelColor = pixel(10, 10) ; get the current color of the pixel at coordinates 10,10
 
 ; Copy a zone from one screen to another screen
-screen_copy($sprites, $dash, $src_x, $src_y, $dst_x, $dst_y, $width, $height, $color) ; here $color is an optional argument to apply additional tint (multiply)
+screen_copy($sprites, $dash, $src_x, $src_y, $dst_x, $dst_y, $width, $height, $color, $rotation, $bilinear)
+; The arguments $color, $rotation, and $bilinear are optional.
+; $color    : Applies a tint to the copied area. Use -1 to apply no tint.
+; $rotation : Rotates the copied area (in degrees, clockwise).
+; $bilinear : Enables bilinear interpolation. Set to 1 to enable
 ```
 
 ### Virtual Screen Function
