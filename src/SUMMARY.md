@@ -45,9 +45,10 @@
 		- [Toggle Button](components/controllers/ToggleButton.md)
 		- [Throttle Lever](components/controllers/ThrottleLever.md)
 
-	- [Docking]()
+	- [Docking & Hitch]()
 		- [Dockable Door](components/docking/DockableDoor.md)
 		- [Docking Port](components/docking/DockingPort.md)
+		- [Hitch](components/docking/Hitch.md)
 
 	- [Energy]()
 		- [Battery]()

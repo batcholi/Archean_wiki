@@ -30,5 +30,14 @@ Once operational:
 
 It is primarily used to produce energy by circulating the fluid through a Steam Turbine.
 
-> #### Note:
+### Additional Information
+- The Geothermal Exchanger works exclusively with water (H₂O).
+- Maximum flow rate: 0.1 kg/s.
+
 > A Small Steam Turbine can generally be supplied effectively by up to 10 Geothermal Exchangers, allowing for a theoretical maximum output power of about 270 kW.
+
+### List of Outputs
+|Channel|Function|Value|
+|---|---|---|
+|0|Depth|meters|
+|1|Temperature|Kelvin|
