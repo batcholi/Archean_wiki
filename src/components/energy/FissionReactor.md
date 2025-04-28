@@ -201,10 +201,10 @@ The lifespan of uranium rods depends entirely on:
 
 |Step|Inputs|Outputs|Temperature|
 |---|---|---|---|
-|Crusher (Fluorite Powder)|Fluorite Ore: 1000 g|Fluorite powder (F₂) : 1000 g|-|
-|ChemicalFurnace (Hydrogen Fluoride (HF)) <font color="orange">*</font>|Fluorine (F₂) : 0.038 g, Hydrogen (H₂) : 0.002 g|Hydrogen fluoride (HF) : 0.040 g|300K - 400K|
+|Crusher (Fluorite powder (F₂))|Fluorite Ore: 1000 g|Fluorite powder (F₂) : 1000 g|-|
+|ChemicalFurnace (Hydrogen Fluoride (HF)) <font color="orange">*</font>|Fluorite powder (F₂) : 0.038 g, Hydrogen (H₂) : 0.002 g|Hydrogen fluoride (HF) : 0.040 g|300K - 400K|
 |ChemicalFurnace (Uranium Tetrafluoride (UF₄))|Hydrogen fluoride (HF) : 0.080 g, Uranium dioxide (UO₂) : 0.270 g|Uranium tetrafluoride (UF₄) : 0.314 g, Water (H₂O) : 0.036 g|750K - 950K|
-|ChemicalFurnace (Uranium Hexafluoride (UF₆))|Uranium tetrafluoride (UF₄) : 0.314 g, Fluorine (F₂) : 0.038 g|Uranium hexafluoride (UF₆) : 0.352 g|550K - 750K|
+|ChemicalFurnace (Uranium Hexafluoride (UF₆))|Uranium tetrafluoride (UF₄) : 0.314 g, Fluorite powder (F₂) : 0.038 g|Uranium hexafluoride (UF₆) : 0.352 g|550K - 750K|
 
 <font color="orange">*</font> The production of Hydrogen Fluoride (HF) triggers a highly exothermic reaction. In this specific case, the resulting temperature, even if the chemical furnace displays values around 3000K, does not affect the chemical reaction. However, in subsequent processes, you will need to cool down HF before it can be used, typically with an [Active Radiator](../fluids/radiator/ActiveRadiator.md) or a similar cooling device.
 
