@@ -149,6 +149,7 @@
 		- [Buzzer](components/miscellaneous/Buzzer.md)
 		- [Ground Anchor](components/miscellaneous/GroundAnchor.md)
 		- [Gyroscope](components/miscellaneous/Gyroscope.md)
+		- [HUD Controller](components/miscellaneous/HudController.md)
 		- [OwnerPad](components/miscellaneous/OwnerPad.md)
 		- [TrashCan](components/miscellaneous/TrashCan.md)
 		- [Step](components/miscellaneous/Step.md)
