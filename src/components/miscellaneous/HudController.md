@@ -27,9 +27,10 @@ When you place a HUD Controller on your build, it has two buttons:
 ### Usage with a [Pilot Seat](../controllers/PilotSeat.md)
 Subscription to the HUD Controller can also be done via its data port using a [Pilot Seat](../controllers/PilotSeat.md), which has the unique ability to send a unique identifier (Token) on its channel 0 (Using). You can connect a [Pilot Seat](../controllers/PilotSeat.md) directly to the HUD Controller's data port, allowing you to subscribe to the HUD Controller when seated in the [Pilot Seat](../controllers/PilotSeat.md) and unsubscribe when you leave it.
 
-You can also use a [Pilot Seat](../controllers/PilotSeat.md) connected to a [Computer](../computers/Computer.md) to subscribe to the HUD Controller. In this case, you need to use channel 0 (Using) of the [Pilot Seat](../controllers/PilotSeat.md) to send the Token to the HUD Controller's data port.
+You can also use a [Pilot Seat](../controllers/PilotSeat.md) connected to a [Computer](../computers/Computer.md) to subscribe to the HUD Controller. In this case, you need to use channel 0 (Using) of the [Pilot Seat](../controllers/PilotSeat.md) to send the Token to the HUD Controller's data port. 
 
-> We recommend not retrieving the Token and hardcoding things with it. The Token is regenerated each time the player connects to the server for security reasons. If a malicious player obtains another player's Token, they could use it to display anything on that player's HUD without their knowledge.
+> - Make sure the `Emit user token on Channel 0` setting is enabled in the [Pilot Seat](../controllers/PilotSeat.md) information window, accessible with the `V` key. This ensures that the user's Token is transmitted on channel 0 of the [Pilot Seat](../controllers/PilotSeat.md) instead of a `0` or `1`.
+> - We recommend not retrieving the Token and hardcoding things with it. The Token is regenerated each time the player connects to the server for security reasons. If a malicious player obtains another player's Token, they could use it to display anything on that player's HUD without their knowledge.
 
 ### HUD Controller for server administrators
 The HUD Controller can also be used to create a HUD visible to all players on the server. 

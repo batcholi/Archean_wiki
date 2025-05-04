@@ -20,10 +20,13 @@ Hold `R` for one second to exit a seat.
 > While seated, you can move to another nearby seat without needing to exit the current seat using the `R` key.
 > When exiting a seat, it remembers where you were relative to the build when you entered the seat, and that is where you will be when you exit it.
 
+## Usage with a HUD Controller
+In the Pilot Seat information window accessible with the `V` key, an option `Emit user token on Channel 0`, enabled by default, allows sending the user's token on Channel 0 of the Pilot Seat instead of a `0` or `1`. This can be used with a HUD Controller to identify which user is seated in the Pilot Seat and display the HUD accordingly.
+
 ### List of outputs
 |Channel|Function|Range|
 |---|---|---|
-|0|Using|1 if an avatar is seated in the seat, otherwise 0|
+|0|Using|1 or the token of the user seated in the Pilot Seat, otherwise 0|
 |1|Backward/Forward|-1.0 to +1.0|
 |2|Left/Right|-1.0 to +1.0|
 |3|Down/Up|-1.0 to +1.0|
