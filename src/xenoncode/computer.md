@@ -128,7 +128,7 @@ Avoid drawing on the virtual screen in a loop, as this would be as slow as drawi
 
 ```xc
 var $vScreen = virtualscreen(100, 200) ;virtualscreen(width, height)
-;The maximum size of a virtual screen is 800x800 pixels.
+;The maximum size of a virtual screen is 10000x10000 pixels.
 
 init
     $vScreen.blank(black); clear the virtual screen with black

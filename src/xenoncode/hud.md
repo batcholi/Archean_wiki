@@ -123,6 +123,10 @@ set("mySharedValue", "Hello World") ; sets a shared value identified by "myShare
 get("mySharedValue") ; returns the value of the shared value "mySharedValue"
 ```
 
+# Virtual screen and screencopy
+These functions are available in HUDs and work the same way as on computers.
+Refer to the documentation for the [virtualscreen](../xenoncode/computer.md#virtual-screen-function) and [screen_copy](../xenoncode/computer.md#screen-rendering-functions-draw-on-a-virtual-screen).
+
 # Examples
 ### HUD that displays the player's speed
 ```xc
