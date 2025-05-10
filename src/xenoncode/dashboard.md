@@ -74,6 +74,11 @@ $screen.draw_circle($screen.width/2, $screen.height/2, 50, green) ; draw a green
 ; draw_poly(color, x1, y1, x2, y2, x3, y3, x4, y4)
 $screen.draw_poly(yellow, 0, 0, 50, 50, 100, 0) ; draw a yellow polygon with 3 points. There is no limit to the number of points, allowing for the creation of complex shapes.
 
+; Legacy draw function with width/height parameters (still supported)
+; draw(x, y, color, width, height)
+$screen.draw(0, 0, red, 50, 70) ; draw a red rectangle at coordinates 0,0 with a width of 50 and a height of 70
+
+
 ; Draw functions may also be turned into Buttons. Works with rect, triangle and circle.
 if $screen.button_rect(0, 0, 40, 10, gray) ; draw a gray rectangle button in the top left corner of the screen. Evaluates to true if clicked.
 	if user == owner

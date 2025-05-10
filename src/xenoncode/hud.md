@@ -51,6 +51,11 @@ aim_distance ; returns the distance of whatever the player is aiming at in meter
 
 mouse_x ; returns the x position of the mouse on the game window
 mouse_y ; returns the y position of the mouse on the game window
+
+set_resolution_scale($scale)
+; Sets the internal resolution of the HUD, from 1 (full resolution) to 8 (lower resolution).
+; Default is 2. The HUD is rendered at screen resolution divided by $scale.
+; Final display size is affected by ($scale * ui_scaling).
 ```
 > It is important to remember that the UI Scaling configured in the game settings influences the values returned by these functions. 
 
