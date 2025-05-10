@@ -93,18 +93,20 @@ draw_circle(screen_w/2, screen_h/2, 50, green) ; draw a green circle with a radi
 ; draw_poly(color, x1, y1, x2, y2, x3, y3, x4, y4)
 draw_poly(yellow, 0, 0, 50, 50, 100, 0) ; draw a yellow polygon with 3 points. There is no limit to the number of points, allowing for the creation of complex shapes.
 
-; Legacy draw function with width/height parameters (still supported)
-; draw(x, y, color, width, height)
-draw(0, 0, red, 50, 70) ; draw a red rectangle at coordinates 0,0 with a width of 50 and a height of 70
-
-
 ; Draw functions may also be turned into Buttons. Works with rect, triangle and circle.
 if button_rect(0, 0, 40, 10, gray) ; draw a gray rectangle button in the top left corner of the screen. Evaluates to true if clicked.
-	if user == owner
-		print("The owner of this computer clicked the button")
-	else
-		print("The button was clicked by " & user) ; prints a message to the console (when the button was clicked, in this case)
+    if user == owner
+        print("The owner of this computer clicked the button")
+    else
+        print("The button was clicked by " & user) ; prints a message to the console (when the button was clicked, in this case)
 ; Here we also happen to use the built-ins 'user' and 'owner' which are player usernames
+
+; Legacy draw|button function with width/height parameters (still supported)
+; draw(x, y, color, width, height)
+draw(0, 0, red, 50, 70) ; draw a red rectangle at coordinates 0,0 with a width of 50 and a height of 70
+if button(10, 10, red, 30, 30) ; draw a red button at coordinates 10,10 with a width of 30 and a height of 30. Evaluates to true if clicked.
+    print("The button was clicked")
+
 
 var $somePixelColor = pixel(10, 10) ; get the current color of the pixel at coordinates 10,10
 
