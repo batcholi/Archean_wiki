@@ -11,7 +11,7 @@
 ---
 
 # Description
-The Linear Track is a component that includes a buildable moving block. It is designed to allow linear translation of objects on a build.
+The Linear Track is a component that includes a buildable moving block. It is designed to allow linear translation of objects on a build. It can only Translate along a track automatically created on the movement axis of the block.
 
 > <font color="green"> *This component is related to the pressurization of builds, please refer to the [Pressurization](../../pressurization.md) page for more information.*</font>
 
@@ -21,6 +21,9 @@ The Linear Track can operate in two modes: Servo (default) and Velocity. To swit
 In this interface, there are two additional configurations possible:
 - `Max Speed` which determines the maximum speed in meters per second.
 - `Acceleration` which determines the rate at which the linear track will accelerate to reach its Max Speed.
+
+## Tracks
+The tracks for the Linear Track component are automatically created and updated aloong its axis. They are created on top of normal blocks of any type. To end the track the line has to be broken. For exanple with another block on top or by leaving a whole along the track.
 
 ## Servo Mode
 In servo mode, the device rotates to a precise position determined by the data received through its data port. It accepts all values and will react accordingly in the range between min and max. So if a number greater or smaller is recived it will move into the according min/max position.
