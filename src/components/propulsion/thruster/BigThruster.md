@@ -18,7 +18,7 @@ It uses a radial aerospike nozzle and it's very efficient at converting combusti
 It can produce up to 1.8 MN of thrust from a flow rate of 100 Kg/s LOX and 12.5 Kg/s H2.
 
 # Usage
-Connect high flow oxydizer and fuel to the fluid ports, high voltage for ignition, and send 1 in the data port to ignite.
+Connect high flow oxidizer and fuel to the fluid ports, high voltage for ignition, and send 1 in the data port to ignite.
 
 Initial ignition will only occur when the flow rate is between 1 g/s and 50 kg/s, for either the fuel or the oxydizer.
 

@@ -17,7 +17,7 @@ It can handle both CH4 (methane) and H2 (hydrogen) as its fuel, but it requires 
 It can produce up to 18 KN of thrust from a flow rate of 1 Kg/s of pre-mixed LOX and H2.
   
 # Usage
-Connect high flow oxydizer and fuel to the fluid ports, low voltage for ignition, and send 1 in the data port to ignite.
+Connect high flow oxidizer and fuel to the fluid ports, low voltage for ignition, and send 1 in the data port to ignite.
 
 When the fuel is H2, the optimal flow ratio is 8:1 (LOX:H2) and ratio of < 1:1 may result in a flame out (no combustion).
 When the fuel is CH4, the optimal flow ratio is 4:1 (LOX:CH4) and ratio of < 1:1 may result in a flame out (no combustion).
