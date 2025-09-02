@@ -17,6 +17,8 @@ Each router is equipped with 30 data ports. They can be chained to increase the 
 
 It requires a low-voltage power supply to operate and consumes 50 watts.
 
+> - It is not possible to have multiple separate router networks connected to different ports of the same computer. A computer can only interface with one unified router network, but this network may include an unlimited number of chained routers.
+
 # Usage
 When the router is powered on and connected to components, it allows assigning aliases to components via a three-dimensional visual interface, which can later be used to identify these components from computer code.
 
