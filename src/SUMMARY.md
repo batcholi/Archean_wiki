@@ -97,6 +97,7 @@
 	- [Joints]()
 		- [Small Hinge](components/joints/SmallHinge.md)
 		- [Small Pivot](components/joints/SmallPivot.md)
+		- [Linear Track](components/joints/LinearTrack.md)
 
 	- [Lights]()
 		- [Lamp](components/lights/Lamp.md)
