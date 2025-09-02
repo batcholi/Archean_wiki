@@ -33,15 +33,16 @@ In velocity mode, the device operates continuously in the direction indicated by
 
 > - Builds installed on a moving part cannot collide with a parent or sibling build. They can only collide with the terrain or other separate builds.
 > - To destroy the Linear Track, you must absolutely remove all the child blocks/components it contains.
+> - The Linear Track has a maximum travel range of -250m to +250m (500m total).
 
 
 ### List of outputs
 |Channel|Function|Value|
 |---|---|---|
-|0|Position|m|
+|0|Position|meters|
 |1|Speed|m/s|
-|2|Minimum Position|m|
-|3|Maximum Position|m|
-|4|Travel (Total Distance)|m|
+|2|Minimum Position|meters|
+|3|Maximum Position|meters|
+|4|Travel (Total Distance)|meters|
 
 ![LinearTrackDemo](lineartrack.gif)
