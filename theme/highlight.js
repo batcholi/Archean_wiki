@@ -2733,7 +2733,7 @@ hljs.registerLanguage("x86asm",function(){"use strict";return function(s){return
         },
         contains: [
           COMMENT,
-          hljs.HASH_COMMENT_MODE,
+          // hljs.HASH_COMMENT_MODE,
           VARIABLE,
           STRING,
           hljs.NUMBER_MODE,

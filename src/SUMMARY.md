@@ -169,6 +169,11 @@
 <!-- - [Examples](xenoncode/examples.md) -->
 #
 #
+# Modding
+- [3D modeling with Blender](modding/blender.md)
+- [Functionality with XenonCode](modding/xenoncode.md)
+#
+#
 # Multiplayer
 - [Setting up a server](multiplayer/settingup.md)
 #
