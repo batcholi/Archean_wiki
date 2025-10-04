@@ -88,7 +88,9 @@ pull_item($port, $itemName, $maxCount, $maxMass); Pulls items from a port. Retur
 #### Animation
 ```xc
 animate($jointName, $axis, $speed [, $targetValue]); Animates a joint.
-; Available axes: linear_x|linear_y|linear_z|angular_x|angular_y|angular_z
+; $axis is an enumeration — use one of the following values directly (no quotes):
+; linear_x | linear_y | linear_z | angular_x | angular_y | angular_z
+
 ```
 
 #### Visual effects
@@ -102,7 +104,8 @@ toggle_renderable($renderableName, $active); Enable or disable a mesh.
 <!-- #### Audio effects
 ```xc
 play_tone($target, $toneMode, $frequency, $amplitude);
-; Available tone modes: sine_wave|square_wave|triangle_wave|sawtooth_wave
+; $toneMode is an enumeration — use one of the following values directly (no quotes):
+; sine_wave | square_wave | triangle_wave | sawtooth_wave
 ; To play several sounds simultaneously, create multiple $target values and call play_tone() for each one.
 ``` -->
 
