@@ -34,8 +34,8 @@ Modding through XenonCode introduces the concept of macros, which lets you decla
 #INFO checkbox Check1 0 MyCheckbox
 ; Add a checkbox identified by "Check1" with the label "MyCheckbox" and default value 0 (unchecked).
 
-#INFO slider Slider1 0 100 1 MySlider
-; Add a slider identified by "Slider1" with the label "MySlider", minimum value 0, maximum value 100, and step 1.
+#INFO slider Slider1 20 0 100 MySlider
+; Add a slider identified by "Slider1" with the label "MySlider" with a default value of 20, a minimum value of 0, and a maximum value of 100.
 
 #INFO button Button1 MyButton
 ; Add a button identified by "Button1" with the label "MyButton".
