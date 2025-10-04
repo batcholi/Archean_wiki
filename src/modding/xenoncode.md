@@ -41,6 +41,8 @@ Modding through XenonCode introduces the concept of macros, which lets you decla
 ; Add a button identified by "Button1" with the label "MyButton".
 ```
 
+> **Note:** <font color="orange">Note: Identifiers like Texte1, Num1, etc.. are converted to lowercase. When calling them through a function like get_info(), always use lowercase.</font>
+
 ### Information Menu functions
 ```xc
 get_info($name); Returns the value of a numeric element in the information menu.
