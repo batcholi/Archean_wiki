@@ -123,6 +123,16 @@ To finish, add a collider that defines the entity's collision area. Add a cube, 
 
 <video src="./blender-res/collider.mp4" width="700" height="438" controls loop muted></video>
 
+### Port Management for XenonCode
+Port naming follows a specific convention to make them easy to identify within XenonCode. Here’s how it works:
+- Ports can be named using the format `yourName.index`, or simply `yourName` if there’s only one port of that type.
+- If you need multiple ports of the same type, each must have a unique index, for example: `data.0`, `data.1`, etc.
+- When a port has no explicit index, it is automatically considered to have index 0.
+
+Example:  
+If you have two data ports named `data.0` and `data.1`, you must use `input.0` and `input.1` in your XenonCode script to interact with them.  
+This indexing logic applies equally to all types of ports.
+
 ### Generating the thumbnail and exporting
 Once everything is configured, generate the thumbnail and export the entity.
 - Rename the Entity Root properly.
