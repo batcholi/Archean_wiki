@@ -99,12 +99,12 @@ set_plasma($target, $radius, $depth, $temperature); Define a plasma effect.
 toggle_renderable($renderableName, $active); Enable or disable a mesh.
 ```
 
-#### Audio effects
+<!-- #### Audio effects
 ```xc
 play_tone($target, $toneMode, $frequency, $amplitude);
 ; Available tone modes: sine_wave|square_wave|triangle_wave|sawtooth_wave
 ; To play several sounds simultaneously, create multiple $target values and call play_tone() for each one.
-```
+``` -->
 
 #### Physics
 ```xc
