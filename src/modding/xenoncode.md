@@ -124,8 +124,18 @@ toggle_collider($colliderName, $active); Enables or disables a collider.
 get_linear_velocity($target); Returns the linear velocity along the Up axis of the target node.
 get_angular_velocity($target); Returns the angular velocity around the Up axis of the target node.
 get_speed(); Returns the absolute linear speed of the parent entity.
+
 get_environment($target, $includeTerrain); Returns the environmental properties at the target node.
-; $includeTerrain is a boolean that, when true, includes terrain information in the returned KV.
+; List of properties returned in a KV:
+;   - Composition of the atmosphere (.molecule{mole fraction}).
+;   - Gravity (m/s²).
+;   - Temperature (Kelvin).
+;   - Pressure (Pascals).
+;   - Density (kg/m³).
+;   - Viscosity (Pa·s).
+;   - Altitude (meters).
+;   if $includeTerrain is true, also includes:
+;   - Altitude above terrain (meters).
 ```
 
 
