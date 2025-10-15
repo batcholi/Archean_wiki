@@ -9,6 +9,9 @@ Refer to the [3D modeling with Blender](blender.md) page for guidance on creatin
 
 Once the 3D object is created and exported, create a `main.xc` file in your new component folder. This file contains the XenonCode script that drives the component's behavior in the game. The XenonCode used for modding reuses the in-game syntax while exposing additional APIs specific to integrating with and interacting with the engine.
 
+## Console output
+XenonCode logs, whether errors or print() output, appear in the information window (`V` by default). This window displays the last 25 log lines and clears its contents each time the XenonCode script reloads. For compilation or runtime errors, only a single line is shown with the error message, just like the in-game IDE.
+
 ## Macros
 Modding through XenonCode introduces the concept of macros, which lets you declare the existence of some functionality that will be used inside the script. These macros must be placed at the top of the file before any other instruction and are prefixed with the `#` character.
 
@@ -17,6 +20,16 @@ Modding through XenonCode introduces the concept of macros, which lets you decla
 #SCREEN screen1 80 40
 ; Create an 80x40-pixel screen from the material "screen1".
 ```
+
+### Naming I/O Channels
+When using native components via the node system, input and output channels are named to facilitate their identification. This macro allows you to define the names of the input and output channels.
+```xc
+#DATAPORT "data" input.0 "Speed (km/h)"
+; Defines the name of input channel 0 of the data port "data" as "Speed (km/h)"
+#DATAPORT "data" output.3 "Velocity (m/s)"
+; Defines the name of output channel 3 of the data port "data" as "Velocity (m/s)"
+```
+The data port name is the one defined in Blender.
 
 ### Information Menu (V)
 ```xc
@@ -103,13 +116,13 @@ set_plasma($target, $radius, $depth, $temperature); Define a plasma effect.
 toggle_renderable($renderableName, $active); Enable or disable a mesh.
 ```
 
-<!-- #### Audio effects
+#### Audio effects
 ```xc
 play_tone($target, $toneMode, $frequency, $amplitude);
 ; $toneMode is an enumeration — use one of the following values directly (no quotes):
 ; sine_wave | square_wave | triangle_wave | sawtooth_wave
 ; To play several sounds simultaneously, create multiple $target values and call play_tone() for each one.
-``` -->
+```
 
 #### Physics
 ```xc
