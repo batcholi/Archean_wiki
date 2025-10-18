@@ -17,7 +17,7 @@ Modding through XenonCode introduces the concept of macros, which lets you decla
 
 ### Screens
 ```xc
-#SCREEN screen1 80 40
+#SCREEN "screen1" 80 40
 ; Create an 80x40-pixel screen from the material "screen1".
 ```
 
@@ -33,25 +33,35 @@ The data port name is the one defined in Blender.
 
 ### Information Menu (V)
 ```xc
-#INFO text_info Texte1 OK MyText
-; Add a line of text identified by "Texte1" with the label "MyText" and default value "OK".
+#INFO text_info "Texte1" "OK" "MyText"
+; Add a text info identified by "Texte1" with the label "MyText" and default value "OK".
+; If the label is omitted, only the value is shown with no colon.
 
-#INFO numeric_info Num1 10 MyNumber
-; Add a numeric field identified by "Num1" with the label "MyNumber" and default value 10.
+#INFO numeric_info "Num1" 10 "MyNumber"
+; Add a numeric info identified by "Num1" with the label "MyNumber" and default value 10.
 
-#INFO text Texte2 "This is the text" This is the text label
+#INFO text_info "Texte2" "This is the text" "This is the text label"
 ; Add a text field identified by "Texte2" with the label "This is the text label" and value "This is the text".
 
 ; --------------------------------------------------------------------------------------------------------------------------
 
-#INFO checkbox Check1 0 MyCheckbox
+#INFO checkbox "Check1" 0 "MyCheckbox"
 ; Add a checkbox identified by "Check1" with the label "MyCheckbox" and default value 0 (unchecked).
 
-#INFO slider Slider1 20 0 100 MySlider
+#INFO slider "Slider1" 20 0 100 "MySlider"
 ; Add a slider identified by "Slider1" with the label "MySlider" with a default value of 20, a minimum value of 0, and a maximum value of 100.
 
-#INFO button Button1 MyButton
+#INFO drag "Drag1" 0 1 10 0.25 "MyDrag"
+; Add a drag field identified by "Drag1" with the label "MyDrag", a default value of 0, a minimum value of 1, a maximum value of 10, and a step value of 0.25.
+
+#INFO button "Button1" "MyButton"
 ; Add a button identified by "Button1" with the label "MyButton".
+
+; --------------------------------------------------------------------------------------------------------------------------
+
+#INFO colorpicker "Color1" "MyCustomColor"
+; Add a color picker identified by "Color1" with the label "MyCustomColor".
+
 ```
 
 > **Note:** <font color="orange">Identifiers like Texte1, Num1, etc.. are converted to lowercase. When calling them through a function like get_info(), always use lowercase.</font>
@@ -87,6 +97,8 @@ screen($materialName); Returns a screen object based on the material name.
 ```
 #### Port management
 ```xc
+is_connected($port); Returns 1 if the specified port is connected, 0 otherwise.
+
 ; Electricity
 push_power($port, $voltage, $availablePower); Offers power to a port and returns the power consumed.
 pull_power($port, $minimumVoltage, $consumedPower); Pulls power from a port. Returns the available power.
