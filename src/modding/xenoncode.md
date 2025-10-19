@@ -40,7 +40,7 @@ The data port name is the one defined in Blender.
 #INFO numeric_info "Num1" 10 "MyNumber"
 ; Add a numeric info identified by "Num1" with the label "MyNumber" and default value 10.
 
-#INFO text_info "Texte2" "This is the text" "This is the text label"
+#INFO text "Texte2" "This is the text" "This is the text label"
 ; Add a text field identified by "Texte2" with the label "This is the text label" and value "This is the text".
 
 ; --------------------------------------------------------------------------------------------------------------------------
