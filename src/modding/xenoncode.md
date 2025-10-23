@@ -123,7 +123,7 @@ animate($jointName, $axis, $speed [, $targetValue]); Animates a joint.
 #### Visual effects
 ```xc
 set_emissive($renderableName, $materialName, $color, $power); Set the emissiveness of a material.
-set_light($target, $color, $power, $angle); Create a light source.
+set_light($target, $radius, $color, $power, $angle); Create a light source.
 set_plasma($target, $radius, $depth, $temperature); Define a plasma effect.
 toggle_renderable($renderableName, $active); Enable or disable a mesh.
 ```
