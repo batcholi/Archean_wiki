@@ -33,15 +33,15 @@ The data port name is the one defined in Blender.
 
 ### Information Menu (V)
 ```xc
-#INFO text_info "Texte1" "OK" "MyText"
-; Add a text info identified by "Texte1" with the label "MyText" and default value "OK".
+#INFO text_info "Text1" "OK" "MyText"
+; Add a text info identified by "Text1" with the label "MyText" and default value "OK".
 ; If the label is omitted, only the value is shown with no colon.
 
 #INFO numeric_info "Num1" 10 "MyNumber"
 ; Add a numeric info identified by "Num1" with the label "MyNumber" and default value 10.
 
-#INFO text "Texte2" "This is the text" "This is the text label"
-; Add a text field identified by "Texte2" with the label "This is the text label" and value "This is the text".
+#INFO text "Text2" "This is the text" "This is the text label"
+; Add a text field identified by "Text2" with the label "This is the text label" and value "This is the text".
 
 ; --------------------------------------------------------------------------------------------------------------------------
 
@@ -64,7 +64,7 @@ The data port name is the one defined in Blender.
 
 ```
 
-> **Note:** <font color="orange">Identifiers like Texte1, Num1, etc.. are converted to lowercase. When calling them through a function like get_info(), always use lowercase.</font>
+> **Note:** <font color="orange">Identifiers like Text1, Num1, etc.. are converted to lowercase. When calling them through a function like get_info(), always use lowercase.</font>
 
 ### Information Menu functions
 ```xc
@@ -90,34 +90,17 @@ click($x:number, $y:number, $material:text)
 
 ## Function list
 
+#### Screens
 ```xc
-; Screens
 screen($materialName); Returns a screen object based on the material name.
 ;virtualscreen() & screen_copy() are available and behave like they do on a Computer/Dashboard.
 ```
-#### Port management
-```xc
-is_connected($port); Returns 1 if the specified port is connected, 0 otherwise.
 
-; Electricity
-push_power($port, $voltage, $availablePower); Offers power to a port and returns the power consumed.
-pull_power($port, $minimumVoltage, $consumedPower); Pulls power from a port. Returns the available power.
-
-; Fluids
-push_fluid($port, $molecule, $mass, $temperature); Pushes fluid to a port. Returns the mass accepted.
-pull_fluid($port, $maxMass); Pulls fluid from a port. Returns a KV of molecule, mass, and temperature.
-
-; Items
-push_item($port, $itemName, $itemProperties, $count); Pushes items to a port. Returns the number of items accepted.
-pull_item($port, $itemName, $maxCount, $maxMass); Pulls items from a port. Returns a KV of itemName, count, and properties.
-```
-
-#### Animation
+#### Animations
 ```xc
 animate($jointName, $axis, $speed [, $targetValue]); Animates a joint.
 ; $axis is an enumeration — use one of the following values directly (no quotes):
 ; linear_x | linear_y | linear_z | angular_x | angular_y | angular_z
-
 ```
 
 #### Visual effects
@@ -144,7 +127,7 @@ set_mass($mass); Sets the mass of the parent entity.
 toggle_collider($colliderName, $active); Enables or disables a collider.
 ```
 
-#### Physical and environmental information
+#### Physical and environmental informations
 ```xc
 get_linear_velocity($target); Returns the linear velocity along the Up axis of the target node.
 get_angular_velocity($target); Returns the angular velocity around the Up axis of the target node.
@@ -163,4 +146,42 @@ get_environment($target, $includeTerrain); Returns the environmental properties 
 ;   - Altitude above terrain (meters).
 ```
 
+## Port management
+### Energy
+```xc
+push_power($port, $voltage, $availablePower); Offers power to a port and returns the power consumed.
+pull_power($port, $minimumVoltage, $consumedPower); Pulls power from a port. Returns the available power.
+```
 
+### Fluids
+##### FUNCTIONS
+```xc
+push_fluid($port:text, $molecule:text, $mass:number, $temperature:number) ; Returns how much mas has been accepted
+pull_fluid($port:text, $maxMass:number) ; Returns KV with composition and temperature
+push_fluid_potential($port:text) ; Returns a value between 0 and 1 (how much fluid flow can the connected device accept with a push)
+pull_fluid_potential($port:text) ; Returns a value between 0 and 1 (how much fluid flow can the connected device accept with a pull)
+```
+
+##### ENTRY POINT
+When another device calls that function on this component.
+```xc
+accept_push_fluid($port:text, $molecule:text, $mass:number, $temperature:number) ; Must modify $mass to subtract how much mass has been accepted
+accept_pull_fluid($port:text, $maxMass:number, $compositionOut:text, $temperatureOut:number) ; Must write molecules to $compositionOut and set $temperatureOut
+accept_pull_fluid_potential($port:text, $potentialOut:number) ; Must set $potentialOut to the flow of fluid another device can pull from this component (value between 0 and 1)
+accept_push_fluid_potential($port:text, $potentialOut:number) ; Must set $potentialOut to the flow of fluid another device can push to this component (value between 0 and 1)
+```
+
+_You can find a list of XenonCode script examples for fluid management on the [Fluid Snippets](fluidSnippets.md) page._
+
+
+----------------------------------
+### Items
+```xc
+push_item($port, $itemName, $itemProperties, $count); Pushes items to a port. Returns the number of items accepted.
+pull_item($port, $itemName, $maxCount, $maxMass); Pulls items from a port. Returns a KV of itemName, count, and properties.
+```
+
+### Miscellaneous
+```xc
+is_connected($port); Returns 1 if the specified port is connected, 0 otherwise.
+```
