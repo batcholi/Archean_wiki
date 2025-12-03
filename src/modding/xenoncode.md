@@ -156,25 +156,36 @@ pull_power($port, $minimumVoltage, $consumedPower); Pulls power from a port. Ret
 ### Fluids
 ##### FUNCTIONS
 ```xc
-push_fluid($port:text, $molecule:text, $mass:number, $temperature:number) ; Returns how much mas has been accepted
-pull_fluid($port:text, $maxMass:number) ; Returns KV with composition and temperature
-push_fluid_potential($port:text) ; Returns a value between 0 and 1 (how much fluid flow can the connected device accept with a push)
-pull_fluid_potential($port:text) ; Returns a value between 0 and 1 (how much fluid flow can the connected device accept with a pull)
+push_fluid($port:text, $molecule:text, $mass:number, $temperature:number)
+; Pushes a given fluid to the device connected to $port and returns the mass actually accepted. Returns 0 if no connection or if $mass <= 0.
+
+pull_fluid($port:text, $maxMass:number)
+; Requests up to $maxMass of fluid from the connected device. Returns a KV object with the pulled composition and temperature. Returns an empty object if nothing is connected.
+
+push_fluid_potential($port:text)
+; Queries how much fluid the connected device can currently accept from a push, clamped between 0 and 1. Relies on the device implementing accept_push_fluid/accept_push_fluid_potential; returns 0 if the port cannot handle push entry points.
+
+pull_fluid_potential($port:text)
+; Queries how much fluid the connected device can currently provide when pulled, clamped between 0 and 1. Uses accept_pull_fluid/accept_pull_fluid_potential on the other device; returns 0 if the port cannot serve pull entry points.
 ```
 
 ##### ENTRY POINT
 When another device calls that function on this component.
 ```xc
-accept_push_fluid($port:text, $molecule:text, $mass:number, $temperature:number) ; Must modify $mass to subtract how much mass has been accepted
-accept_pull_fluid($port:text, $maxMass:number, $compositionOut:text, $temperatureOut:number) ; Must write molecules to $compositionOut and set $temperatureOut
-accept_pull_fluid_potential($port:text, $potentialOut:number) ; Must set $potentialOut to the flow of fluid another device can pull from this component (value between 0 and 1)
-accept_push_fluid_potential($port:text, $potentialOut:number) ; Must set $potentialOut to the flow of fluid another device can push to this component (value between 0 and 1)
-```
+accept_push_fluid($port:text, $molecule:text, $mass:number, $temperature:number)
+; Called when another device tries to push fluid into this component. Decrease $mass to reflect the unaccepted remainder (the server computes accepted mass as input minus leftover).
 
+accept_pull_fluid($port:text, $maxMass:number, $compositionOut:text, $temperatureOut:number)
+; Called when another device wants to pull fluid. Populate $compositionOut with the exported molecules and set $temperatureOut. Respect $maxMass and your own storage limits so the consumer receives only what you can supply.
+
+accept_pull_fluid_potential($port:text, $potentialOut:number)
+; Report the ratio of the requested fluid you can provide on this port right now (0–1). Leave $potentialOut at 0 when the port cannot serve pulls or storage is empty.
+
+accept_push_fluid_potential($port:text, $potentialOut:number)
+; Report the ratio of incoming fluid you can accept on this port right now (0–1).
+```
 _You can find a list of XenonCode script examples for fluid management on the [Fluid Snippets](fluidSnippets.md) page._
 
-
-----------------------------------
 ### Items
 ```xc
 push_item($port, $itemName, $itemProperties, $count); Pushes items to a port. Returns the number of items accepted.
