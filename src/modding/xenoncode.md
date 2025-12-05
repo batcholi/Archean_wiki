@@ -113,11 +113,29 @@ toggle_renderable($renderableName, $active); Enable or disable a mesh.
 
 #### Audio effects
 ```xc
+play_tone_once($target, $toneMode, $frequency, $amplitude, $duration);
+; Generated one-shot tone
 play_tone($target, $toneMode, $frequency, $amplitude);
-; $toneMode is an enumeration — use one of the following values directly (no quotes):
-; sine_wave | square_wave | triangle_wave | sawtooth_wave
-; To play several sounds simultaneously, create multiple $target values and call play_tone() for each one.
+; Generated looping tone
+
+; $toneMode is an enumeration — use one of the following values directly (no quotes)
+; sine_wave | square_wave | triangle_wave | sawtooth_wave;
+
+
+play_sound_once($target, $waveFilePath[, $volume, $pitch, $innerRadius, $outerRadius, $begin, $end]);
+; One-shot .wav playback
+play_sound($target, $waveFilePath[, $volume, $pitch, $innerRadius, $outerRadius, $begin, $end]);
+; Looping .wav playback
+
+; $volume: 0.0 to 1.0 (Default: 0.5)
+; $pitch: 0.1 to 4.0 (Default: 1.0)
+; $inner/outer radius define the distance attenuation of the sound. (Default: innerRadius=1, outerRadius=25)
+; $begin/$end: slice in seconds within the file (Default: begin=0, end=-1 to play to the end)
 ```
+> * You can play multiple audio entries on the same target at the same time, but only if each entry has a different key.  
+>	The key is built as `$target` + `$waveFilePath`.  
+>	This means that if you trigger the same audio file on the same target multiple times with different parameters, it will replace any currently playing instance with the same key.
+> * Calling **_once** versions from a tick or tight loop will retrigger them every tick (spoiler: that's probably not what you want).
 
 #### Physics
 ```xc
