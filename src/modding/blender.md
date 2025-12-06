@@ -125,13 +125,11 @@ To finish, add a collider that defines the entity's collision area. Add a cube, 
 
 ### Port Management for XenonCode
 Port naming follows a specific convention to make them easy to identify within XenonCode. Here’s how it works:
-- Ports can be named using the format `yourName.index`, or simply `yourName` if there’s only one port of that type.
-- If you need multiple ports of the same type, each must have a unique index, for example: `data.0`, `data.1`, etc.
-- When a port has no explicit index, it is automatically considered to have index 0.
+- Data Ports must be named **data** using the format `data.index`, or simply `data` if there is only one. This naming is required so they can be accessed using `input.index` and `output.index` in XenonCode.  
+  Example with two data ports: Name them `data.0` and `data.1`. In XenonCode, you would access them using `input.0` and `input.1`.  
+  Example with a single data port: Simply name it `data`. In XenonCode, you would access it using `input.0` and `output.0`.
 
-Example:  
-If you have two data ports named `data.0` and `data.1`, you must use `input.0` and `input.1` in your XenonCode script to interact with them.  
-This indexing logic applies equally to all types of ports.
+- All other port types (Power, Fluid, Item, etc.) have no specific naming requirements. Their declared name is used directly in XenonCode.
 
 ### Generating the thumbnail and exporting
 Once everything is configured, generate the thumbnail and export the entity.
