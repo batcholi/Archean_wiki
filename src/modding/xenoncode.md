@@ -122,9 +122,9 @@ play_tone($target, $toneMode, $frequency, $amplitude);
 ; sine_wave | square_wave | triangle_wave | sawtooth_wave;
 
 
-play_sound_once($target, $waveFilePath[, $volume, $pitch, $innerRadius, $outerRadius, $begin, $end]);
+play_sound_once($target, $audioFilePath[, $volume, $pitch, $innerRadius, $outerRadius, $begin, $end]);
 ; One-shot .wav playback
-play_sound($target, $waveFilePath[, $volume, $pitch, $innerRadius, $outerRadius, $begin, $end]);
+play_sound($target, $audioFilePath[, $volume, $pitch, $innerRadius, $outerRadius, $begin, $end]);
 ; Looping .wav playback
 
 ; $volume: 0.0 to 1.0 (Default: 0.5)
@@ -133,9 +133,12 @@ play_sound($target, $waveFilePath[, $volume, $pitch, $innerRadius, $outerRadius,
 ; $begin/$end: slice in seconds within the file (Default: begin=0, end=-1 to play to the end)
 ```
 > * You can play multiple audio entries on the same target at the same time, but only if each entry has a different key.  
->	The key is built as `$target` + `$waveFilePath`.  
+>	The key is built as `$target` + `$audioFilePath`.  
 >	This means that if you trigger the same audio file on the same target multiple times with different parameters, it will replace any currently playing instance with the same key.
-> * Calling **_once** versions from a tick or tight loop will retrigger them every tick (spoiler: that's probably not what you want).
+> * Tested and guaranteed formats: .**wav**, .**ogg**, .**mp3**  
+>   *FMOD audio engine can decode many additional file types, but they are not officially tested or supported in Archean*
+>
+> * Calling **_once** versions from a tick or tight loop will retrigger them every tick (_spoiler: that's probably not what you want_).
 
 #### Physics
 ```xc
