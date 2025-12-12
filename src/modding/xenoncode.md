@@ -24,9 +24,9 @@ Modding through XenonCode introduces the concept of macros, which lets you decla
 ### Naming I/O Channels
 When using native components via the node system, input and output channels are named to facilitate their identification. This macro allows you to define the names of the input and output channels.
 ```xc
-#DATAPORT "data" input.0 "Speed (km/h)"
+#DATAPORT input "data" 0 "Speed (km/h)"
 ; Defines the name of input channel 0 of the data port "data" as "Speed (km/h)"
-#DATAPORT "data" output.3 "Velocity (m/s)"
+#DATAPORT output "data" 3 "Velocity (m/s)"
 ; Defines the name of output channel 3 of the data port "data" as "Velocity (m/s)"
 ```
 The data port name is the one defined in Blender.
@@ -131,6 +131,13 @@ play_sound($target, $audioFilePath[, $volume, $pitch, $innerRadius, $outerRadius
 ; $pitch: 0.1 to 4.0 (Default: 1.0)
 ; $inner/outer radius define the distance attenuation of the sound. (Default: innerRadius=1, outerRadius=25)
 ; $begin/$end: slice in seconds within the file (Default: begin=0, end=-1 to play to the end)
+
+sound_info($audioFilePath)
+; Returns a KV object with information about the audio file:
+;   - duration (seconds)
+;   - sample_rate (Hertz)
+;   - channels (number of channels)
+;   - size (bytes)
 ```
 > * You can play multiple audio entries on the same target at the same time, but only if each entry has a different key.  
 >	The key is built as `$target` + `$audioFilePath`.  
