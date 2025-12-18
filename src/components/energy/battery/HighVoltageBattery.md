@@ -12,13 +12,13 @@
 
 # Description
 - Voltage: 480 to 500 volts
-- Current: 10,000 amps per port
+- Current: 200,000 amps per port
 - Total capacity: 120 kilowatt-hours
 - Electrical ports: 4
 - Data port: 1 port for battery status monitoring
 
 # Usage
-With the battery providing 10,000 amps per port, you can get up to 100 MW on each port to power components.
+With the battery providing 200,000 amps per port, you can get up to 100 MW on each port to power components.
 
 ### List of outputs
 |Channel|Function|
