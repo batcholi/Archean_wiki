@@ -111,6 +111,7 @@ var $view = get("avatar_is_3rd_person") ; returns whether the player is in third
 
 var $inv = get("avatar_inventory") ; returns the player's inventory as a string of key values
 var $belt = get("avatar_belt") ; returns the content of the belt as a string of key values
+var $mass = get("avatar_mass") ; returns the mass of the avatar including inventory in kg (Avatar base mass is 100kg)
 var $water = get("avatar_water_level") ; returns the player's water level
 var $o2 = get("avatar_oxygen_level") ; returns the player's oxygen level
 var $h2 = get("avatar_hydrogen_level") ; returns the player's hydrogen level
