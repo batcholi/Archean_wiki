@@ -1,7 +1,5 @@
 # 3D modeling with Blender
 
-> <font color="red" size="5">The content on this page is currently available only in the **Experimental** version of Archean.</font>
-
 ## Plugin Installation
 
 Here are two ways to install the plugin in Blender.

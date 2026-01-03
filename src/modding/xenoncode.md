@@ -1,7 +1,5 @@
 # Add functionality with XenonCode
 
-> <font color="red" size="5">The content of this page is currently available only in the **Experimental** version of Archean.</font>
-
 ## Introduction
 Creating a component involves several steps. First, create a new folder in `Archean/Archean-game/modules/ARCHEAN_mod/components/MyComponentName/`, where `MyComponentName` is the name of your component. This folder must contain the component's 3D object exported from Blender with the Archean plugin, as well as a `main.xc` file that will host the XenonCode script, even if the script itself remains optional.
 
