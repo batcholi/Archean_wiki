@@ -120,9 +120,9 @@ Boolean values are represented as numerical values. 0 means False, anything else
 
 `Equal` Compares if two values are equal and returns a boolean (0 or 1).
 
-`Greater` Compares if one value is greater than another and returns a boolean (0 or 1).
+`Greater` Compares if value in `a` is greater than value in `b` and returns a boolean (0 or 1).
 
-`Lesser` Compares if one value is less than another and returns a boolean (0 or 1).
+`Lesser` Compares if value in `a` is less than value in `b` and returns a boolean (0 or 1).
 
 ---
 
