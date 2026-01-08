@@ -1,9 +1,11 @@
 # Visual Nodes Editor
+
 The XenonCode IDE's node editor offers a wide range of nodes to help you create scripts and programs.
 
 It is comprehensive enough to handle complex tasks and is also easier to grasp for beginners. For even more advanced possibilities, you can also use [XenonCode](documentation.md) in text mode (code).
 
 ---
+
 ## Code generation
 
 The Visual Nodes system will always automatically generate code in the background as you make modifications.  
@@ -11,6 +13,7 @@ The code is generated whenever an `output`, `print`, or `execute` endpoint node 
 This means adding an input node won't generated any code, but adding an output node will generate the code for both nodes when you connect them together.  
 
 ---
+
 ## List of nodes
 
 Here is a list of the different types of nodes available in the editor, along with their descriptions if necessary:
@@ -26,13 +29,17 @@ Here is a list of the different types of nodes available in the editor, along wi
 `Comment` Allows you to display a comment block in your script.
 
 ---
+
 ### Input
+
 `By Alias` Use an output node of a component using its alias when communicating through a Router.
 
 `0,1,2,3...` Use an output node of a component that is currently connected to a port on the computer. When you connect a component to a port, it is automatically detected by the computer.
 
 ---
+
 ### Output
+
 `Print (Console log)` Displays a number/text in the computer console.
 
 `By Alias` Use an input node of a component using its alias when communicating through a Router.
@@ -40,7 +47,9 @@ Here is a list of the different types of nodes available in the editor, along wi
 `0,1,2,3...` Use an input node of a component that is currently connected to a port on the computer. When you connect a component to a port, it is automatically detected by the computer.
 
 ---
+
 ### Math
+
 `Add` Returns the addition of two values.
 
 `Subtract` Returns the subtraction of two values.
@@ -92,7 +101,9 @@ Here is a list of the different types of nodes available in the editor, along wi
 `Atan` Returns the arctangent angle in radians of a number.
 
 ---
+
 ### Boolean
+
 Boolean values are represented as numerical values. 0 means False, anything else means True.
 
 `And` Returns 1 if both values evalutate to True.
@@ -104,15 +115,19 @@ Boolean values are represented as numerical values. 0 means False, anything else
 `Not` Returns the opposite of a given boolean value.
 
 ---
+
 ### Compare
+
 `Equal` Compares if two values are equal and returns a boolean (0 or 1).
 
-`Greater` Compares if one value is greater than another and returns a boolean (0 or 1).
+`Greater` Compares if value in `a` is greater than value in `b` and returns a boolean (0 or 1).
 
-`Lesser` Compares if one value is less than another and returns a boolean (0 or 1).
+`Lesser` Compares if value in `a` is less than value in `b` and returns a boolean (0 or 1).
 
 ---
+
 ### Functions
+
 `Expression` Allows you to write a more advanced mathematical expression using XenonCode functions and/or algebra.
 
 `Switch` Returns different values depending on the input value.
@@ -128,7 +143,9 @@ Boolean values are represented as numerical values. 0 means False, anything else
 `PID Controller` Returns a PID control value based on the error, integral of the error, and derivative of the error.
 
 ---
+
 ### Execution
+
 `Statement` Allows you to write a pure XenonCode statement like a function call. Must output to either a Conditional or an Execute node.
 
 `Conditional` Consider the given statement only if the given condition evaluates to True. Can be chained with other conditionals.
@@ -138,6 +155,7 @@ Boolean values are represented as numerical values. 0 means False, anything else
 `Include` Includes another XenonCode script in the current script. Make sure your variables and constants nodes have unique names.
 
 ---
+
 ### Timing
 
 `Time` Returns the current Unix Timestamp in units of seconds, having decimals with microsecond precision.
