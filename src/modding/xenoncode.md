@@ -70,7 +70,7 @@ get_info($name); Returns the value of a numeric element in the information menu.
 get_info_text($name); Returns the value of a text element in the information menu.
 set_info($name, $value); Sets the value of an element in the information menu.
 ```
-## Entry point
+## Entry points
 ```xc
 #SCREEN screen1 80 40
 var $screen = screen("screen1")
@@ -84,6 +84,14 @@ click($x:number, $y:number, $material:text)
 	if $material == "screen1"
 		print($x, $y) ; Displays the click coordinates
 ; If the material has been declared as a screen with the #SCREEN macro, the XY coordinates will be in pixels; otherwise, they will be in the range 0.0 to 1.0 according to the UV mapping of the material.
+
+; click_hold works like click but triggers continuously while the button is held:
+click_hold.$screen($x:number, $y:number)
+click_hold($x:number, $y:number, $material:text)
+
+; scroll entry point for mouse wheel events:
+scroll.$screen($scroll:number) ; $scroll is -1 or 1
+scroll($scroll:number, $material:text)
 ```
 
 ## Function list
@@ -91,15 +99,19 @@ click($x:number, $y:number, $material:text)
 #### Screens
 ```xc
 screen($materialName); Returns a screen object based on the material name.
-;virtualscreen() & screen_copy() are available and behave like they do on a Computer/Dashboard.
+$screen.scroll ; Returns the scroll value (-1, 0, or 1)
+;virtualscreen() & screen_copy() are available and behave like they do on a [Computer](../xenoncode/computer.md)/[Dashboard](../xenoncode/dashboard.md).
 ```
 
 #### Animations
 ```xc
 animate($jointName, $axis, $speed [, $targetValue]); Animates a joint.
+get_joint($jointName, $axis); Returns the current value of a joint.
 ; $axis is an enumeration — use one of the following values directly (no quotes):
 ; linear_x | linear_y | linear_z | angular_x | angular_y | angular_z
 ```
+
+For more information on creating joints and targets in Blender, see [3D modeling with Blender](blender.md).
 
 #### Visual effects
 ```xc

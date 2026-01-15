@@ -17,6 +17,16 @@ click ($x:number, $y:number)
 ; This entry point is executed whenever a user clicks on the screen, given an xy coordinate in pixels.
 ; Multiple 'click' entry points may be defined in a single program and they will all be executed in the order they are defined.
 
+click_hold ($x:number, $y:number)
+; This entry point is executed continuously while a user holds the click on the screen, given an xy coordinate in pixels.
+; Useful for drag interactions or continuous input detection.
+; Multiple 'click_hold' entry points may be defined in a single program and they will all be executed in the order they are defined.
+
+scroll ($delta:number)
+; This entry point is executed whenever a user scrolls with the mouse wheel while aiming at the screen.
+; The $delta parameter indicates the scroll direction and amount (positive for scroll up, negative for scroll down).
+; Multiple 'scroll' entry points may be defined in a single program and they will all be executed in the order they are defined.
+
 shutdown
 ; This entry point is executed once when the computer is powered off or before it is rebooted (but NOT when it crashes).
 ; Multiple 'shutdown' entry points may be defined in a single program and they will all be executed in the order they are defined.
@@ -36,6 +46,7 @@ $num_value = screen_h ; the height of the virtual monitor in pixels
 $num_value = clicked ; whether the mouse button was pressed while aiming at the virtual monitor
 $num_value = click_x ; the x coordinate of the mouse cursor on the virtual monitor when the mouse button was pressed
 $num_value = click_y ; the y coordinate of the mouse cursor on the virtual monitor when the mouse button was pressed
+$num_value = scroll ; the scroll wheel delta value (positive for scroll up, negative for scroll down)
 
 $num_value = system_frequency ; the frequency of the system clock in hertz (ticks per second)
 $num_value = programs_count ; the number of programs currently on the virtual HDD
@@ -52,7 +63,17 @@ reboot() ; reboots the computer (calls the shutdown entry point and loads the bi
 $text_value = device_type(aliasOrIoNumber) ; returns the type of the device with the given IO index
 ```
 
+### Screen Override
+A Computer can override the screen of any component connected to it. This allows you to replace the default display of a component with custom graphics rendered by your XenonCode program.
+
+To enable screen override:
+1. Open the component's GetInfo menu with `V`
+2. Check the **Override Screen** option
+3. Reference the screen in your code using `screen(ioIndex, channel)` and draw on it like any other screen
+
 ### IO
+Computers can resolve component aliases directly without needing a Router. Simply use the alias name as the first parameter in IO functions.
+
 ```xc
 ; input_[number|text](aliasOrIoNumber, channelIndex) ; returns the value of the input with the given alias and index
 var $someNumber = input_number("", 0)

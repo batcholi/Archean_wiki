@@ -1,1 +1,0 @@
-# XenonCode FAQ

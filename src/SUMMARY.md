@@ -6,6 +6,7 @@
 #
 # 
 # Gameplay & Mechanics
+- [Interfaces & Inventory](interfaces.md)
 - [Game modes](gamemode.md)
 - [Pressurization](pressurization.md)
 - [N-Body Physics](nbody.md)
@@ -23,10 +24,8 @@
 	- [Label Tool](tools/LabelTool.md)
 	- [RockRake Tool](tools/RockRakeTool.md)
 	- [Blueprint Tool](tools/BlueprintTool.md)
-  
-
-- [Consumables]()
-	- [Spools of cable/pipe](consumables/Spool.md)
+	- [Spool Tool](tools/SpoolTool.md)
+	- [Ore Scanner Tool](tools/OreScannerTool.md)
 
 - [Components]()
 	- [Computers]()
@@ -102,6 +101,7 @@
 	- [Lights]()
 		- [Lamp](components/lights/Lamp.md)
 		- [SpotLight](components/lights/SpotLight.md)
+		- [SlopeLight](components/lights/SlopeLight.md)
 
 	- [Mining]()
 		- [Crusher](components/mining/Crusher.md)
@@ -111,6 +111,7 @@
 	- [Navigation]()
 		- [Beacon](components/navigation/Beacon.md)
 		- [Nav Instrument](components/navigation/NavInstrument.md)
+		- [Mini Nav Instrument](components/navigation/MiniNavInstrument.md)
 		- [Terrain Scanner](components/navigation/TerrainScanner.md)
 
 	- [Processing]()
@@ -133,10 +134,11 @@
 		- [Altitude Sensor](components/sensors/AltitudeSensor.md)
 		- [Angular Velocity Sensor](components/sensors/AngularVelocitySensor.md)
 		- [Density Sensor](components/sensors/DensitySensor.md)
-		- [Temperature Sensor](components/sensors/TemperatureSensor.md)
 		- [Linear Velocity Sensor](components/sensors/LinearVelocitySensor.md)
+		- [Player Sensor](components/sensors/PlayerSensor.md)
 		- [Solar Sensor](components/sensors/SolarSensor.md)
 		- [Speed Sensor](components/sensors/SpeedSensor.md)
+		- [Temperature Sensor](components/sensors/TemperatureSensor.md)
 		- [Tilt Sensor](components/sensors/TiltSensor.md)
 		- [Vehicle Physics Sensor](components/sensors/VehiclePhysicsSensor.md)
 
@@ -165,14 +167,13 @@
 	- [HUD](xenoncode/hud.md)
 - [XenonCode IDE](xenoncode/ide.md)
 	- [List of nodes](xenoncode/nodes.md)
-<!-- - [XenonCode FAQ](xenoncode/faq.md) -->
-<!-- - [Examples](xenoncode/examples.md) -->
 #
 #
 # Modding
 - [3D modeling with Blender](modding/blender.md)
 - [Functionality with XenonCode](modding/xenoncode.md)
 	- [Fluid Snippets](modding/fluidSnippets.md)
+- [Crafting Recipes](modding/config.md)
 #
 #
 # Multiplayer

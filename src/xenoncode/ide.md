@@ -11,11 +11,14 @@ The **XenonCode IDE** is an interface that allows you to create/edit scripts and
 ## Using the IDE on computers
 The `CODE` button on computers allows access to the IDE. From there, you can start writing scripts and programs to control components and systems.
 
+### IDE Library
+The IDE includes a Library feature that allows you to locally save and reuse XenonCode files across different computers. This is useful for sharing common functions, utility scripts, or templates between multiple in-game computers without having to copy-paste code manually.
+
 ### Additional information specific to computers
-#### Computer
+#### [Computer](../components/computers/Computer.md)
 The computer has an integrated touch screen and a UI BIOS that displays system information and available programs on the hard drive at startup. You can select a program to execute by aiming at it and pressing the `F` key.
 
-#### Mini Computer
+#### [Mini Computer](../components/computers/MiniComputer.md)
 The MiniComputer is smaller than the Computer and does not have a touch screen or a visual BIOS. It will natively execute the first program created on the hard drive.
 
 ## Interface

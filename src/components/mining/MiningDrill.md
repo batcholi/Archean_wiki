@@ -15,8 +15,8 @@
 The Mining Drill is a component that allows drilling the terrain to extract rocks that can be crushed to obtain ores.
 
 # Usage
-To function, it needs to be installed on a build that must be anchored to the ground using a ground anchor.
-You need to connect it to a Container of anything else that takes in Items, to collect the mined rocks.
+To function, it needs to be installed on a build that must be anchored to the ground using a [Ground Anchor](../miscellaneous/GroundAnchor.md).
+You need to connect it to a [Container](../storage/Container.md) or anything else that takes in Items, to collect the mined rocks.
 
 Depending on the energy type, it can extract rocks at different speeds.
 

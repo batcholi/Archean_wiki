@@ -13,9 +13,11 @@
 # Description
 - Voltage: 480 to 500 volts
 - Current: 200,000 amps per port
-- Total capacity: 120 kilowatt-hours
+- Total capacity: 120 kWh
 - Electrical ports: 4
 - Data port: 1 port for battery status monitoring
+
+> **Recycling:** When crushed, this battery returns approximately **50%** of its crafting cost in raw ores.
 
 # Usage
 With the battery providing 200,000 amps per port, you can get up to 100 MW on each port to power components.

@@ -14,11 +14,15 @@
 # Description
 The Crusher is a component that allows for the rapid crushing of rocks to obtain ores.
 
+It can also be used to **recycle any craftable item** back into its raw materials. The recycling process returns **100% of the primary resources** used to craft the item, by recursively decomposing the crafting recipe.
+
+> **Note:** [Batteries](../energy/battery/LowVoltageBattery.md) have a special recycling recipe that only returns approximately **50%** of their crafting cost. This prevents exploiting the recycling system to get free recharges by crushing and re-crafting depleted batteries.
+
 # Usage
 The Crusher requires high voltage power and consumes 10 kW.
 
 To use the Crusher, simply send rocks to be crushed through its item input port. It will not pull from its input but it is capable of pushing the obtained ores into any container that accepts items.
 
-The Crusher is capable of processing 400 kg of rocks per second, matching the output of 4 mining drills operating at full power.
+The Crusher is capable of processing 400 kg of rocks per second, matching the output of 4 [Mining Drills](MiningDrill.md) operating at full power.
 
 > When the composition of rocks contains a low concentration of certain ores, the Crusher will accumulate the ores at a low concentration until it is possible to produce at least one unit of the ore.

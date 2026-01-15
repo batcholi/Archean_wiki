@@ -2,8 +2,9 @@
 
 ## Chat System
 The chat allows players to communicate with each other. To chat with other players, press `Enter` to open the chat, then type your message and press `Enter` again to send it.
-> - You have the option to copy a message by simply clicking on it with the `left mouse button`.
+> - You have the option to copy a message by simply clicking on it with the `left mouse button`. Multiline messages are fully supported.
 > - The maximum length of a message is limited to 800 characters.
+> - Chat conversations are logged to the server's log file.
 
 ## Commands
 Commands allow you to perform specific actions by typing them in the chat, preceded by a `/`. There are several commands available, some of which are reserved for administrators.
@@ -19,4 +20,5 @@ Commands allow you to perform specific actions by typing them in the chat, prece
 - `/setspawn <username>` - Sets the spawn point for a specific user.
 - `/give [<stack>] [<moduleName>.]<itemType> [<inventoryAlias|username>]` - Gives items to a player.
 - `/kick <username>` - Kicks a player from the server.
+- `/ban <username>` - Bans a player from the server.
 - `/timeadd [-]<hours>` - Adds or subtracts time in the game.

@@ -15,3 +15,10 @@ The push button constantly sends a value of `1` while it is pressed otherwise `0
 
 # Usage
 The button is activated with the `F` key and will remain active as long as the key is held down.
+
+## Configuration
+In the configuration menu accessible with the `V` key:
+
+| Option | Description |
+|--------|-------------|
+| **Dual-Sided** | Makes the button usable from both sides |

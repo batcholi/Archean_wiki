@@ -46,6 +46,7 @@ init
 ```xc
 screen_w ; returns the width of the game window
 screen_h ; returns the height of the game window
+screen_ratio ; returns the aspect ratio of the screen (width/height)
 fov ; returns the player's camera field of view (radians)
 aim_distance ; returns the distance of whatever the player is aiming at in meters
 
@@ -69,6 +70,9 @@ $myPanel.set_size($width, $height) ; resizes the panel to size width, height
 
 $myPanel.width ; returns the width of the panel
 $myPanel.height ; returns the height of the panel
+$myPanel.x ; returns the x position of the panel
+$myPanel.y ; returns the y position of the panel
+$myPanel.scroll ; returns the mouse scroll value (-1, 0, or 1)
 
 ; ENTRY POINT
 click.$myPanel ($x:number, $y:number) ; returns the click position within the panel
@@ -78,6 +82,8 @@ Note: The way to draw on the panel is similar to the [dashboard screen](../xenon
 ### Functions related to the integrated computer
 ```xc
 set_cps(25) ; sets the number of HUD cycles per second
+tick ; returns the current tick index
+language ; returns the player's current language code (e.g., "en", "fr")
 ```
 
 ### Functions related to communication

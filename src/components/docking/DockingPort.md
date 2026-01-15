@@ -12,7 +12,7 @@
 ---
 
 # Description
-The docking port is a component that allows two builds to be connected together. The connection enables the transfer of data, energy, and fluids between the connected builds, but it also physically constrains them together. They are stuck together.
+The docking port is a component that allows two builds to be connected together. The connection enables the transfer of data, energy, fluids, and **items** between the connected builds, but it also physically constrains them together. They are stuck together.
 
 # Usage
 The docking port does not need to be powered.

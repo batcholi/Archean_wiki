@@ -41,13 +41,15 @@ Here is a list of the different types of nodes available in the editor, along wi
 
 ---
 ### Math
-`Add` Returns the addition of two values.
+Math nodes can have more than two inputs, allowing you to chain multiple values in a single operation.
 
-`Subtract` Returns the subtraction of two values.
+`Add` Returns the addition of two or more values.
 
-`Multiply` Returns the multiple of two values.
+`Subtract` Returns the subtraction of two or more values.
 
-`Divide` Returns the division of two values.
+`Multiply` Returns the multiple of two or more values.
+
+`Divide` Returns the division of two or more values.
 
 `Absolute` Returns the absolute value of a number.
 
@@ -94,12 +96,13 @@ Here is a list of the different types of nodes available in the editor, along wi
 ---
 ### Boolean
 Boolean values are represented as numerical values. 0 means False, anything else means True.
+Boolean nodes can have more than two inputs, allowing you to chain multiple conditions in a single operation.
 
-`And` Returns 1 if both values evalutate to True.
+`And` Returns 1 if all values evaluate to True.
 
-`Or` Returns 1 if either of the two values evalutate to True.
+`Or` Returns 1 if any of the values evaluate to True.
 
-`Xor` Returns 1 if only one of the two values evalutate to True.
+`Xor` Returns 1 if an odd number of the values evaluate to True.
 
 `Not` Returns the opposite of a given boolean value.
 

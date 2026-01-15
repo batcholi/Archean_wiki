@@ -13,9 +13,11 @@
 # Description
 - Voltage: 44 to 52 volts depending on its current state of charge
 - Current: 1000 amps per port
-- Total capacity: 10 kwh
+- Total capacity: 10 kWh
 - Electrical ports: 4
 - Data port: 1 port for battery status monitoring
+
+> **Recycling:** When crushed, this battery returns approximately **50%** of its crafting cost in raw ores.
 
 # Usage
 With the battery providing 1000 amps per port, you can get up to 52 kw on each port to power components.

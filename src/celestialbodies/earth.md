@@ -4,20 +4,20 @@
 |Full Element Name|Rarity|Distribution|
 |---|---|---|
 |Silicon (Si)|Common|Everywhere|
-|Iron (Fe)|Common|Everywhere|
-|Carbon (C)|Common|Everywhere|
-|Copper (Cu)|Common|Everywhere|
-|Aluminum (Al)|Common|High altitude (Mountains)|
+|Iron (Fe)|Common|Everywhere (+ near volcanoes)|
+|Carbon (C)|Common|Above sea level|
+|Copper (Cu)|Common|Above sea level|
+|Tin (Sn)|Common|Above sea level|
+|Aluminum (Al)|Uncommon|High altitude (Mountains)|
+|Silver (Ag)|Uncommon|High altitude (Mountains)|
 |Nickel (Ni)|Rare|High altitude (Mountains)|
-|Silver (Ag)|Rare|High altitude (Mountains)|
-|Tin (Sn)|Rare|High altitude (Mountains)|
 |Chromium (Cr)|Rare|High altitude (Mountains)|
-|Titanium (Ti)|Rare|High altitude (Mountains)|
+|Titanium (Ti)|Rare|Very high altitude|
 |Gold (Au)|Very rare|Low altitude (Deep in the sea)|
-|Lead (Pb)|Very rare|Low altitude (Deep in the sea)|
-|Tungsten (W)|Very rare|Low altitude (Deep in the sea)|
+|Lead (Pb)|Very rare|Low altitude (+ near volcanoes)|
+|Tungsten (W)|Rare|Mixed (high and low altitude)|
 |Uranium (U)|Very rare|Low altitude (Deep in the sea)|
-|Fluorite (F)|Very rare|Low altitude (Deep in the sea)|
+|Fluorite (F)|Very rare|Near volcanoes only|
 
 
 ### Celestial body parameters

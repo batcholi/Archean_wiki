@@ -19,4 +19,4 @@ The destructor is a tool that, when equipped, allows the player to delete target
 ---
 >- *You cannot destroy cables, blocks or beams with this tool.*
 >- *You cannot delete a seat if it is occupied by a player.*
->- *If an OwnerPad had been added, you must have the `Build` permission to destroy a component.*
+>- *If an [OwnerPad](../components/miscellaneous/OwnerPad.md) had been added, you must have the `Build` permission to destroy a component.*

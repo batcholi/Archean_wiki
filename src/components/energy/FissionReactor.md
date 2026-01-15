@@ -76,7 +76,7 @@ Although each zone of the reactor has its own uranium rods, temperature, and neu
 ---
 
 ## Cooling and Steam Production
-When used with *Steam Turbines*, the ideal water output temperature is **650 K**.
+When used with [Steam Turbines](SteamTurbine.md), the ideal water output temperature is **650 K**.
 
 - Below → Reduced energy production.
 - Above → Loss of efficiency (no additional gain).
