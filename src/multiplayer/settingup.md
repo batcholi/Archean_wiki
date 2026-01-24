@@ -18,7 +18,7 @@ Regardless of the operating system choice, you must ensure that port `8881` is o
 Archean Server is available via SteamCMD. This is the recommended method for dedicated servers as it allows easy updates.
 
 ```bash
-steamcmd +login anonymous +app_update 2340330 +quit
+steamcmd +login anonymous +app_update 2941660 +quit
 ```
 
 Once downloaded, run the server executable as described in **Manual Installation** below.
