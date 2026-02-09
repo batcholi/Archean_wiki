@@ -9,6 +9,7 @@
 - [Interfaces & Inventory](interfaces.md)
 - [Game modes](gamemode.md)
 - [Pressurization](pressurization.md)
+- [Aerodynamics](aerodynamics.md)
 - [N-Body Physics](nbody.md)
 - [Celestial bodies & resources]()
 	- [Sun](celestialbodies/sun.md)
