@@ -6,7 +6,7 @@
 |---|---|
 |**Module**|`ARCHEAN_nuclear`|
 |**Mass**|1000 kg|
-|[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|275 x 275 x 275 cm|
+|[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|300 x 300 x 275 cm|
 |**Push/Pull Fluid**|Accept Push / Initiate Push|
 #
 ---

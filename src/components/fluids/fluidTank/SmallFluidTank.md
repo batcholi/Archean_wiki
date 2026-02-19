@@ -21,3 +21,4 @@ Total capacity: `0.20 m³`
 |---|---|---|
 |0|Fluid level|`0.0` to `1.0`|
 |1|Fluid content|[Key-value](/xenoncode/documentation.md#key-value-objects)|
+|2|Fluid temperature|Kelvin|

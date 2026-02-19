@@ -4,7 +4,7 @@
 
 |Component|`OwnerPad`|
 |---|---|
-|**Module**|`ARCHEAN_owner`|
+|**Module**|`ARCHEAN_ownership`|
 |**Mass**|1 kg|
 |[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|25 x 50 x 50 cm|
 #

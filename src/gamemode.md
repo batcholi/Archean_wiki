@@ -18,7 +18,7 @@ In adventure mode, you start with an empty inventory and must collect resources 
 - The OwnerPad checkpoint system does not restore the state of batteries and tanks.
 - The respawn shortcut accessible via `Shift+F10` drops the contents of your inventory in a box at your location before the respawn.
 - Mining and crafting are necessary for building structures or vehicles.
-- **Avatar inventory is limited to 48 slots.**
+- **Avatar inventory is limited to 45 slots.**
 - **Items in your inventory have mass**, which affects your movement speed and the mass of any build you're aboard.
 
 ### Survival

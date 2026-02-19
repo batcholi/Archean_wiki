@@ -11,12 +11,12 @@
 ---
 
 # Description
-The lamp is a component that allows to illuminate a large area with a maximum angle of 120°. It is particularly suitable to place vehicles as headlight.
+The spotlight is a component that allows to illuminate a large area with a maximum angle of 120°. It is particularly suitable to place on vehicles as a headlight.
 
 # Usage
-The lamp must be powered by low voltage and consumes up to 1000 W depending on the power set in its information menu accessible via the `V` key.
+The spotlight must be powered by low voltage and consumes up to 1000 W depending on the power set in its information menu accessible via the `V` key.
 
-The colors of the lamp can be changed via the lamp's information menu or via its data port.
+The colors of the spotlight can be changed via its information menu or via its data port.
 
 ### List of inputs
 |Channel|Function|Range|

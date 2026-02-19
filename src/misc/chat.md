@@ -24,6 +24,6 @@ Commands allow you to perform specific actions by typing them in the chat, prece
 - `/save` - Saves the current state of the game.
 - `/setspawn <username>` - Sets the spawn point for a specific user.
 - `/give [<stack>] [<moduleName>.]<itemType> [<inventoryAlias|username>]` - Gives items to a player. If no username is specified, the items are given to yourself.
-- `/kick <username>` - Kicks a player from the server.
-- `/ban <username>` - Bans a player from the server.
+- `/kick <username|id>` - Kicks a player from the server.
+- `/ban <username|id>` - Bans a player from the server.
 - `/timeadd [-]<hours>` - Adds or subtracts time in the game.

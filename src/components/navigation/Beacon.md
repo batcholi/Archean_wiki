@@ -6,7 +6,7 @@
 |---|---|
 |**Module**|`ARCHEAN_beacon`|
 |**Mass**|2 kg|
-|[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|25 x 25 x 75 cm|
+|[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|25 x 25 x 25 cm|
 #
 ---
 

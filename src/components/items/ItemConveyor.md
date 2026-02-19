@@ -15,7 +15,7 @@
 The item conveyor is a component that allows moving items from one point to another. It operates by pulling items at the input and pushing them at the output. It can be used, for example, to transport items from one container to another.
 
 # Usage
-The item conveyor requires low voltage power and consumes 100 watts, with power consumption directly proportional to the amount of items being moved.
+The item conveyor requires low voltage power, with power consumption directly proportional to the flow rate of items being moved.
 
 It can be configured either through its information window (accessible with the `V` key) or through its data port.
 The available configuration options are:
@@ -35,4 +35,4 @@ The available configuration options are:
 |0|ON|0 or 1|
 |1|Pull n items/second|1 to 1000|
 |2|Filter|text|
-|3|MPull x kg/second|0 to 1000|
+|3|Pull x kg/second|0 to 1000|

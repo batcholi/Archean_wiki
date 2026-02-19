@@ -68,8 +68,8 @@ Hold **right-click** then quick press **left-click** on an existing cable to del
 ## Painting Cables
 Use the [Paint Tool](PaintTool.md) to customize cable appearance:
 - Normal painting changes cable color
-- Hold **Shift** to make cables transparent
-- Hold **X** for a striped effect
+- Hold **Shift** for a striped effect
+- Hold **X** to replace color on all matching cables
 - Combine both for transparent stripes
 
 ---
