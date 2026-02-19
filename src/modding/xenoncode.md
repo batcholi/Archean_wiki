@@ -1,11 +1,11 @@
-# Add functionality with XenonCode
+# Functionality with XenonCode
 
 ## Introduction
-Creating a component involves several steps. First, create a new folder in `Archean/Archean-game/modules/ARCHEAN_mod/components/MyComponentName/`, where `MyComponentName` is the name of your component. This folder must contain the component's 3D object exported from Blender with the Archean plugin, as well as a `main.xc` file that will host the XenonCode script, even if the script itself remains optional.
+Adding a XenonCode script to a component is **optional**. If your component doesn't need any behavior (no screens, animations, physics, or ports), you can skip this entirely.
 
-Refer to the [3D modeling with Blender](blender.md) page for guidance on creating and exporting a new 3D object.
+To add scripting, create a `main.xc` file in your component folder (e.g. `mods/MYVENDOR_mymod/components/MyComponent/main.xc`). This file contains the XenonCode script that drives the component's behavior in the game. The XenonCode used for modding reuses the in-game syntax while exposing additional APIs specific to integrating with and interacting with the engine.
 
-Once the 3D object is created and exported, create a `main.xc` file in your new component folder. This file contains the XenonCode script that drives the component's behavior in the game. The XenonCode used for modding reuses the in-game syntax while exposing additional APIs specific to integrating with and interacting with the engine.
+> See [Getting Started](getting-started.md) for how to create a mod and set up the folder structure.
 
 ## Console output
 XenonCode logs, whether errors or print() output, appear in the information window (`V` by default). This window displays the last 25 log lines and clears its contents each time the XenonCode script reloads. For compilation or runtime errors, only a single line is shown with the error message, just like the in-game IDE.

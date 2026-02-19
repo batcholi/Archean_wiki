@@ -91,8 +91,9 @@ The first important step is to orient yourself properly in 3D space. In Archean,
    > The **Entity Root** name must not contain spaces or special characters—only alphanumeric characters.
 4. Scale the cube to `0.5 x 0.5 x 0.5`, i.e., `50 x 50 x 50 cm`, because the default cube is too large. *(That's 2 x 2 x 2 meters in-game.)*
 5. Save the project in a folder before going further so you can export the entity later.
-   > - Save the project to the game folder`Archean/Archean-data/mods/MYVENDORNAME_mymod/components/MyComponentName/`
-   > - <font color="orange"> A mod can contain multiple components, each in its own folder.</font>  
+   > - Save the project to your component folder: `Archean/Archean-data/mods/MYVENDOR_mymod/components/MyComponentName/`
+   > - See [Getting Started](getting-started.md) for how to create a mod and set up this folder structure.
+   > - <font color="orange"> A mod can contain multiple components, each in its own folder.</font>
    > - <font color="red">/!\ The component folder name must match the Entity Root name.</font>
 
 ### Adding the data port

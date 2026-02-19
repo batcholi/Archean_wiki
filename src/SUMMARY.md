@@ -171,6 +171,7 @@
 #
 #
 # Modding
+- [Getting Started](modding/getting-started.md)
 - [3D modeling with Blender](modding/blender.md)
 - [Functionality with XenonCode](modding/xenoncode.md)
 	- [Fluid Snippets](modding/fluidSnippets.md)
