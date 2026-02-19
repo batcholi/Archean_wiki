@@ -62,6 +62,15 @@ $num_value = 2pi ; 3.14159265 * 2
 ; Random Generator
 $num_value = random(0, 100) ; returns a random integer value between 0 and 100 inclusively
 $num_value = random ; returns a random float value between 0.0 and 1.0 (hitting exactly 0.0 or 1.0 is statistically improbable)
+
+; Game Mode
+$num_value = game_mode() ; returns the current game mode (0 = Creative, 1 = Adventure)
+
+; Crafting Recipes
+var $categories = get_recipes_categories("crafter") ; returns a comma-separated list of recipe categories for the given context
+var $recipes = get_recipes("crafter", "CATEGORY") ; returns a comma-separated list of recipe names in the given category (category must be uppercase)
+var $recipe = get_recipe("crafter", "recipeName") ; returns a key-value text object with ingredient names and quantities
+var $label = get_recipe_label("module.recipeName") ; returns the display label of a recipe (strips the module prefix)
 ```
 
 

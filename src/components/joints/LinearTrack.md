@@ -18,9 +18,10 @@ The Linear Track is a component that includes a buildable moving block. It is de
 # Usage
 The Linear Track can operate in two modes: Servo (default) and Velocity. To switch between modes, press the V key to open the component's information interface.
 
-In this interface, there are two additional configurations possible:
+In this interface, there are additional configurations possible:
 - `Max Speed` which determines the maximum speed in meters per second.
 - `Acceleration` which determines the rate at which the linear track will accelerate to reach its Max Speed.
+- `Override limits` when enabled, allows you to manually set the minimum and maximum position limits instead of using the automatically calculated values based on available track space.
 
 ## Tracks
 The tracks for the Linear Track component are automatically created and updated along its axis. They are created on top of normal blocks of any type. To end the track the line has to be broken. For example with another block on top or by leaving a hole along the track.
@@ -43,6 +44,5 @@ In velocity mode, the device operates continuously in the direction indicated by
 |1|Speed|m/s|
 |2|Minimum Position|meters|
 |3|Maximum Position|meters|
-|4|Travel (Total Distance)|meters|
 
 ![LinearTrackDemo](lineartrack.gif)

@@ -15,7 +15,7 @@
 The gyroscope is a component that, when powered and active, dampen its angular velocity. It is mainly used to stabilize a vehicle or stop angular momentum in zero G.
 
 # Power Supply
-The gyroscope must be powered via either low voltage or high voltage. It consumes more power at startup then gradually reduces its consumption as it reaches the rotation speed you have requested via the data port.
+The SmallGyroscope is powered via **low voltage** and the Gyroscope is powered via **high voltage**. They consume more power at startup then gradually reduce their consumption as they reach the rotation speed requested via the data port.
 
 # Usage
 To start the gyroscope, it must receive a value between `0.0` and `1.0` in its data port to decrease/increase its rotation speed, thereby increasing its stabilizing effect.

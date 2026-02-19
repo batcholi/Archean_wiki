@@ -46,6 +46,22 @@ When a tool is in your hand, you can use it with:
 
 ---
 
+## Component Interaction
+
+Press **F** to interact with the component or screen you are aiming at (open inventories, press buttons, toggle switches, adjust levers, click on screens...).
+
+Additionally, you can **left-click** on components directly:
+
+| Condition | Behavior |
+|-----------|----------|
+| **Free mouse** (no mouse look) | Click on any visible component to interact |
+| **Mouse look without active item** | Click to interact with the component in your crosshair |
+| **Mouse look with active item** | Left-click is used by the tool — component interaction is disabled |
+
+> **Note:** Left-click interaction allows you to press buttons or toggle switches without needing to put your tool away — simply free your mouse or empty your hand.
+
+---
+
 ## Item Manipulation
 
 ### Drag & Drop
@@ -120,6 +136,8 @@ Some tools can operate directly from inside a container:
 2. **Double-click** the tool to activate it
 3. The tool will use resources from the container instead of your backpack
 
+> **Tip:** If you have an item from a container selected in your hand, pressing **Tab** will automatically open both your backpack and the source container.
+
 This is especially useful when resources are too heavy to carry on your avatar:
 - **Constructor Tool** - build using components stored in the container
 - **Destructor Tool** - destroyed components go into the container
@@ -127,9 +145,34 @@ This is especially useful when resources are too heavy to carry on your avatar:
 - **Blueprint Tool** - spawn vehicles in Adventure mode with all required components in the container
 - **Rock Rake Tool** - collected rocks go into the container
 
+### Distance Limits
+
+Open inventories have a maximum interaction distance:
+- **Containers**: 100 meters
+- **Dropped Boxes**: 10 meters
+
+When you move beyond the limit, items become **grayed out** and cannot be interacted with. The inventory window will automatically close if you move too far away.
+
 ### Crafting from Open Inventories
 
 When a container is open, the avatar's crafting system can pull ingredients from it automatically. This allows you to craft items using resources stored in containers without manually transferring them to your backpack.
+
+---
+
+## Placing Components on the Ground
+
+Some components can be placed directly on the terrain without needing an existing build structure.
+
+1. Select the component in your hand
+2. Aim at the ground (within **10 meters**)
+3. **Left-click** to place it
+
+| Action | Description |
+|--------|-------------|
+| **Left-click** | Place the component |
+| **Hold Shift + Mouse wheel** | Rotate the component |
+
+The component will automatically align to the local gravity direction. A new build is created to hold the component.
 
 ---
 

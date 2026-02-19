@@ -35,7 +35,7 @@ In velocity mode, the device operates continuously in the direction indicated by
 ### List of outputs
 |Channel|Function|Value|
 |---|---|---|
-|0|Angle|0 to 1|
+|0|Angle|-1.0 to +1.0|
 |1|Speed|rot/s| 
 
 ![SmallPivotDemo](pivot.gif)

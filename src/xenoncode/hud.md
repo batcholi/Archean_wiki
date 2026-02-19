@@ -84,6 +84,7 @@ Note: The way to draw on the panel is similar to the [dashboard screen](../xenon
 set_cps(25) ; sets the number of HUD cycles per second
 tick ; returns the current tick index
 language ; returns the player's current language code (e.g., "en", "fr")
+mouse_look() ; returns 1 if mouse look is active, 0 otherwise
 ```
 
 ### Functions related to communication

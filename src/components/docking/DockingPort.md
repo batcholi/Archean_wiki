@@ -18,6 +18,13 @@ The docking port is a component that allows two builds to be connected together.
 The docking port does not need to be powered.
 The separate data connector allows controlling the docking port, while the other connectors allow connecting various cables that will transfer data, energy, or fluids to/from the other docking port.
 
+### Transfer Mode
+The Docking Port can operate in two transfer modes, configurable via the GetInfo menu (`V` key):
+- **Fluid Mode** (default): Transfers fluids between docked ports
+- **Item Mode**: Transfers items between docked ports
+
+> Both docking ports must be set to the same mode for transfers to work.
+
 > The Docking Port can only be docked to another Docking Port.
 
 ### Usage with aliases

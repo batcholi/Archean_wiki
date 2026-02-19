@@ -11,7 +11,7 @@
 ---
 
 # Description
-The switch button constantly sends a value of `1` when activated, otherwise `0`.
+The switch button constantly sends a value when activated or deactivated. By default, it sends `1` when on and `0` when off, but custom values can be configured.
 
 # Usage
 The `F` key is used to toggle the Toggle Button.
@@ -23,3 +23,5 @@ In the configuration menu accessible with the `V` key:
 |--------|-------------|
 | **Dual-Sided** | Makes the button usable from both sides |
 | **Allow IO Input** | Allows the button to be controlled from another component through its data port |
+| **Off Value** | The value sent when the button is off (default: `0`) |
+| **On Value** | The value sent when the button is on (default: `1`) |

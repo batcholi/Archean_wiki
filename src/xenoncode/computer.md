@@ -51,6 +51,7 @@ $num_value = scroll ; the scroll wheel delta value (positive for scroll up, nega
 $num_value = system_frequency ; the frequency of the system clock in hertz (ticks per second)
 $num_value = programs_count ; the number of programs currently on the virtual HDD
 $num_value = system_ipc ; the maximum number of instructions per cycle (IPC) of the virtual CPU
+$num_value = system_ram ; the maximum number of variables in RAM
 $num_value = ipc ; the number of instructions per cycle (IPC) of the virtual CPU
 ```
 	
@@ -120,7 +121,10 @@ if button_rect(0, 0, 40, 10, gray) ; draw a gray rectangle button in the top lef
         print("The owner of this computer clicked the button")
     else
         print("The button was clicked by " & user) ; prints a message to the console (when the button was clicked, in this case)
-; Here we also happen to use the built-ins 'user' and 'owner' which are player usernames
+; Here we also happen to use the built-ins 'user', 'username' and 'owner'
+; 'user' returns the user token (text) of the player who clicked
+; 'username' returns the username (text) of the player who clicked
+; 'owner' returns the user token (text) of the computer's owner
 
 ; Legacy draw|button function with width/height parameters (still supported)
 ; draw(x, y, color, width, height)

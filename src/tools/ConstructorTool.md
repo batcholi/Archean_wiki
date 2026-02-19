@@ -63,6 +63,9 @@ Hold **left-click** for one second then release. A new build will be created wit
 
 > **Tip:** Hold **Shift** while creating to align the new frame with the ground and set it as static (anchored).
 
+### Creating a Build in Space
+When in space near an existing build, you can create a new build that will spawn **5 meters in front of you**. The new build is created as a child of the nearest root build. This also works with the [Blueprint Tool](BlueprintTool.md).
+
 ### Adding Frames
 Aim at an existing frame face and quick press **left-click**.
 

@@ -29,14 +29,27 @@ To update an existing blueprint, simply enter the exact same name as an existing
 4. Click **Spawn** to enter placement mode
 
 ### Placement Controls
+
+#### Free Placement (new build)
 | Action | Control |
 |--------|---------|
-| Quick attach to existing build | **Left-click** (quick press) |
 | Confirm spawn | **Hold Left-click** (2 seconds) |
+| Rotate | **Mouse wheel** |
+| Snap to ground and set static | **Hold Shift** |
 | Cancel | **Right-click** |
-| Change mode (Rotate/Translate X/Y/Z) | **C** |
-| Rotate / Translate | **Mouse wheel** |
-| Change rotation axis | **Shift** + **Mouse wheel** |
+
+#### On an Existing Build
+When aiming at an existing build, **quick press Left-click** to attach the blueprint and enter **Gizmo mode**:
+
+| Action | Control |
+|--------|---------|
+| Translate / Rotate | **Gizmo handles** (drag) |
+| Toggle mouse look | **Right-click** |
+| Confirm spawn | **Hold Left-click** away from gizmo (2 seconds), or **Spawn** button |
+| Cancel | **Right-click** (when not in mouse look) |
+
+### Spawning in Space
+When in space near an existing build, you can spawn blueprints the same way as [creating a new build](ConstructorTool.md#creating-a-build-in-space).
 
 ## Steam Workshop
 - Click **Publish** next to a local blueprint to upload it to Steam Workshop

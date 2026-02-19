@@ -5,7 +5,7 @@
 |Component|`ChemicalFurnace`|
 |---|---|
 |**Module**|`ARCHEAN_chemical`|
-|**Mass**|400 kg|
+|**Mass**|500 kg|
 |[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|150 x 200 x 200 cm|
 |**Push/Pull Fluid**|Accept Push / Initiate Push|
 |**Push/Pull Item**|Accept Push / Initiate Push|

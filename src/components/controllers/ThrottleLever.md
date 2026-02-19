@@ -11,7 +11,7 @@
 ---
 
 # Description
-The Throttle Lever is a type of control that constantly sends an analog value between `-1.0` and `+1.0` depending on the position of the lever.
+The Throttle Lever is a type of control that constantly sends an analog value depending on the position of the lever. The output value is mapped to a configurable range (default `-1.0` to `+1.0`).
 
 # Usage
 The lever is controlled with the mouse by holding the `F` key and moving the `mouse up/down`.

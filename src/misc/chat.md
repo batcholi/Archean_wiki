@@ -6,6 +6,11 @@ The chat allows players to communicate with each other. To chat with other playe
 > - The maximum length of a message is limited to 800 characters.
 > - Chat conversations are logged to the server's log file.
 
+### Command History
+When the chat is open, use the **Up/Down arrow keys** to browse through previously entered commands. A visual popup appears above the input box showing up to 20 recent entries. You can also click on any entry to select it.
+
+> **Note:** If command suggestions are visible (auto-completion), the arrow keys navigate the suggestions instead. History browsing resumes when no suggestions are shown.
+
 ## Commands
 Commands allow you to perform specific actions by typing them in the chat, preceded by a `/`. There are several commands available, some of which are reserved for administrators.
 
@@ -18,7 +23,7 @@ Commands allow you to perform specific actions by typing them in the chat, prece
 #### List of commands available to administrators:
 - `/save` - Saves the current state of the game.
 - `/setspawn <username>` - Sets the spawn point for a specific user.
-- `/give [<stack>] [<moduleName>.]<itemType> [<inventoryAlias|username>]` - Gives items to a player.
+- `/give [<stack>] [<moduleName>.]<itemType> [<inventoryAlias|username>]` - Gives items to a player. If no username is specified, the items are given to yourself.
 - `/kick <username>` - Kicks a player from the server.
 - `/ban <username>` - Bans a player from the server.
 - `/timeadd [-]<hours>` - Adds or subtracts time in the game.

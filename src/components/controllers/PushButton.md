@@ -22,3 +22,4 @@ In the configuration menu accessible with the `V` key:
 | Option | Description |
 |--------|-------------|
 | **Dual-Sided** | Makes the button usable from both sides |
+| **Single Pulse** | When enabled, the button sends `1` for a single tick then immediately resets to `0`, instead of staying active while held |

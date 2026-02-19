@@ -17,6 +17,7 @@ The Paint Tool allows you to paint blocks, cables, labels and components with cu
 | Paint face | **Left-click** |
 | Paint whole block (all faces) | **Shift** + **Left-click** |
 | Pick color from block | **Right-click** |
+| Replace color across entire build | **X** + **Left-click** |
 
 ## Color Palettes
 The Paint Tool uses a palette system to save and organize your colors.
@@ -46,6 +47,21 @@ Each color can have a different surface finish:
 | **Chrome** | Mirror-like metallic surface |
 | **Transparent** | See-through (for glass effects) |
 
+## Replace Color
+Hold **X** and **Left-click** on any painted surface to replace that color across the entire build. This works on:
+- **Blocks**: Replaces all blocks sharing the same color index
+- **Pipes/Cables**: Replaces all pipes matching the same color
+- **Components**: Replaces all components of the same type and material
+
+## Symmetry Painting
+When the build has [symmetry mode](ConstructorTool.md) enabled, the Paint Tool automatically paints the mirrored block as well. This applies to:
+- Single face painting
+- Whole block painting (**Shift**)
+
+If the block is on the symmetry plane, the mirrored face on the same block is painted instead.
+
+> **Note**: Replace color (**X**) always affects the entire build regardless of symmetry, so symmetry is not applied in that mode.
+
 # Notes
 - Painting a block applies color **per face** (use Shift for all faces)
-- Cables have additional customization options, see [Spool](../consumables/Spool.md#painting-cables) 
+- Cables have additional customization options, see [Spool](../consumables/Spool.md#painting-cables)

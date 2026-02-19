@@ -24,7 +24,7 @@ The RTG has two electrical ports, which allows you to connect two components sim
 |0|Generated Power (Watts)|
 |1|Output Power (Watts)|
 
-> - Currently, the RTG provides unlimited energy and does not have any harmful effects on the player or the environment.
+> - The RTG can generate up to **12 kW** of power. Its actual output depends on the cooling capacity of the environment (reduced to ~6 kW in the vacuum of space). It does not have any harmful effects on the player or the environment.
 >
 > - If you are using the RTG to power two components, the total power distributed across the two ports cannot exceed the RTG's available output power.
 >
@@ -41,7 +41,7 @@ The RTG has two electrical ports, which allows you to connect two components sim
 |ChemicalFurnace (Yellow Cake - U₃O₈)|Uranium Powder (U) : 0.714 g, O₂ : 0.128 g|Yellow Cake (U₃O₈) : 0.842 g|750K - 950K|
 |ChemicalFurnace (Uranium Dioxide - UO₂)|Yellow Cake (U₃O₈) : 0.842 g, H₂ : 0.004 g|Uranium Dioxide (UO₂) : 0.810 g, H₂O : 0.036 g|850K - 1050K|
 |Crafter|Uranium Dioxide (UO₂) : 1000 g|Uranium Rod (U235 : 10%, U238 : 90%) : 1|-|
-|Crusher|Uranium Rod|Plutonium Dioxide (PuO₂) : 1000 g (Pu : 100%)|-|
+|Crusher|Uranium Rod|Plutonium Dioxide (PuO₂) : 1 g (Pu : 100%)|-|
 |Crafter|Plutonium Dioxide (PuO₂) : 5000 g|Plutonium Pellet : 1|-|
 
 > It is recommended to use low-enriched uranium (LEU) for plutonium production. The enrichment level has no effect on the amount of plutonium obtained.

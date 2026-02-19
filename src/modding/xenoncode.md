@@ -91,7 +91,13 @@ click_hold($x:number, $y:number, $material:text)
 
 ; scroll entry point for mouse wheel events:
 scroll.$screen($scroll:number) ; $scroll is -1 or 1
-scroll($scroll:number, $material:text)
+scroll($scroll:number, $x:number, $y:number, $material:text)
+; If the material has been declared as a screen with the #SCREEN macro, the XY coordinates will be in pixels; otherwise, they will be in the range 0.0 to 1.0 according to the UV mapping of the material.
+```
+
+### Built-in values
+```xc
+$num_value = delta_time ; the time interval between ticks in seconds (equivalent to 1.0 / system_frequency)
 ```
 
 ## Function list

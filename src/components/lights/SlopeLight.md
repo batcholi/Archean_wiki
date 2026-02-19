@@ -10,7 +10,7 @@
 #
 ---
 # Description
-The SlopeLight is a compact lighting component that emits light at a 45° angle.
+The SlopeLight is a compact lighting component designed to fit on slopes. It emits light with a default beam angle of 120°.
 
 # Usage
 The SlopeLight must be powered by low voltage and consumes up to 1000 W depending on the power set in its information menu accessible via the `V` key.
