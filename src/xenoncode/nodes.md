@@ -130,6 +130,8 @@ Boolean nodes can have more than two inputs, allowing you to chain multiple cond
 
 `PID Controller` Returns a PID control value based on the error, integral of the error, and derivative of the error.
 
+`Unit Converter` Converts a value between common physical units of the same category. Supported categories: Angle (Radians, Degrees), Rotation (RPS, RPM), Speed (m/s, km/h, mph, ft/s, knots), Temperature (Kelvin, Celsius, Fahrenheit), Pressure (Pascal, bar, psi, atm), Force (Newton, lbf, kgf).
+
 ---
 ### Execution
 `Statement` Allows you to write a pure XenonCode statement like a function call. Must output to either a Conditional or an Execute node.

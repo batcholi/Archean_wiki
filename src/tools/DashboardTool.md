@@ -71,6 +71,9 @@ LEDs can be clicked like push buttons and can display custom colors.
 - **Color From Input**: Receive color value from data channel instead of using the configured color
 - **Color picker**: Set the LED color
 
+### Trim
+Trim is a decorative element that can be placed with a precision of 1 cm and resized in 1 cm increments up to 4 m. Useful for adding visual separation or borders to your dashboard layout.
+
 ## Adding Components to Dashboards
 Any component can be placed on a dashboard at arbitrary positions and orientations. This allows embedding instruments, sensors, or other components directly into your dashboard design.
 

@@ -177,6 +177,7 @@ The lifespan of uranium rods depends entirely on:
 |13|Output Water Temperature (Kelvin)|Number|
 |14|Water Flow Rate (kg/s)|Number|
 |15|Reactor Status|"IDLE", "STARTING", "ACTIVE", "COOLDOWN", "HOT", "SCRAM", "CRITICAL", "MELTDOWN"|
+|16|Lifetime|Estimated remaining time in seconds|
 
 ---
 

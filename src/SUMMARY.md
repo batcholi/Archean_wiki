@@ -135,6 +135,7 @@
 		- [Altitude Sensor](components/sensors/AltitudeSensor.md)
 		- [Angular Velocity Sensor](components/sensors/AngularVelocitySensor.md)
 		- [Density Sensor](components/sensors/DensitySensor.md)
+		- [Distance Sensor](components/sensors/DistanceSensor.md)
 		- [Linear Velocity Sensor](components/sensors/LinearVelocitySensor.md)
 		- [Player Sensor](components/sensors/PlayerSensor.md)
 		- [Solar Sensor](components/sensors/SolarSensor.md)
