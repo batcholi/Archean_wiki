@@ -8,8 +8,10 @@
 # Gameplay & Mechanics
 - [Interfaces & Inventory](interfaces.md)
 - [Game modes](gamemode.md)
+- [Push & Pull](pushpull.md)
 - [Pressurization](pressurization.md)
 - [Aerodynamics](aerodynamics.md)
+- [Mining](mining.md)
 - [N-Body Physics](nbody.md)
 - [Celestial bodies & resources]()
 	- [Sun](celestialbodies/sun.md)
