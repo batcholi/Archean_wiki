@@ -1,0 +1,161 @@
+# Computer
+
+## Funciones especificas para Computers
+
+### Program Entry Points
+```xc
+input.0 ($value0:number, $value1:number, $value2:text)
+; This entry point is executed whenever a value is received from the input with the specified IO index.
+; The arguments are the values received for each channel. Any number of arguments can be provided, with their appropriate types.
+; There can only be one 'input' entry point defined per IO index per program.
+
+update
+; This entry point is executed on each server tick at the end of each cycle, after the timers.
+; Multiple 'update' entry points may be defined in a single program and they will all be executed in the order they are defined.
+
+click ($x:number, $y:number)
+; This entry point is executed whenever a user clicks on the screen, given an xy coordinate in pixels.
+; Multiple 'click' entry points may be defined in a single program and they will all be executed in the order they are defined.
+
+click_hold ($x:number, $y:number)
+; This entry point is executed continuously while a user holds the click on the screen, given an xy coordinate in pixels.
+; Useful for drag interactions or continuous input detection.
+; Multiple 'click_hold' entry points may be defined in a single program and they will all be executed in the order they are defined.
+
+scroll ($delta:number)
+; This entry point is executed whenever a user scrolls with the mouse wheel while aiming at the screen.
+; The $delta parameter indicates the scroll direction and amount (positive for scroll up, negative for scroll down).
+; Multiple 'scroll' entry points may be defined in a single program and they will all be executed in the order they are defined.
+
+shutdown
+; This entry point is executed once when the computer is powered off or before it is rebooted (but NOT when it crashes).
+; Multiple 'shutdown' entry points may be defined in a single program and they will all be executed in the order they are defined.
+```
+
+### Built-in values
+```xc
+$num_value = delta_time ; the time interval between ticks in seconds (equivalent to 1.0 / system_frequency)
+$num_value = tick ; the index of the current tick since the computer has started
+
+$num_value = char_w ; the width of a character in pixels, taking into consideration the current text size
+$num_value = char_h ; the height of a character in pixels, taking into consideration the current text size
+
+$num_value = screen_w ; the width of the virtual monitor in pixels
+$num_value = screen_h ; the height of the virtual monitor in pixels
+
+$num_value = clicked ; whether the mouse button was pressed while aiming at the virtual monitor
+$num_value = click_x ; the x coordinate of the mouse cursor on the virtual monitor when the mouse button was pressed
+$num_value = click_y ; the y coordinate of the mouse cursor on the virtual monitor when the mouse button was pressed
+$num_value = scroll ; the scroll wheel delta value (positive for scroll up, negative for scroll down)
+
+$num_value = system_frequency ; the frequency of the system clock in hertz (ticks per second)
+$num_value = programs_count ; the number of programs currently on the virtual HDD
+$num_value = system_ipc ; the maximum number of instructions per cycle (IPC) of the virtual CPU
+$num_value = system_ram ; the maximum number of variables in RAM
+$num_value = ipc ; the number of instructions per cycle (IPC) of the virtual CPU
+```
+
+### Built-in functions
+```xc
+var $programName = program_name(0) ; returns a program name, given an index between 0 and programs_count-1
+load_program($programName) ; loads a program and call its init function (it first unloads the currently running program, calling shutdown on it)
+reboot() ; reboots the computer (calls the shutdown entry point and loads the bios or main program)
+
+$text_value = device_type(aliasOrIoNumber) ; returns the type of the device with the given IO index
+```
+
+### Screen Override
+Un Computer puede sobreescribir la pantalla de cualquier componente conectado a el. Esto te permite reemplazar la visualizacion predeterminada de un componente con graficos personalizados renderizados por tu programa XenonCode.
+
+Para activar la sobreescritura de pantalla:
+1. Abre el menu GetInfo del componente con `V`
+2. Marca la opcion **Override Screen**
+3. Referencia la pantalla en tu codigo usando `screen(ioIndex, channel)` y dibuja en ella como cualquier otra pantalla
+
+### IO
+Los Computers pueden resolver alias de componentes directamente sin necesitar un Router. Simplemente usa el nombre del alias como primer parametro en las funciones de IO.
+
+```xc
+; input_[number|text](aliasOrIoNumber, channelIndex) ; returns the value of the input with the given alias and index
+var $someNumber = input_number("", 0)
+var $someText = input_text("", 0)
+
+; output_[number|text](aliasOrIoNumber, channelIndex, value) ; sends the given value to the output with the given alias and index
+output_number(0, 0, $num_value) ; send a number to output with alias computer
+output_number("computer", 0, $num_value) ; send a number to output with alias computer
+output_text("computer", 0, "hello") ; send text hello to output with alias computer
+```
+
+
+### Screen Rendering functions (dibujar en una pantalla virtual)
+```xc
+blank($black) ; clears the screen with a given color
+
+write(0, 0, green, "Hello") ; write a green Hello message in the top left corner of the screen
+write(0, char_h, blue, "Hey") ; write a blue Hey message just under the first message
+; Note that char_w and char_h return the size of one character in pixels + 1 additional pixel, to serve as a multiplier to jump lines or to count the width of a text.
+
+text_size(2) ; sets text size to two times native, only valid for following writes in the current cycle until the next call to text_size()
+text_align(top_left) ; sets text alignment to top_left, only valid for following writes in the current cycle until the next call to text_align()
+;(top_left, top, top_right, left, center, right, bottom_left, bottom, bottom_right)
+newline_spacing(3) ; sets the spacing between lines when using "\n" to make new line in write(), only valid for following writes in the current cycle until the next call to newline_spacing()
+
+
+; Draw functions take positions X and Y where 0,0 = top-left, in pixels.
+; draw_point(x, y, color)
+draw_point(screen_w/2, screen_h/2, white) ; draw a single white pixel in the middle of the screen
+; draw_line(x1, y1, x2, y2, color)
+draw_line(0, 0, screen_w, screen_h, yellow) ; draw a yellow line going from top left to bottom right of the screen
+; draw_rect(x1, y1, x2, y2, color [, fillcolor])
+draw_rect(50, 50, 60, 60, red) ; draw a red square starting at coordinates 50,50 inclusive through 60,60 exclusive, it will effectively have a size of 10x10.
+; draw_triangle(x1, y1, x2, y2, x3, y3, color [, fillcolor])
+draw_triangle(screen_w/2, 0, 0, screen_h, screen_w, screen_h, blue) ; draw a blue triangle from the top middle to the bottom corners of the screen
+; draw_circle(x, y, radius, color [, fillcolor])
+draw_circle(screen_w/2, screen_h/2, 50, green) ; draw a green circle with a radius of 50 pixels in the middle of the screen
+; draw_poly(color, x1, y1, x2, y2, x3, y3, x4, y4)
+draw_poly(yellow, 0, 0, 50, 50, 100, 0) ; draw a yellow polygon with 3 points. There is no limit to the number of points, allowing for the creation of complex shapes.
+
+; Draw functions may also be turned into Buttons. Works with rect, triangle and circle.
+if button_rect(0, 0, 40, 10, gray) ; draw a gray rectangle button in the top left corner of the screen. Evaluates to true if clicked.
+    if user == owner
+        print("The owner of this computer clicked the button")
+    else
+        print("The button was clicked by " & user) ; prints a message to the console (when the button was clicked, in this case)
+; Here we also happen to use the built-ins 'user', 'username' and 'owner'
+; 'user' returns the user token (text) of the player who clicked
+; 'username' returns the username (text) of the player who clicked
+; 'owner' returns the user token (text) of the computer's owner
+
+; Legacy draw|button function with width/height parameters (still supported)
+; draw(x, y, color, width, height)
+draw(0, 0, red, 50, 70) ; draw a red rectangle at coordinates 0,0 with a width of 50 and a height of 70
+if button(10, 10, red, 30, 30) ; draw a red button at coordinates 10,10 with a width of 30 and a height of 30. Evaluates to true if clicked.
+    print("The button was clicked")
+
+
+var $somePixelColor = pixel(10, 10) ; get the current color of the pixel at coordinates 10,10
+
+; Copy a zone from one screen to another screen
+screen_copy($sprites, $dash, $src_x, $src_y, $dst_x, $dst_y, $width, $height, $color, $rotation, $bilinear)
+; The arguments $color, $rotation, and $bilinear are optional.
+; $color    : Applies a tint to the copied area. Use -1 to apply no tint.
+; $rotation : Rotates the copied area (in degrees, clockwise).
+; $bilinear : Enables bilinear interpolation. Set to 1 to enable
+```
+
+### Virtual Screen Function
+Permite la creacion de una pantalla virtual con XenonCode. Esta pantalla, definida por codigo, no es fisica y sirve principalmente para almacenar datos visuales. Luego puedes copiar estos datos a una pantalla fisica usando la funcion `screen_copy()`, que es mas rapida que redibujar.
+
+Uso tipico: almacenar sprites en una pantalla virtual para copiarlos todos de una vez a una pantalla fisica. Por ejemplo, crear un fondo complejo y copiarlo de una sola vez en lugar de redibujarlo cada vez.
+
+Evita dibujar en la pantalla virtual en un bucle, ya que esto seria tan lento como dibujar directamente en una pantalla fisica. Aunque esto puede ser util en algunos casos de uso, recomendamos usarlo de manera estatica.
+
+
+```xc
+var $vScreen = virtualscreen(100, 200) ;virtualscreen(width, height)
+;The maximum size of a virtual screen is 10000x10000 pixels.
+
+init
+    $vScreen.blank(black); clear the virtual screen with black
+    $vScreen.write(0, 0, white, "Hello World") ; write a white "Hello World" message in the top left corner of the virtual screen
+```

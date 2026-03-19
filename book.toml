@@ -2,12 +2,14 @@
 title = "Archean Wiki"
 language = "en"
 multilingual = false
-src = "src"
+src = "src/en"
 
 [output.html]
 default-theme = "Ayu"
 preferred-dark-theme = "Ayu"
 no-section-label = true
+additional-js = ["theme/lang-data.js", "theme/lang-selector.js"]
+additional-css = ["theme/lang-selector.css"]
 
 [output.html.fold]
 enable = true
