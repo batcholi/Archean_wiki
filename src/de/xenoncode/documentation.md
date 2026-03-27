@@ -7,6 +7,7 @@
 - Typisierte Variablen
 - Konstanten
 - Dynamische Arrays
+- Vektoren und Matrizen (bis zu 4x4) mit Swizzling
 - Standard-Rechenoperationen auf numerischen Werten
 - Einfache Textverkettung und Formatierung
 - Benutzerdefinierte Funktionen
@@ -108,8 +109,10 @@ XenonCode wurde mit einer sehr einfachen Syntax und einer sehr präzisen Struktu
 XenonCode ist eine typisierte Sprache, enthält aber nur zwei generische Typen sowie Arrays von beiden und implementierungsdefinierte Objekte.  
 
 Generische Datentypen, die der Benutzer deklarieren kann: 
-* `number`
-* `text`
+- `number`
+- `text`
+- `vecN` (numerischer Vektor fester Größe, z.B. `vec3`)
+- `matNxM` (numerische Matrix fester Größe, z.B. `mat4x4`)
 
 Eine `number`-Variable ist intern immer eine 64-Bit-Gleitkommazahl, kann aber auch als Boolean fungieren, wenn ihr Wert entweder 1 oder 0 ist (true oder false), wobei jeder Wert ungleich Null als true ausgewertet wird.  
 
@@ -259,6 +262,137 @@ Arrays werden mit der Größe Null initialisiert, wenn das Programm startet; Wer
 `array $stuff:text` Deklariert ein Array von Texten  
 
 Arrays können keine implementierungsdefinierten Objekte enthalten, nur generische Typen.  
+
+## Vektoren und Matrizen
+
+Vektoren und Matrizen sind Container fester Größe für 64-Bit-Gleitkommazahlen, nützlich für Positionen, Transformationen und lineare Algebra. Alle Elemente werden mit Null initialisiert.
+
+### Deklaration
+
+Verwenden Sie `vecN` für Vektoren (1D) und `matNxM` für 2D-Matrizen, mit Dimensionen bis zu 4.
+
+```xc
+var $position : vec3       ; 3-Element-Vektor (vec2, vec3, vec4 verfügbar)
+var $transform : mat4x4    ; 4x4-Matrix
+var $rotation : mat3       ; Kurzform für mat3x3
+```
+
+| Typ | Kurzform | Beschreibung |
+|-----|----------|--------------|
+| `vec2`, `vec3`, `vec4` | -- | Vektoren mit 2, 3 oder 4 Elementen |
+| `matNxM` | -- | 2D-Matrix mit N Zeilen und M Spalten (z.B. `mat3x4`) |
+| `matN` | `matNxN` | Kurzform für quadratische Matrix (z.B. `mat3` = `mat3x3`) |
+
+### Komponentenzugriff
+
+Greifen Sie auf Elemente mit `.x`, `.y`, `.z`, `.w` oder gleichwertig `.0`, `.1`, `.2`, `.3` zu.
+
+**Vektoren** -- jeder Accessor bezieht sich auf ein einzelnes Element:
+```xc
+var $v : vec3
+$v.x = 1       ; Element 0
+$v.y = 2       ; Element 1
+$v.z = 3       ; Element 2
+$v.0 = 1       ; identisch mit .x
+```
+
+**2D-Matrizen** -- der erste Accessor wählt eine Zeile, der zweite eine Spalte innerhalb dieser Zeile:
+```xc
+var $m : mat4x4
+$m.0.x = 1     ; Zeile 0, Spalte 0
+$m.1.y = 1     ; Zeile 1, Spalte 1
+$m.w.w = 1     ; Zeile 3, Spalte 3 (identisch mit $m.3.3)
+```
+
+### Swizzling
+
+Kombinieren Sie 2-4 Komponentennamen aus `xyzw`, um mehrere Elemente gleichzeitig in einen neuen Vektor zu extrahieren:
+```xc
+var $v : vec3
+$v.x = 10
+$v.y = 20
+$v.z = 30
+var $a : vec2
+$a = $v.xy         ; vec2 mit (10, 20)
+var $b : vec2
+$b = $v.zx         ; vec2 mit (30, 10)
+```
+Swizzling erzeugt immer eine **Kopie** -- das Ändern des Ergebnisses beeinflusst nicht das Original.
+
+### Arithmetik
+
+**Elementweise** Operationen zwischen Vektoren/Matrizen gleicher Größe:
+```xc
+var $a : vec3
+var $b : vec3
+var $c : vec3
+$c = $a + $b       ; elementweise Addition
+$c = $a - $b       ; elementweise Subtraktion
+```
+
+**Skalare** Multiplikation und Division skalieren jedes Element:
+```xc
+$c = $a * 2        ; alle Elemente mit 2 multiplizieren
+$c = $a / 2        ; alle Elemente durch 2 teilen
+```
+
+**Matrixmultiplikation** mit `*` wenn die Dimensionen kompatibel sind:
+```xc
+var $m : mat3x3
+var $v : vec3
+var $result : vec3
+$result = $m * $v  ; 3x3-Matrix mal 3x1-Vektor = 3x1-Vektor
+```
+
+**Zusammengesetzte Zuweisungsoperatoren** funktionieren ebenfalls: `+=`, `-=`, `*=`, `/=`
+
+### Trailing-Funktionen (vor Ort)
+
+Diese modifizieren den Vektor oder die Matrix direkt und geben keinen Wert zurück.
+
+| Funktion | Gilt für | Beschreibung |
+|----------|----------|--------------|
+| `.normalize()` | Vektoren | Auf Einheitslänge skalieren |
+| `.cross($other)` | vec3 | Kreuzprodukt von sich und `$other` in sich speichern |
+| `.transpose()` | quadratische Matrizen | Vor Ort transponieren |
+| `.inverse()` | quadratische Matrizen | Vor Ort invertieren |
+| `.identity()` | quadratische Matrizen | Auf Einheitsmatrix setzen |
+| `.lerp($other, $t)` | Vektoren / Matrizen | In Richtung `$other` um Faktor `$t` interpolieren |
+
+```xc
+var $dir : vec3
+$dir.x = 3
+$dir.y = 4
+$dir.normalize()   ; $dir ist jetzt ein Einheitsvektor
+```
+
+### Standardfunktionen (geben einen neuen Wert zurück)
+
+Diese modifizieren ihre Argumente nicht. Funktionen, die eine einzelne Zahl zurückgeben, sind als *Skalar* gekennzeichnet.
+
+| Funktion | Gibt zurück | Beschreibung |
+|----------|-------------|--------------|
+| `length($v)` | Skalar | Betrag eines Vektors |
+| `distance($a, $b)` | Skalar | Euklidischer Abstand zwischen zwei Vektoren |
+| `dot($a, $b)` | Skalar | Skalarprodukt zweier Vektoren |
+| `angle($a, $b)` | Skalar | Winkel zwischen zwei Vektoren in Radiant |
+| `cross($a, $b)` | vec3 | Kreuzprodukt zweier vec3-Vektoren |
+| `determinant($m)` | Skalar | Determinante einer quadratischen Matrix |
+| `normalize($v)` | gleicher Typ | Normalisierte Kopie eines Vektors |
+| `transpose($m)` | gleicher Typ | Transponierte Kopie einer quadratischen Matrix |
+| `inverse($m)` | gleicher Typ | Invertierte Kopie einer quadratischen Matrix |
+| `lerp($a, $b, $t)` | gleicher Typ | Interpolierte Kopie zwischen `$a` und `$b` um Faktor `$t` |
+
+### Übergabe an Funktionen
+
+Vektoren und Matrizen können als Funktionsargument- und Rückgabetypen verwendet werden:
+```xc
+function @scale($v : vec3, $factor : number) : vec3
+	return $v * $factor
+
+var $result : vec3
+$result = @scale($myVec, 2.5)
+```
 
 ## Storage deklarieren
 Storage wird verwendet, um einige Daten über Neustarts und sogar über eine Neukompilierung hinweg persistent zu halten.  
