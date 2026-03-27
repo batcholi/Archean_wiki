@@ -1,47 +1,47 @@
-# Éditeur de nœuds visuels
-L'éditeur de nœuds de l'IDE XenonCode offre une large gamme de nœuds pour vous aider à créer des scripts et des programmes.
+# Éditeur de noeuds visuels
+L'éditeur de noeuds de l'IDE XenonCode offre une large gamme de noeuds pour vous aider à créer des scripts et des programmes.
 
 Il est suffisamment complet pour gérer des tâches complexes et est aussi plus facile à appréhender pour les débutants. Pour des possibilités encore plus avancées, vous pouvez aussi utiliser [XenonCode](documentation.md) en mode texte (code).
 
 ---
 ## Génération de code
 
-Le système de nœuds visuels générera toujours automatiquement du code en arrière-plan au fur et à mesure que vous faites des modifications.
-Le code est généré chaque fois qu'un nœud terminal `output`, `print` ou `execute` est ajouté, et il se propagera en arrière à travers les dépendances d'entrée.
-Cela signifie qu'ajouter un nœud d'entrée ne générera aucun code, mais ajouter un nœud de sortie générera le code pour les deux nœuds lorsque vous les connecterez ensemble.
+Le système de noeuds visuels générera toujours automatiquement du code en arrière-plan au fur et à mesure que vous faites des modifications.
+Le code est généré chaque fois qu'un noeud terminal `output`, `print` ou `execute` est ajouté, et il se propagera en arrière à travers les dépendances d'entrée.
+Cela signifie qu'ajouter un noeud d'entrée ne générera aucun code, mais ajouter un noeud de sortie générera le code pour les deux noeuds lorsque vous les connecterez ensemble.
 
 ---
-## Liste des nœuds
+## Liste des noeuds
 
-Voici la liste des différents types de nœuds disponibles dans l'éditeur, avec leurs descriptions si nécessaire :
+Voici la liste des différents types de noeuds disponibles dans l'éditeur, avec leurs descriptions si nécessaire :
 
 `Constant Number` Définit une valeur numérique constante.
 
 `Constant Text` Définit une valeur textuelle constante.
 
-`Variable Number` Définit une valeur numérique variable qui peut être définie et réinitialisée par un autre nœud.
+`Variable Number` Définit une valeur numérique variable qui peut être définie et réinitialisée par un autre noeud.
 
-`Variable Text` Définit une valeur textuelle variable qui peut être définie et réinitialisée par un autre nœud.
+`Variable Text` Définit une valeur textuelle variable qui peut être définie et réinitialisée par un autre noeud.
 
 `Comment` Permet d'afficher un bloc de commentaire dans votre script.
 
 ---
 ### Input
-`By Alias` Utilise un nœud de sortie d'un composant en utilisant son alias lors de la communication via un Router.
+`By Alias` Utilise un noeud de sortie d'un composant en utilisant son alias lors de la communication via un Router.
 
-`0,1,2,3...` Utilise un nœud de sortie d'un composant actuellement connecté à un port de l'ordinateur. Lorsque vous connectez un composant à un port, il est automatiquement détecté par l'ordinateur.
+`0,1,2,3...` Utilise un noeud de sortie d'un composant actuellement connecté à un port de l'ordinateur. Lorsque vous connectez un composant à un port, il est automatiquement détecté par l'ordinateur.
 
 ---
 ### Output
 `Print (Console log)` Affiche un nombre/texte dans la console de l'ordinateur.
 
-`By Alias` Utilise un nœud d'entrée d'un composant en utilisant son alias lors de la communication via un Router.
+`By Alias` Utilise un noeud d'entrée d'un composant en utilisant son alias lors de la communication via un Router.
 
-`0,1,2,3...` Utilise un nœud d'entrée d'un composant actuellement connecté à un port de l'ordinateur. Lorsque vous connectez un composant à un port, il est automatiquement détecté par l'ordinateur.
+`0,1,2,3...` Utilise un noeud d'entrée d'un composant actuellement connecté à un port de l'ordinateur. Lorsque vous connectez un composant à un port, il est automatiquement détecté par l'ordinateur.
 
 ---
 ### Math
-Les nœuds Math peuvent avoir plus de deux entrées, vous permettant d'enchaîner plusieurs valeurs dans une seule opération.
+Les noeuds Math peuvent avoir plus de deux entrées, vous permettant d'enchaîner plusieurs valeurs dans une seule opération.
 
 `Add` Retourne l'addition de deux ou plusieurs valeurs.
 
@@ -96,7 +96,7 @@ Les nœuds Math peuvent avoir plus de deux entrées, vous permettant d'enchaîne
 ---
 ### Boolean
 Les valeurs booléennes sont représentées comme des valeurs numériques. 0 signifie Faux, toute autre valeur signifie Vrai.
-Les nœuds booléens peuvent avoir plus de deux entrées, vous permettant d'enchaîner plusieurs conditions dans une seule opération.
+Les noeuds booléens peuvent avoir plus de deux entrées, vous permettant d'enchaîner plusieurs conditions dans une seule opération.
 
 `And` Retourne 1 si toutes les valeurs sont évaluées comme Vrai.
 
@@ -130,17 +130,17 @@ Les nœuds booléens peuvent avoir plus de deux entrées, vous permettant d'ench
 
 `PID Controller` Retourne une valeur de contrôle PID basée sur l'erreur, l'intégrale de l'erreur et la dérivée de l'erreur.
 
-`Unit Converter` Convertit une valeur entre des unités physiques courantes de la même catégorie. Catégories supportées : Angle (Radians, Degrés), Rotation (RPS, RPM), Vitesse (m/s, km/h, mph, ft/s, nœuds), Température (Kelvin, Celsius, Fahrenheit), Pression (Pascal, bar, psi, atm), Force (Newton, lbf, kgf).
+`Unit Converter` Convertit une valeur entre des unités physiques courantes de la même catégorie. Catégories supportées : Angle (Radians, Degrés), Rotation (RPS, RPM), Vitesse (m/s, km/h, mph, ft/s, noeuds), Température (Kelvin, Celsius, Fahrenheit), Pression (Pascal, bar, psi, atm), Force (Newton, lbf, kgf).
 
 ---
 ### Execution
-`Statement` Permet d'écrire une instruction XenonCode pure comme un appel de fonction. Doit sortir vers un nœud Conditional ou Execute.
+`Statement` Permet d'écrire une instruction XenonCode pure comme un appel de fonction. Doit sortir vers un noeud Conditional ou Execute.
 
 `Conditional` Considère l'instruction donnée seulement si la condition donnée est évaluée comme Vrai. Peut être enchaîné avec d'autres conditionnels.
 
 `Execute` Exécute les instructions connectées dans l'ordre de haut en bas.
 
-`Include` Inclut un autre script XenonCode dans le script courant. Assurez-vous que vos nœuds de variables et de constantes ont des noms uniques.
+`Include` Inclut un autre script XenonCode dans le script courant. Assurez-vous que vos noeuds de variables et de constantes ont des noms uniques.
 
 ---
 ### Timing

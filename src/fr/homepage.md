@@ -72,7 +72,7 @@ Terrain haute résolution avec rochers entièrement procéduraux.
 Vous voulez construire un bateau ou un sous-marin, bien sûr pourquoi pas !?
 
 - Programmation en jeu
-Notre propre langage de programmation en jeu et un système de programmation visuelle par nœuds plus accessible aux joueurs.
+Notre propre langage de programmation en jeu et un système de programmation visuelle par noeuds plus accessible aux joueurs.
 
 - Moddable nativement
 Si vous maîtrisez le C++, nous exposerons bientôt un SDK où tout est possible.

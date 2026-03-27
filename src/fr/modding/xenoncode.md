@@ -20,7 +20,7 @@ Le modding via XenonCode introduit le concept de macros, qui vous permet de déc
 ```
 
 ### Nommage des canaux I/O
-Lorsque vous utilisez des composants natifs via le système de nœuds, les canaux d'entrée et de sortie sont nommés pour faciliter leur identification. Cette macro vous permet de définir les noms des canaux d'entrée et de sortie.
+Lorsque vous utilisez des composants natifs via le système de noeuds, les canaux d'entrée et de sortie sont nommés pour faciliter leur identification. Cette macro vous permet de définir les noms des canaux d'entrée et de sortie.
 ```xc
 #DATAPORT input "data" 0 "Speed (km/h)"
 ; Defines the name of input channel 0 of the data port "data" as "Speed (km/h)"

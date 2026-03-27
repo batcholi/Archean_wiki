@@ -170,7 +170,7 @@
 	- [Dashboard](xenoncode/dashboard.md)
 	- [HUD](xenoncode/hud.md)
 - [XenonCode IDE](xenoncode/ide.md)
-	- [Liste des nœuds](xenoncode/nodes.md)
+	- [Liste des noeuds](xenoncode/nodes.md)
 #
 #
 # Modding
