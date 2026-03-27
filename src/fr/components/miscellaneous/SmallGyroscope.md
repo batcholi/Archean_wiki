@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="Gyroscope.png" />
+  <img src="SmallGyroscope.png" />
 </p>
 
-|Component| `Gyroscope`|
+|Component|`SmallGyroscope`|
 |---|---|
 |**Module**|`ARCHEAN_gyroscope`|
-|**Mass**|200 kg|
-|[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|100 x 100 x 100 cm|
+|**Mass**|50 kg|
+|[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|50 x 50 x 50 cm|
 #
 ---
 
@@ -14,7 +14,7 @@
 Le gyroscope est un composant qui, lorsqu'il est alimente et actif, amortit sa vitesse angulaire. Il est principalement utilise pour stabiliser un vehicule ou arreter le moment angulaire en apesanteur.
 
 # Alimentation electrique
-Le Gyroscope est alimente en **haute tension**. Il consomme plus d'energie au demarrage puis reduit progressivement sa consommation a mesure qu'il atteint la vitesse de rotation demandee via le port de donnees.
+Le SmallGyroscope est alimente en **basse tension**. Il consomme plus d'energie au demarrage puis reduit progressivement sa consommation a mesure qu'il atteint la vitesse de rotation demandee via le port de donnees.
 
 # Usage
 Pour demarrer le gyroscope, il doit recevoir une valeur entre `0.0` et `1.0` dans son port de donnees pour diminuer/augmenter sa vitesse de rotation, augmentant ainsi son effet stabilisant.

@@ -1,12 +1,12 @@
 <p align="center">
-  <img src="Gyroscope.png" />
+  <img src="SmallGyroscope.png" />
 </p>
 
-|Component| `Gyroscope`|
+|Component|`SmallGyroscope`|
 |---|---|
 |**Module**|`ARCHEAN_gyroscope`|
-|**Mass**|200 kg|
-|[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|100 x 100 x 100 cm|
+|**Mass**|50 kg|
+|[**Size**](# "Based on the component's occupancy in a fixed 25cm grid.")|50 x 50 x 50 cm|
 #
 ---
 
@@ -14,7 +14,7 @@
 El giroscopio es un componente que, cuando está alimentado y activo, amortigua su velocidad angular. Se usa principalmente para estabilizar un vehículo o detener el momento angular en gravedad cero.
 
 # Power Supply
-El Gyroscope se alimenta mediante **alto voltaje**. Consume más energía al arrancar y luego reduce gradualmente su consumo a medida que alcanza la velocidad de rotación solicitada a través del puerto de datos.
+El SmallGyroscope se alimenta mediante **bajo voltaje**. Consume más energía al arrancar y luego reduce gradualmente su consumo a medida que alcanza la velocidad de rotación solicitada a través del puerto de datos.
 
 # Usage
 Para iniciar el giroscopio, debe recibir un valor entre `0.0` y `1.0` en su puerto de datos para disminuir/aumentar su velocidad de rotación, aumentando así su efecto estabilizador.
