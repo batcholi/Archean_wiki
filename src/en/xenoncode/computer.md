@@ -81,7 +81,7 @@ var $someNumber = input_number("", 0)
 var $someText = input_text("", 0)
 
 ; output_[number|text](aliasOrIoNumber, channelIndex, value) ; sends the given value to the output with the given alias and index
-output_number(0, 0, $num_value) ; send a number to output with alias computer
+output_number(0, 0, $num_value) ; send a number to output with IoNumber 0
 output_number("computer", 0, $num_value) ; send a number to output with alias computer
 output_text("computer", 0, "hello") ; send text hello to output with alias computer
 ```

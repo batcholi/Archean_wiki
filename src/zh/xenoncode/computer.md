@@ -81,7 +81,7 @@ var $someNumber = input_number("", 0)
 var $someText = input_text("", 0)
 
 ; output_[number|text](aliasOrIoNumber, channelIndex, value) ; 将给定值发送到给定别名和索引的输出
-output_number(0, 0, $num_value) ; 向别名为 computer 的输出发送数字
+output_number(0, 0, $num_value) ; 向 IoNumber 0 的输出发送数字
 output_number("computer", 0, $num_value) ; 向别名为 computer 的输出发送数字
 output_text("computer", 0, "hello") ; 向别名为 computer 的输出发送文本 hello
 ```
