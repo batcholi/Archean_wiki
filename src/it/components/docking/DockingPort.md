@@ -34,10 +34,10 @@ Per utilizzare separatamente le porte dati con gli alias, è necessario usare un
 ### List of outputs
 |Channel|Function|
 |---|---|
-|0|Is Docked
+|0|Is Docked|
 
 ### List of inputs
-|Channel|Function
+|Channel|Function|
 |---|---|
-|0|Arm/Disarm Docking
+|0|Arm/Disarm Docking|
 

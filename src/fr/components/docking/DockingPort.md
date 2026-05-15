@@ -34,10 +34,10 @@ Pour utiliser séparément les ports de données avec des alias, vous devez util
 ### Liste des sorties
 |Canal|Fonction|
 |---|---|
-|0|Est amarré
+|0|Est amarré|
 
 ### Liste des entrées
-|Canal|Fonction
+|Canal|Fonction|
 |---|---|
-|0|Armer/Désarmer l'amarrage
+|0|Armer/Désarmer l'amarrage|
 

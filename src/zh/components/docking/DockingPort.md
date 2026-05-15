@@ -34,10 +34,10 @@ Docking Port 可以在两种传输模式下运行，通过信息菜单（`V` 键
 ### List of outputs
 |Channel|Function|
 |---|---|
-|0|Is Docked
+|0|Is Docked|
 
 ### List of inputs
-|Channel|Function
+|Channel|Function|
 |---|---|
-|0|Arm/Disarm Docking
+|0|Arm/Disarm Docking|
 

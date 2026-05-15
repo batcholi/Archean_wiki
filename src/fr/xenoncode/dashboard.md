@@ -31,6 +31,11 @@ En supposant que nous avons assigné la variable `$screen` à notre écran de da
 click.$screen ($x:number, $y:number)
 ; Ce point d'entrée est exécuté chaque fois qu'un utilisateur clique sur l'écran, avec des coordonnées xy en pixels.
 ; Plusieurs points d'entrée 'click' peuvent être définis dans un seul programme et ils seront tous exécutés dans l'ordre de leur définition.
+
+scroll.$screen ($delta:number)
+; Ce point d'entrée est exécuté chaque fois qu'un utilisateur fait défiler la molette de la souris en visant l'écran.
+; Le paramètre $delta indique la direction et l'amplitude du défilement (positif vers le haut, négatif vers le bas).
+; Plusieurs points d'entrée 'scroll' peuvent être définis dans un seul programme et ils seront tous exécutés dans l'ordre de leur définition.
 ```
 
 ### Valeurs intégrées
@@ -44,6 +49,7 @@ $num_value = $screen.height ; the height of the virtual monitor in pixels
 $num_value = $screen.clicked ; whether the mouse button was pressed while aiming at the virtual monitor
 $num_value = $screen.click_x ; the x coordinate of the mouse cursor on the virtual monitor when the mouse button was pressed
 $num_value = $screen.click_y ; the y coordinate of the mouse cursor on the virtual monitor when the mouse button was pressed
+$num_value = $screen.scroll ; the scroll wheel delta value (positive for scroll up, negative for scroll down, 0 if no scroll happened on this cycle)
 ```
 
 ### Fonctions de rendu d'écran

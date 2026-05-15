@@ -31,6 +31,11 @@ Asumiendo que hemos asignado la variable `$screen` a nuestra pantalla de dashboa
 click.$screen ($x:number, $y:number)
 ; This entry point is executed whenever a user clicks on the screen, given an xy coordinate in pixels.
 ; Multiple 'click' entry points may be defined in a single program and they will all be executed in the order they are defined.
+
+scroll.$screen ($delta:number)
+; This entry point is executed whenever a user scrolls with the mouse wheel while aiming at the screen.
+; The $delta parameter indicates the scroll direction and amount (positive for scroll up, negative for scroll down).
+; Multiple 'scroll' entry points may be defined in a single program and they will all be executed in the order they are defined.
 ```
 
 ### Built-in values
@@ -44,6 +49,7 @@ $num_value = $screen.height ; the height of the virtual monitor in pixels
 $num_value = $screen.clicked ; whether the mouse button was pressed while aiming at the virtual monitor
 $num_value = $screen.click_x ; the x coordinate of the mouse cursor on the virtual monitor when the mouse button was pressed
 $num_value = $screen.click_y ; the y coordinate of the mouse cursor on the virtual monitor when the mouse button was pressed
+$num_value = $screen.scroll ; the scroll wheel delta value (positive for scroll up, negative for scroll down, 0 if no scroll happened on this cycle)
 ```
 
 ### Screen Rendering functions

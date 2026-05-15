@@ -74,8 +74,9 @@ $myPanel.x ; returns the x position of the panel
 $myPanel.y ; returns the y position of the panel
 $myPanel.scroll ; returns the mouse scroll value (-1, 0, or 1)
 
-; ENTRY POINT
+; ENTRY POINTS
 click.$myPanel ($x:number, $y:number) ; returns the click position within the panel
+scroll.$myPanel ($delta:number) ; called when the user scrolls the mouse wheel while aiming at the panel
 ```
 Hinweis: Die Art, auf dem Panel zu zeichnen, ist ähnlich wie beim [Dashboard-Bildschirm](../xenoncode/dashboard.md#screen-rendering-functions)
 

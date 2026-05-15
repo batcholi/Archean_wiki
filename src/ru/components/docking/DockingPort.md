@@ -34,10 +34,10 @@ Docking Port может работать в двух режимах переда
 ### List of outputs
 |Channel|Function|
 |---|---|
-|0|Is Docked
+|0|Is Docked|
 
 ### List of inputs
-|Channel|Function
+|Channel|Function|
 |---|---|
-|0|Arm/Disarm Docking
+|0|Arm/Disarm Docking|
 

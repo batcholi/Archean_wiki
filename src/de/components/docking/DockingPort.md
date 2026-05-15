@@ -34,10 +34,10 @@ Um Datenanschlüsse separat mit Aliassen zu verwenden, müssen Sie eine [Data Br
 ### List of outputs
 |Channel|Function|
 |---|---|
-|0|Is Docked
+|0|Is Docked|
 
 ### List of inputs
-|Channel|Function
+|Channel|Function|
 |---|---|
-|0|Arm/Disarm Docking
+|0|Arm/Disarm Docking|
 
