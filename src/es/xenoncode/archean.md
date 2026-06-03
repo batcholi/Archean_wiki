@@ -71,6 +71,7 @@ var $categories = get_recipes_categories("crafter") ; returns a comma-separated 
 var $recipes = get_recipes("crafter", "CATEGORY") ; returns a comma-separated list of recipe names in the given category (category must be uppercase)
 var $recipe = get_recipe("crafter", "recipeName") ; returns a key-value text object with ingredient names and quantities
 var $label = get_recipe_label("module.recipeName") ; returns the display label of a recipe (strips the module prefix)
+var $value = get_item_value_unit("module.itemName", $stack) ; returns a stack quantity formatted with the item's unit (e.g. "100kg" for ores, a plain count for parts)
 ```
 
 

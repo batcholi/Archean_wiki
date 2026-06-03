@@ -71,6 +71,7 @@ var $categories = get_recipes_categories("crafter") ; 返回给定上下文的�
 var $recipes = get_recipes("crafter", "CATEGORY") ; 返回给定类别中逗号分隔的配方名称列表（类别必须为大写）
 var $recipe = get_recipe("crafter", "recipeName") ; 返回一个包含成分名称和数量的键值文本对象
 var $label = get_recipe_label("module.recipeName") ; 返回配方的显示标签（去除模块前缀）
+var $value = get_item_value_unit("module.itemName", $stack) ; 返回带物品单位格式化的数量（例如矿石显示为 "100kg"，零件显示为简单计数）
 ```
 
 

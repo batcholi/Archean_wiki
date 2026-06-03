@@ -79,12 +79,13 @@ Crafter 在正确配置后原生支持自动制造行为。
 
 对于更高级的自动制造系统，或要完全控制制造过程，可以使用 XenonCode。
 
-Crafter 提供四个 XenonCode 函数来获取可用配方的信息：
+Crafter 提供五个 XenonCode 函数来获取可用配方的信息：
 
 - `get_recipes_categories("crafter")`：返回 Crafter 中可用的配方类别列表。
 - `get_recipes("crafter", "PARTS")`：返回 `PARTS` 类别中可用的配方列表。
 - `get_recipe("crafter", "Circuit")`：返回 `Circuit` 配方所需的原料列表。
 - `get_recipe_label("ARCHEAN_parts.Circuit")`：返回可读的显示名称（例如 `"Circuit"`）。
+- `get_item_value_unit("ARCHEAN_celestial.Titanium", 100000)`：返回带单位格式化的数量（例如矿石显示为 `"100kg"`，零件显示为简单计数）。
 
 #### Built-in Program
 Crafter 的内置程序——即在 *Simple Auto-Crafting Setup* 中自动使用的程序——已经使用这些函数实现了完整的自动制造逻辑。您可以将其作为灵感来源，或构建自己的自定义程序以满足更高级或特定的需求。
@@ -204,7 +205,7 @@ function @drawScreen()
 					var $recipeInputs = get_recipe("crafter", $currentCraft)
 					$dpIndex++
 					foreach $recipeInputs ($item, $qty)
-						write(20,(12*$dpIndex+2)-$cursor,color(100,100,100), get_recipe_label($item) & ": " & $qty)
+						write(20,(12*$dpIndex+2)-$cursor,color(100,100,100), get_recipe_label($item) & ": " & get_item_value_unit($item, $qty:number))
 						$dpIndex++
 				else
 					write(10,(12*$dpIndex+2)-$cursor,color(100,100,100),get_recipe_label($craft))

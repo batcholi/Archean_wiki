@@ -79,12 +79,13 @@ Esto permite un control programático completo sobre el Crafter mientras se bene
 
 Para sistemas de auto-fabricación más avanzados, o para tener un control completo sobre el proceso de fabricación, puedes usar XenonCode.
 
-El Crafter proporciona cuatro funciones XenonCode para obtener información sobre las recetas disponibles:
+El Crafter proporciona cinco funciones XenonCode para obtener información sobre las recetas disponibles:
 
 - `get_recipes_categories("crafter")` : Devuelve la lista de categorías de recetas disponibles en el Crafter.
 - `get_recipes("crafter", "PARTS")` : Devuelve la lista de recetas disponibles en la categoría `PARTS`.
 - `get_recipe("crafter", "Circuit")` : Devuelve la lista de ingredientes necesarios para la receta `Circuit`.
 - `get_recipe_label("ARCHEAN_parts.Circuit")` : Devuelve el nombre legible para mostrar (por ejemplo, `"Circuit"`).
+- `get_item_value_unit("ARCHEAN_celestial.Titanium", 100000)` : Devuelve la cantidad formateada con su unidad (por ejemplo, `"100kg"` para minerales, un número simple para piezas).
 
 #### Programa integrado
 El programa integrado del Crafter — el que se usa automáticamente en la *Configuración simple de auto-fabricación* — ya implementa una lógica de auto-fabricación completamente funcional usando estas funciones. Puedes usarlo como inspiración o crear tu propio programa personalizado para necesidades más avanzadas o específicas.
@@ -204,7 +205,7 @@ function @drawScreen()
 					var $recipeInputs = get_recipe("crafter", $currentCraft)
 					$dpIndex++
 					foreach $recipeInputs ($item, $qty)
-						write(20,(12*$dpIndex+2)-$cursor,color(100,100,100), get_recipe_label($item) & ": " & $qty)
+						write(20,(12*$dpIndex+2)-$cursor,color(100,100,100), get_recipe_label($item) & ": " & get_item_value_unit($item, $qty:number))
 						$dpIndex++
 				else
 					write(10,(12*$dpIndex+2)-$cursor,color(100,100,100),get_recipe_label($craft))
