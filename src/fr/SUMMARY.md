@@ -7,6 +7,7 @@
 #
 # Mécaniques de jeu
 - [Interfaces & Inventaire](interfaces.md)
+- [Noms des items et des modules](itemlist.md)
 - [Modes de jeu](gamemode.md)
 - [Push & Pull](pushpull.md)
 - [Pressurisation](pressurization.md)

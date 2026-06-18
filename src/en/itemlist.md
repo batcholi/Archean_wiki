@@ -1,10 +1,8 @@
 # Item & Module Names
 
-This page lists **every item, block and component** in the game together with the exact name to use in your XenonCode programs (for example with a `Crafter`'s `start_craft()`, or anywhere a recipe name is expected).
+Every item, block and component in the game, with the exact name (`<Module>.<Item>`) to use in your XenonCode programs.
 
-Each entry is shown as `` `<Module>.<Item>` `` — the full identifier — followed by its readable name and its maximum stack size (how many fit in one inventory slot).
-
-> Tip: you can also retrieve these at runtime from a computer with `get_recipes_categories()`, `get_recipes()` and `get_recipe()`.
+> Tip: you can also get these at runtime with `get_recipes()` and `get_recipe()`.
 
 ## ARCHEAN_aileron
 

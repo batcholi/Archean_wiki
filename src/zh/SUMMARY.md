@@ -7,6 +7,7 @@
 #
 # 游戏玩法与机制
 - [界面与物品栏](interfaces.md)
+- [物品与模块名称](itemlist.md)
 - [游戏模式](gamemode.md)
 - [Push & Pull](pushpull.md)
 - [增压系统](pressurization.md)

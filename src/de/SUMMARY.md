@@ -7,6 +7,7 @@
 #
 # Spielmechanik
 - [Benutzeroberfläche & Inventar](interfaces.md)
+- [Item- und Modulnamen](itemlist.md)
 - [Spielmodi](gamemode.md)
 - [Push & Pull](pushpull.md)
 - [Druckbeaufschlagung](pressurization.md)

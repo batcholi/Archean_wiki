@@ -7,6 +7,7 @@
 #
 # Геймплей и механики
 - [Interfaces & Inventory](interfaces.md)
+- [Названия предметов и модулей](itemlist.md)
 - [Game modes](gamemode.md)
 - [Push & Pull](pushpull.md)
 - [Pressurization](pressurization.md)
