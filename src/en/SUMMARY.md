@@ -7,6 +7,7 @@
 # 
 # Gameplay & Mechanics
 - [Interfaces & Inventory](interfaces.md)
+- [Item & Module Names](itemlist.md)
 - [Game modes](gamemode.md)
 - [Push & Pull](pushpull.md)
 - [Pressurization](pressurization.md)
