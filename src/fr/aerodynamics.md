@@ -1,230 +1,199 @@
 # Aérodynamique
 
-Archean simule des forces aérodynamiques qui s'appliquent automatiquement à tout véhicule se déplaçant dans un milieu fluide — que ce soit l'air ou l'eau. Ces forces comprennent la **traînée** (résistance au mouvement), la **portance** (force perpendiculaire générée par les surfaces fines) et la **flottabilité** (force ascendante due au déplacement de fluide). Comprendre ces systèmes est essentiel pour concevoir des aéronefs, bateaux, sous-marins et toute autre création mobile efficace.
+Archean simule des forces aérodynamiques réalistes, dignes d'un simulateur de vol, sur tout véhicule se déplaçant dans un fluide — air ou eau. Le moteur produit de la **portance**, de la **traînée**, de la **stabilité**, de l'**autorité de contrôle**, de la **flottabilité** et même un **échauffement de rentrée**, le tout à partir de la **forme** réelle de votre construction. Il n'existe pas de « blocs d'aile » spéciaux ni de statistiques cachées : si ça ressemble à une aile et que c'est placé comme une aile, ça vole comme une aile.
 
 ## Fonctionnement
 
-### Milieu fluide
+### Le champ de forme (modèle de section transversale)
 
-Le moteur physique interroge l'environnement à chaque point pertinent de votre véhicule pour déterminer les propriétés locales du fluide :
+Lorsque vous terminez l'édition d'une construction, le moteur prend un **instantané de sa forme extérieure** en la balayant depuis les six directions des axes (comme une cubemap), puis transforme le résultat en un ensemble de petites parcelles de surface. Chaque parcelle connaît sa position, la direction qu'elle expose, son aire et — surtout — **la profondeur du corps derrière elle** (sa section transversale).
 
-| Propriété | Description | Valeurs d'exemple |
-|----------|-------------|----------------|
-| **Densité** (kg/m³) | Masse par unité de volume du fluide | Air au niveau de la mer : ~1.2, Eau : ~1000 |
-| **Viscosité** (kg/(m·s)) | Résistance à l'écoulement au sein du fluide | Utilisée pour la détection de l'eau et l'amortissement |
+Cet instantané est **mis en cache** et n'est reconstruit que lorsque la construction change (ajout/retrait de blocs, mouvement d'une surface de contrôle, ou dégâts subis). La physique de vol par image ne fait que lire les parcelles en cache, si bien que le coût reste **borné quelle que soit la complexité du véhicule** — un avion de ligne de 300 mètres avec des centaines de colliders se pilote aussi efficacement qu'un petit chasseur. La résolution du balayage s'adapte automatiquement à la taille du véhicule.
 
-- Dans l'**air**, la densité diminue avec l'altitude. Plus l'altitude est élevée, moins il y a de traînée et de portance.
-- Dans l'**eau**, la densité est environ 800 fois supérieure à celle de l'air — les forces aérodynamiques sont considérablement plus fortes.
-- Dans l'**espace** (vide), la densité est de 0 — aucune force aérodynamique ne s'applique.
+Trois promesses en découlent — et le moteur les tient **exactement**, pas approximativement :
 
-> Les forces aérodynamiques ne s'activent que lorsque la vitesse d'un véhicule dépasse **0.1 m/s**. En dessous de ce seuil, les forces ne sont pas calculées.
+- **La façon dont vous bâtissez une forme ne change jamais sa manière de voler — seule la forme finale compte.** Une aile de 10 × 10 × 1 faite d'un seul grand bloc ou d'une centaine de petits donne un résultat **strictement identique** : les mêmes forces et les mêmes moments, jusqu'au dernier chiffre. La subdivision, le nombre de blocs et la manière dont la géométrie est découpée ou fusionnée sont totalement invisibles pour l'écoulement — seuls comptent la silhouette extérieure et la section transversale.
+- **L'air et l'eau relèvent de la même physique — il n'y a pas de « voie eau » séparée.** Le modèle échantillonne la **densité du fluide à chaque surface** et l'injecte dans les *mêmes* équations de portance et de traînée. L'air, la ligne de flottaison et l'eau profonde ne sont que des points d'une seule échelle continue de densité, si bien qu'une aile devient progressivement un hydrofoil en s'immergeant — rien ne bascule.
+- **Le matériau est invisible pour le vol.** Acier, aluminium, composite — une plaque plate reste une plaque plate. **Le matériau n'affecte que la masse et la flottabilité, jamais la portance ni la traînée** — il change l'*équilibrage* de l'avion, pas sa *façon de voler*.
 
-### Traînée
-
-La traînée est la force qui s'oppose au mouvement d'un véhicule à travers un fluide. Elle agit dans la **direction opposée** à la vitesse.
-
-La force de traînée sur chaque surface exposée suit l'équation aérodynamique standard :
-
-**F = ½ × C<sub>d</sub> × ρ × v² × A**
-
-| Symbole | Signification | Valeur |
-|--------|---------|-------|
-| C<sub>d</sub> | Coefficient de traînée | **0.4** pour les surfaces de blocs |
-| ρ | Densité du fluide (kg/m³) | Dépend de l'environnement |
-| v | Vitesse relative à la surface (m/s) | Vitesse du véhicule + vitesse de rotation en ce point |
-| A | Surface frontale exposée (m²) | Perpendiculaire à la vitesse, mise à l'échelle par le ratio d'occupation |
-
-Points clés :
-- La traînée augmente avec le **carré** de la vitesse — doubler votre vitesse quadruple la traînée
-- Seules les **surfaces exposées** contribuent à la traînée (voir [Occultation](#occultation-et-surfaces-exposées))
-- La force est calculée **par surface**, à la position de chaque surface, ce qui signifie que la traînée peut aussi induire un **couple** (rotation) si elle est appliquée hors du centre
+> Seule la **coque extérieure** est balayée. Les blocs intérieurs ne sont jamais exposés au flux d'air : ils n'ajoutent **aucune** traînée aérodynamique ni aucun coût — et comme le modèle lit l'épaisseur de matière solide derrière une surface (une cavité scellée compte comme du corps plein), une forme creuse vole exactement comme sa version pleine. Remplissez vos intérieurs, ou évidez-les, librement ; cela ne change jamais la façon dont l'engin vole.
 
 ### Portance
 
-La portance est générée automatiquement par les **structures fines et plates** — comme les ailes ou les ailerons — que le moteur physique détecte en fonction de la géométrie.
+Une surface génère de la **portance** (se comporte comme une aile) lorsque sa **section transversale est mince** — la profondeur avant-arrière de matière solide à cette surface est faible par rapport à la taille du véhicule. Une aile est mince de haut en bas mais large en envergure et en corde, donc elle porte. Un fuselage est profond dans toutes les directions, donc il ne fait que traîner.
 
-Une surface est classée comme **surface de portance** lorsque toutes les conditions suivantes sont remplies :
+- La portance suit une **courbe de portance réaliste** : elle augmente avec l'angle d'attaque, puis **décroche** au-delà d'environ **15°**, après quoi la portance chute et la traînée grimpe fortement — comme un véritable profil d'aile.
+- La portance est **bi-face** : une aile exposée à l'air sur ses deux faces produit toute sa portance ; une aile dont le dessous est plaqué contre le fuselage porte quand même, à puissance réduite.
+- **Les surfaces distinctes portent chacune pour leur propre compte.** Un empennage bidérive, des ailes superposées (biplan) ou une dérive alignée derrière une autre sur le même axe sont lues comme les surfaces minces distinctes qu'elles sont — l'espace d'air entre elles n'est pas compté comme du corps plein, si bien que chacune d'elles fonctionne.
+- La portance est calculée **à l'emplacement de chaque surface**, ce qui produit naturellement les bons moments de **tangage, roulis et lacet** autour de votre centre de masse.
 
-| Condition | Seuil |
-|-----------|-----------|
-| Épaisseur (dimension la plus courte) | < **0.3 m** |
-| Largeur (dimension intermédiaire) | ≥ **longueur / 4** |
-| Longueur (dimension la plus longue) | ≥ **4 m** |
+> **Pour faire une aile, faites-la géométriquement mince.** Une voilure large et plate de seulement un ou deux blocs d'épaisseur portera. Une aile épaisse et profonde ne fera surtout que traîner. La façon de la subdiviser ou son matériau n'importent pas — seule la section transversale compte.
 
-Lorsqu'une surface de portance est détectée :
-- Le **coefficient de portance** dépend de l'angle d'attaque : `C_l = sin(|angle_d_attaque| × π/2)`
-- Le **coefficient de traînée** est très faible : seulement **0.01** (contre 0.4 pour les surfaces normales)
-- La force de portance est perpendiculaire à la vitesse, poussant le véhicule dans la direction de la normale à la surface
+### Traînée
 
-> Pour construire des ailes qui génèrent de la portance, utilisez des arrangements plats de blocs d'au moins **4 mètres de long** et de **moins de 0.3 mètre d'épaisseur**. Les pentes peuvent être utilisées pour façonner les bords d'attaque et de fuite.
+La traînée provient de plusieurs sources physiques, combinées automatiquement :
+
+| Source | Description |
+|--------|-------------|
+| **Traînée de forme (pression)** | La poussée de l'air sur les surfaces face au flux. Croît avec le **carré de la vitesse**. |
+| **Frottement de peau** | Le frottement de l'air le long des surfaces parallèles au flux (basé sur le nombre de Reynolds). Dominant pour les grands corps lents. |
+| **Traînée induite** | La traînée inévitable qui accompagne la portance — plus de portance signifie plus de traînée induite. |
+
+Le comportement nouveau clé est le **profilage basé sur la finesse**. Le moteur mesure à quel point chaque surface est **élancée** — jusqu'où le corps s'étend *le long* du flux par rapport à sa minceur *en travers* :
+
+- Une forme **élancée** (un nez pointu, le bord d'attaque tranchant d'une aile, un long fuselage mince avançant) garde le flux attaché et a une traînée de forme **très faible**.
+- Une forme **émoussée** (un cube, une plaque plate placée de côté comme un aérofrein, un nez épaté) a une traînée de forme **maximale**.
+
+C'est purement géométrique — cela lit la section transversale réelle de votre construction, donc profiler votre nez et vos bords paie vraiment.
+
+> Utilisez des pentes, des coins et des biseaux pour effiler les nez et les bords d'attaque/de fuite. Une forme profilée peut avoir **un dixième** de la traînée de forme d'une forme émoussée de même taille frontale.
+
+### Compressibilité (haute vitesse)
+
+Le modèle tient compte des régimes. À l'approche et au-delà de la **vitesse du son** (qui dépend de la température de l'air), la pression sur les surfaces orientées vers l'avant augmente dans le régime transsonique et supersonique, et **la portance des ailes s'estompe en supersonique** (vous comptez davantage sur la portance du corps et la déflexion des gouvernes). Le vol à Mach élevé devient nettement plus lourd et moins réactif, comme il se doit.
+
+### Stabilité — émergente, non scriptée
+
+Il n'y a **aucun amortissement artificiel** du type « garder le nez vers l'avant ». La stabilité est un résultat réel et émergent de l'emplacement de vos surfaces :
+
+- Un **stabilisateur horizontal** monté derrière le centre de masse rencontre le flux d'air sous un angle dès que le nez pique ou cabre, générant une **force de rappel** qui ramène le nez. C'est une **stabilité en tangage** automatique.
+- Un **stabilisateur vertical** (dérive) fait de même pour le **lacet** dès que le véhicule dérape.
+- L'**amortissement en rotation** (résistance à la vrille) émerge aussi naturellement — les surfaces éloignées du centre de masse se déplacent vite dans l'air quand le véhicule tourne, et les forces qui en résultent s'opposent à la rotation.
+
+Comme c'est de la vraie physique, **la stabilité statique dépend de votre centre de masse**. Un avion est stable quand son **centre de masse se situe au niveau ou légèrement en avant du centre de portance de l'aile**, et instable quand la masse est trop en arrière — exactement comme un vrai avion (et un vrai modèle réduit). Voir [Bien voler](#bien-voler) ci-dessous.
+
+> L'ancienne stabilisation angulaire artificielle à haute vitesse a **disparu** pour les constructions utilisant ce modèle. Si votre avion semble nerveux ou refuse de se stabiliser, c'est un problème d'**équilibrage**, pas le moteur qui vous combat : déplacez de la masse vers l'avant ou ajoutez de la surface de queue.
+
+### Surfaces de contrôle et autorité
+
+Les surfaces de contrôle (les [Ailerons](components/miscellaneous/Aileron.md) utilisés comme ailerons, gouvernes de profondeur ou de direction) sont montées sur charnières et **se défléchissent en temps réel**. Le moteur réévalue l'aérodynamique d'une surface défléchie **à son angle courant à chaque image**, si bien que :
+
+- Une gouverne de profondeur braquée change immédiatement le flux d'air sur l'empennage et fait tanguer l'avion.
+- L'autorité dépend de l'**aire** de la surface, de sa **distance au centre de masse** (bras de levier) et de **densité de l'air × vitesse²**.
+
+> **Pour un contrôle puissant :** faites des surfaces de contrôle **grandes** et montez-les **loin du centre de masse**. Une gouverne de profondeur tout au bout de la queue a bien plus d'autorité en tangage qu'une près de l'aile. Un air plus rapide et plus dense donne plus d'autorité — les commandes mollissent à basse vitesse et haute altitude.
+
+### Aérodynamique sensible aux dégâts
+
+Les dégâts de combat changent la façon dont une surface vole. À mesure qu'un panneau est déformé ou troué (et de plus en plus à mesure qu'il est détruit) :
+
+- Il **perd sa portance** — une aile détruite cesse de voler.
+- Il **perd son profilage et sa récupération de pression**, et **traîne davantage** (il génère un sillage turbulent).
+
+Comme la portance et la traînée sont calculées par surface, les **dégâts asymétriques** ont le bon effet : une aile criblée d'un côté à la fois fait **rouler** l'avion (perte de portance de ce côté) et le fait **lacer** (traînée supplémentaire de ce côté). Les conceptions symétriques et redondantes survivent mieux au combat.
 
 ### Flottabilité
 
-La flottabilité est la force ascendante exercée sur un objet immergé ou partiellement immergé. Elle s'oppose à la gravité et dépend de la quantité de fluide que les blocs du véhicule déplacent.
+La flottabilité est la force ascendante sur les blocs immergés, calculée par collider à partir du volume de fluide déplacé par chaque bloc.
 
 **F<sub>flottabilité</sub> = V<sub>déplacé</sub> × ρ<sub>fluide</sub> × g**
 
-| Symbole | Signification |
-|--------|---------|
-| V<sub>déplacé</sub> | Volume déplacé (volume du bloc × `volumeDisplacementRatio`) |
-| ρ<sub>fluide</sub> | Densité du fluide au point d'échantillonnage |
-| g | Accélération gravitationnelle (direction opposée) |
+- Le volume déplacé de chaque bloc = son volume × le **ratio de déplacement volumique** de son matériau (voir [Matériaux](#matériaux)).
+- Les blocs endommagés perdent presque toute leur flottabilité.
+- La flottabilité est appliquée là où se trouvent réellement les blocs, donc une immersion inégale incline le navire — un effet d'auto-redressement pour les coques bien formées.
 
-- Le moteur échantillonne **au moins 16 points aléatoires** sur tous les colliders pour gérer l'**immersion partielle** en douceur
-- La contribution de chaque bloc dépend du `volumeDisplacementRatio` de son matériau (voir [Matériaux](#matériaux))
-- La flottabilité est appliquée à chaque point d'échantillonnage, de sorte qu'un véhicule peut s'incliner en cas d'immersion inégale
+### Eau
 
-## Blocs et formes
+L'eau n'est **pas un cas particulier**. Le modèle échantillonne la **densité du fluide à chaque surface** — air au-dessus de la ligne de flottaison, eau en dessous, avec une transition continue — de sorte que le *même* modèle de portance et de traînée produit simplement des forces bien plus grandes sous l'eau, où le fluide est **~800× plus dense** que l'air. Rien n'est codé en dur pour le fait « d'être dans l'eau » :
 
-### Formes de blocs
+- Une aile devient un **hydrofoil** : elle porte et traîne sous l'eau exactement comme dans l'air, mais bien plus fortement. **Les gouvernes continuent de fonctionner sous l'eau**, si bien qu'un sous-marin se dirige avec les mêmes ailerons et empennages qu'un avion.
+- **La traînée est énorme** et croît avec le carré de la vitesse : un corps qui entre dans l'eau décélère brutalement et une coque flottante est naturellement retenue au lieu de jaillir hors de l'eau — sans aucun amortissement artificiel.
+- **L'amortissement en rotation** provient directement du même modèle : les surfaces éloignées du centre de masse se déplacent vite dans le fluide dense quand l'engin tourne ou bascule, de sorte que bateaux et sous-marins se stabilisent naturellement.
 
-Les différentes formes de blocs ont des **ratios d'occupation** différents, qui affectent directement les calculs de traînée :
+> Comme les forces augmentent avec la densité, **toucher l'eau à grande vitesse est un véritable impact**. Un plat à grande vitesse charge toute la face de contact bien au-delà de ce que la structure peut encaisser et la **déforme ou la détruit**, exactement comme un choc contre un sol dur — alors entrez dans l'eau avec un angle faible et ralentissez d'abord.
 
-| Forme | Ratio d'occupation | Multiplicateur de masse |
-|-------|----------------|-----------------|
-| **Cube** | 1.0 | 1.0× |
-| **Pente** | 0.5 | 0.5× |
-| **Coin** | 0.5 | 0.5× |
-| **Pyramide** | 0.5 | 0.5× |
-| **Coin inversé** | 0.5 | 0.5× |
+### Échauffement de rentrée
 
-Le ratio d'occupation met à l'échelle la surface de traînée calculée — un bloc en pente face au vent produit environ **la moitié de la traînée** d'un cube à la même position.
+Se déplacer vite dans l'air chauffe les surfaces orientées vers l'avant vers la **température d'arrêt (de récupération)**, qui croît avec le carré de la vitesse. C'est doux en supersonique mais **explosif aux vitesses de rentrée**, et chaque matériau se consume au-delà de sa propre limite thermique — donc un bouclier thermique, un angle de rentrée raide mais survivable, et la perte de vitesse en haute altitude comptent tous.
+
+## Blocs et matériaux
 
 ### Matériaux
 
-Chaque matériau de bloc possède des propriétés physiques différentes qui affectent l'aérodynamique, la flottabilité et la masse :
+Le choix du matériau affecte la **masse** et la **flottabilité** — donc l'**équilibrage** — mais **pas la portance ni la traînée** :
 
-| Matériau | Masse (kg/unité de bloc) | Ratio de déplacement de volume | Friction |
-|----------|---------------------|--------------------------|----------|
-| **Composite** | 0.25 | 0.20 × occupation | 0.05 |
-| **Béton** | 10.0 | 0.25 × occupation | 0.50 |
-| **Acier** | 1.0 | 0.01 × occupation | 0.20 |
-| **Aluminium** | 0.5 | 0.01 × occupation | 0.20 |
-| **Verre** | 1.0 | 0.02 × occupation | 0.10 |
-| **Plomb** | 150.0 | 1.00 × occupation | 0.20 |
+| Matériau | Masse (par unité de bloc) | Déplacement volumique (flottabilité) |
+|----------|---------------------------|--------------------------------------|
+| **Composite** | 0.25 | 0.20 × occupation |
+| **Béton** | 10.0 | 0.25 × occupation |
+| **Acier** | 1.0 | 0.01 × occupation |
+| **Aluminium** | 0.5 | 0.01 × occupation |
+| **Verre** | 1.0 | 0.02 × occupation |
+| **Plomb** | 150.0 | 1.00 × occupation |
+| **Titane** | 0.6 | 0.01 × occupation |
 
-Le **ratio de déplacement de volume** détermine combien un bloc contribue à la flottabilité et sa visibilité pour la détection des surfaces aérodynamiques :
-- Le **Plomb** (1.0) déplace entièrement le fluide — force de flottabilité maximale mais aussi très lourd, donc il coule
-- L'**Acier/Aluminium** (0.01) déplacent à peine le fluide — ils ne contribuent presque pas à la flottabilité
-- Le **Composite** (0.2) offre un équilibre modéré entre flottabilité et légèreté
+- Le **Plomb** est dense et déplace tout — idéal comme **lest de nez** pour ramener votre centre de masse vers l'avant (ou comme lest de quille dans un bateau), mais il coule.
+- Le **Composite** est léger avec un déplacement modéré — le meilleur flotteur polyvalent.
+- L'**Acier/Aluminium/Titane** déplacent à peine le fluide — solides et légers, mais ne contribuent presque pas à la flottabilité.
 
-### Occultation et surfaces exposées
+> Comme le matériau ne change pas l'aérodynamique, vous choisissez les matériaux pour la **solidité, le poids, la résistance à la chaleur et l'équilibrage** — pas pour les performances de vol.
 
-Le système aérodynamique utilise le **raycasting** pour déterminer quelles surfaces sont réellement exposées au flux d'air :
+### Formes de blocs
 
-1. Pour chaque collider de bloc, le moteur identifie la surface faisant face à la direction de la vitesse
-2. Un rayon est lancé depuis cette surface vers l'extérieur dans la direction de la vitesse
-3. Si le rayon touche un autre bloc du même véhicule, cette surface est considérée comme **occultée** et ne contribue **pas** à la traînée ou à la portance
-4. Seules les surfaces véritablement exposées génèrent des forces aérodynamiques
-
-Cela signifie :
-- Les **blocs internes** à l'intérieur d'une coque n'ajoutent pas de traînée — seule l'enveloppe extérieure compte
-- Un **véhicule compact** avec moins de faces exposées a moins de traînée qu'une structure étalée
-- Quand un groupe de blocs a un ratio d'occupation inférieur à **0.9**, le système examine récursivement les blocs enfants individuels pour trouver les surfaces réellement exposées
-
-> C'est un point d'optimisation important : deux véhicules avec la même forme extérieure mais des structures internes différentes subiront la **même** traînée aérodynamique. Remplissez les intérieurs librement sans vous soucier de la traînée supplémentaire.
+Les pentes, coins et pyramides occupent une demi-case et sont plus légers. Sur le plan aérodynamique, ils comptent parce qu'ils permettent d'**effiler** les surfaces — transformant une face émoussée et traînante en une face élancée et profilée. Utilisez-les sur les nez et les bords d'aile.
 
 ### Poutres de cadre
 
-Les poutres de cadre (les barres structurelles aux bords des cadres) ont un **ratio de déplacement de volume de 0**. Cela signifie :
-
-- Elles ne produisent **aucune traînée**
-- Elles ne produisent **aucune portance**
-- Elles ne produisent **aucune flottabilité**
-- Elles servent uniquement de géométrie de collision structurelle
-
-> Les poutres de cadre sont aérodynamiquement invisibles. Utilisez-les librement pour la structure interne sans affecter les performances aérodynamiques de votre véhicule.
+Les poutres de cadre (les barres structurelles aux bords des cadres) sont **aérodynamiquement invisibles** — aucune portance, aucune traînée, aucune flottabilité. Utilisez-les librement comme structure interne.
 
 ## Composants aérodynamiques
 
 ### Aileron
 
-L'[Aileron](components/miscellaneous/Aileron.md) est une surface de contrôle qui se défléchit pour créer des forces perpendiculaires au flux d'air. Il est utilisé pour diriger les aéronefs et les embarcations.
+L'[Aileron](components/miscellaneous/Aileron.md) est une surface de contrôle articulée utilisée comme aileron, gouverne de profondeur ou de direction. L'entrée est une valeur de `-1.0` à `+1.0` (rotation de −45° à +45°) via son port de données.
 
-- **Entrée** : une valeur entre `-1.0` et `+1.0` via son port de données, contrôlant la rotation de -45° à +45°
-- **Force** : proportionnelle à la densité du fluide × vitesse² × angle de déflexion
-- **Ne calcule pas l'occultation** — contrairement aux blocs, l'Aileron génère toujours sa pleine force indépendamment de la géométrie environnante
-
-> Comme les Ailerons ignorent l'occultation, vous pouvez les **cacher à l'intérieur des ailes** faites de blocs. Les blocs auront leurs surfaces occultées (réduisant la traînée), tandis que les Ailerons produisent toujours leur pleine force de contrôle.
+- Il calcule sa **propre** force de contrôle et est **exclu du champ de forme principal**, donc il ne se compte jamais deux fois et délivre toujours sa pleine autorité même entouré de structure.
+- Vous pouvez bâtir la partie fixe d'une aile ou d'un empennage en blocs (gérés par le champ) et placer des **ailerons au bord de fuite** pour le contrôle.
 
 ### Propeller
 
-Le [Propeller](components/propulsion/Propeller.md) génère de la poussée en faisant tourner des pales dans un milieu fluide. Il fonctionne aussi bien dans l'air que dans l'eau.
+Le [Propeller](components/propulsion/Propeller.md) (hélice) génère une poussée dans l'air ou l'eau et est exclu du champ de forme (il a son propre modèle). Comportements clés : la poussée dépend de la densité du fluide et de l'aire du disque ; l'**effet de sol** augmente la poussée jusqu'à **+50 %** près du terrain ; les pales en rotation créent une résistance **gyroscopique** à la réorientation ; la poussée est plafonnée à **100 000 N**.
 
-Physique clé :
-- **Poussée** = ½ × ρ × A<sub>disque</sub> × v<sub>effective</sub>² × 0.4
-- **Traînée sur les pales** = ½ × ρ × viscosité × A<sub>disque</sub> × v<sub>effective</sub>² × 10.0
-- **Effet de sol** : lorsqu'un Propeller est proche du sol et orienté vers le bas, la poussée augmente jusqu'à **+50 %** (dans un rayon de 3× le rayon des pales par rapport au terrain)
-- **Précession gyroscopique** : les Propellers en rotation résistent aux changements d'orientation, créant un couple perpendiculaire à l'axe de rotation — comme de vrais gyroscopes
-- La poussée maximale est plafonnée à **100 000 N**
+### Thruster et RCS
 
-### Thruster & RCS
+Les [Thrusters](components/propulsion/thruster/SmallThruster.md) chimiques ne sont pas affectés par l'aérodynamique et fonctionnent de la même façon en atmosphère et dans le vide. Les [RCS](components/propulsion/RCS.md) perdent presque toute leur efficacité dans les fluides denses (atténuation ≈ e<sup>−ρ×4</sup>) — ils sont faits pour l'espace.
 
-Les [Thrusters](components/propulsion/thruster/SmallThruster.md) chimiques génèrent de la poussée par combustion de carburant et ne sont **pas affectés** par l'aérodynamique externe pour leur rendement de poussée — ils fonctionnent de la même manière dans l'atmosphère et dans le vide.
+## Bien voler
 
-Les propulseurs [RCS](components/propulsion/RCS.md) (Reaction Control System), en revanche, subissent une **atténuation atmosphérique** :
+### Construire des ailes
 
-**atténuation = max(e<sup>-ρ×4</sup>, 0.01)**
+- Faites l'aile **géométriquement mince** — une voilure large et plate d'un ou deux blocs d'épaisseur. Section plus mince = portance plus propre.
+- Donnez-lui de l'**envergure et de la corde** ; une aile longue et large porte plus et décroche plus en douceur.
+- Le **matériau et le nombre de blocs n'importent pas** pour la portance — construisez pour la solidité et le poids.
+- Effilez les **bords d'attaque et de fuite** avec des pentes pour réduire la traînée.
 
-| Environnement | Densité (ρ) | Atténuation | Poussée effective |
-|-------------|-------------|-------------|-----------------|
-| Vide | 0 | 100 % | Pleine poussée |
-| Air (niveau de la mer) | ~1.2 | ~99.2 % | Quasi pleine |
-| Eau | ~1000 | ~1 % | Presque aucune poussée |
+### Équilibrer pour un vol stable
 
-> Les propulseurs RCS sont conçus pour les manoeuvres spatiales. Dans les atmosphères denses ou l'eau, leur efficacité chute considérablement.
+C'est la chose la plus importante pour un avion qui vole bien :
 
-## Physique aquatique
+- Gardez le **centre de masse au niveau ou légèrement en avant des ailes**. Ajoutez de la masse dense (par ex. du **plomb** ou des composants lourds) vers le **nez** pour l'amener en avant — les vrais avions portent leur moteur à l'avant pour exactement cette raison.
+- Un avion **trop chargé de l'arrière** (masse trop en arrière) est instable : il tangue et lace de façon divergente et est épuisant à piloter.
+- Montez des **stabilisateurs horizontaux** bien en arrière du centre de masse pour la stabilité en tangage, et une **dérive** pour la stabilité en lacet. Plus de surface de queue et une queue plus longue = plus de stabilité.
+- Si une construction refuse de se calmer, **déplacez de la masse vers l'avant** ou **ajoutez de la surface de queue** avant d'accuser les commandes.
 
-Lorsqu'un véhicule entre dans l'eau, le moteur physique applique des effets d'amortissement supplémentaires au-delà de la traînée standard :
+### Autorité de contrôle
 
-### Détection de l'eau
-
-Le moteur détecte l'eau en mesurant la **viscosité** de l'environnement. Une viscosité comprise entre **0.0000151** et **0.000999** kg/(m·s) est classée comme de l'eau.
-
-### Effets d'amortissement aquatique
-
-| Effet | Description |
-|--------|-------------|
-| **Suppression de la vitesse verticale** | La vitesse verticale est réduite au fil du temps, simulant la résistance de l'eau au mouvement vertical |
-| **Amortissement du tangage et du roulis** | La rotation autour des axes horizontaux est amortie proportionnellement au degré d'immersion du véhicule |
-| **Amortissement du lacet** | La rotation autour de l'axe vertical est amortie à **la moitié** du taux du tangage/roulis |
-
-Le **facteur d'immersion** est calculé à partir de la viscosité moyenne : `immergé = clamp(pow(viscosité × 1000, 0.1), 0.5, 1.0)`
-
-> L'eau stabilise naturellement les véhicules. Un véhicule partiellement immergé résistera au chavirement grâce à l'amortissement du tangage/roulis. Cela rend les bateaux intrinsèquement plus stables que les aéronefs.
-
-## Stabilité angulaire à haute vitesse
-
-À des vitesses supérieures à **10 m/s**, le moteur physique applique un amortissement angulaire artificiel qui simule l'accumulation de pression sur les surfaces du véhicule :
-
-**ω -= ω × min(1, ρ) × clamp(Δt × |v| / 25, 0, 0.025)**
-
-Cela signifie :
-- Les **véhicules plus rapides** sont plus stables en rotation
-- Les **fluides plus denses** (eau > air) fournissent une stabilisation plus forte
-- Cela empêche les véhicules de tournoyer de manière incontrôlable à haute vitesse
-- Dans l'eau à haute viscosité, un facteur d'amortissement angulaire supplémentaire est appliqué
-
-## Conseils de conception
+- Des surfaces de contrôle plus grandes, montées **plus loin du centre de masse**, donnent plus d'autorité.
+- Placez les **gouvernes de profondeur tout au bout de la queue** pour le tangage, les **gouvernes de direction sur la dérive** pour le lacet, les **ailerons en bout d'aile** pour le roulis.
+- L'autorité chute à **basse vitesse** et **haute altitude** (air raréfié) — gardez de la vitesse à l'approche.
 
 ### Réduire la traînée
-- **Minimisez la surface exposée** — une forme compacte et profilée crée moins de traînée
-- Utilisez des **pentes, coins et biseaux** sur les bords d'attaque et les nez au lieu de faces de cubes plates
-- Les **blocs internes n'ajoutent pas de traînée** — seule l'enveloppe extérieure compte, remplissez les intérieurs selon vos besoins
-- Les poutres de cadre sont aérodynamiquement invisibles — utilisez-les librement pour la structure interne
 
-### Construire des ailes efficaces
-- Les ailes doivent mesurer **au moins 4 mètres de long**, **moins de 0.3 mètre d'épaisseur**
-- Une envergure plus large (largeur ≥ longueur/4) garantit que la surface est classée comme surface de portance plutôt que surface de traînée
+- **Profilez** les nez et les bords avec des pentes — les formes élancées traînent beaucoup moins.
+- Gardez le véhicule **compact** ; les structures étalées présentent plus d'aire frontale.
+- Les **blocs intérieurs sont gratuits** — seule la coque extérieure est balayée, donc l'aménagement interne n'ajoute jamais de traînée.
 
-### Conception d'embarcations
-- Les **blocs Composite** (ratio 0.2) offrent le meilleur rapport flottabilité/poids pour flotter
-- L'**Acier et l'Aluminium** (ratio 0.01) contribuent à peine à la flottabilité — utilisez-les avec parcimonie dans les bateaux
-- Le **Plomb** (ratio 1.0) déplace le plus de fluide, mais à 150 kg par unité il coulera rapidement
-- L'amortissement aquatique stabilise naturellement votre embarcation — les coques larges et plates sont les plus stables
+### Embarcations
 
-### Placement des Propellers
-- L'**effet de sol** augmente la poussée jusqu'à 50 % à proximité du terrain — utile pour la conception d'aéroglisseurs
-- Les Propellers génèrent un **couple gyroscopique** — des paires de Propellers contrarotatifs annulent cet effet
-- Les Propellers fonctionnent dans l'air et dans l'eau, adaptant leur poussée en fonction de la densité et de la viscosité du fluide
+- Utilisez le **composite** pour la coque (meilleur rapport flottabilité/poids) ; utilisez le **plomb au fond de la quille** pour la stabilité.
+- Les coques **larges et plates** sont les plus stables — l'amortissement de l'eau fait le reste.
+- L'**acier/aluminium** flottent à peine ; utilisez-les au-dessus de la ligne de flottaison.
+
+### Survivre au combat
+
+- **Symétrie et redondance :** des dégâts d'aile asymétriques vous font *rouler* et *lacer*, donc dupliquez les surfaces portantes et de contrôle critiques des deux côtés.
+- Attendez-vous à ce qu'une aile endommagée **perde de la portance et traîne davantage** — gardez de la vitesse et de l'altitude en réserve.
+
+### Performances
+
+Le champ de forme est mis en cache et n'est reconstruit que lorsque la construction change ou subit des dégâts, et son coût est borné quelles que soient la taille ou le nombre de blocs. Vous ne payez jamais de pénalité par image pour le détail ou le remplissage intérieur — alors construisez aussi grand et détaillé que vous le souhaitez.

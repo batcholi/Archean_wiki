@@ -1,230 +1,199 @@
 # Aerodynamics
 
-Archean simulates aerodynamic forces that automatically apply to any vehicle moving through a fluid medium — whether it's air or water. These forces include **drag** (resistance to motion), **lift** (perpendicular force from thin surfaces), and **buoyancy** (upward force from fluid displacement). Understanding how these systems work is key to designing efficient aircraft, boats, submarines, and any other moving creation.
+Archean simulates realistic, flight-sim-grade aerodynamic forces on any vehicle moving through a fluid — air or water. The engine produces **lift**, **drag**, **stability**, **control authority**, **buoyancy**, and even **re-entry heating**, all from the actual **shape** of your build. There are no special "wing blocks" or hidden stats: if it looks like a wing and is placed like a wing, it flies like a wing.
 
 ## How It Works
 
-### Fluid Medium
+### The shape field (cross-section model)
 
-The physics engine queries the environment at each relevant point on your vehicle to determine the local fluid properties:
+When you finish editing a build, the engine takes a **snapshot of its outer shape** by scanning it from the six axis directions (like a cubemap) and turning the result into a set of small surface patches. Each patch knows its position, the direction it faces, its area, and — crucially — **how deep the body is behind it** (its cross-section).
 
-| Property | Description | Example Values |
-|----------|-------------|----------------|
-| **Density** (kg/m³) | Mass per volume of the fluid | Air at sea level: ~1.2, Water: ~1000 |
-| **Viscosity** (kg/(m·s)) | Resistance to flow within the fluid | Used for water detection and damping |
+This snapshot is **cached** and only rebuilt when the build changes (you add/remove blocks, a control surface moves, or the build takes damage). Per-frame flight physics just reads the cached patches, so the cost stays **bounded no matter how complex your vehicle is** — a 300-meter airliner with hundreds of colliders is just as cheap to fly as a small fighter. The scan resolution scales automatically with the vehicle's size.
 
-- In **air**, density decreases with altitude. Higher altitude means less drag and lift.
-- In **water**, density is roughly 800× greater than air — aerodynamic forces are dramatically stronger.
-- In **space** (vacuum), density is 0 — no aerodynamic forces apply at all.
+Three promises follow — and the engine keeps them **exactly**, not approximately:
 
-> Aerodynamic forces only activate when a vehicle's speed exceeds **0.1 m/s**. Below that threshold, forces are not computed.
+- **How you build a shape never changes how it flies — only the final shape does.** A 10 × 10 × 1 wing made from one big block or from a hundred small ones gives a **bit-for-bit identical** result: the same forces and the same moments, to the last digit. Subdivision, block count, and how geometry is split or merged are completely invisible to the airflow — only the outer silhouette and cross-section matter.
+- **Air and water are the same physics — there is no separate "water path."** The model samples the **fluid density at each surface** and feeds it into the *same* lift-and-drag equations. Air, the waterline, and deep water are just points on one continuous density scale, so a wing smoothly becomes a hydrofoil as it submerges — nothing switches over.
+- **Material is invisible to flight.** Steel, aluminium, composite — a flat plate is a flat plate. **Material affects only mass and buoyancy, never lift or drag** — it changes how the plane is *balanced*, not how it *flies*.
 
-### Drag
-
-Drag is the force that opposes a vehicle's motion through a fluid. It acts in the **opposite direction** of the velocity.
-
-The drag force on each exposed surface follows the standard aerodynamic equation:
-
-**F = ½ × C<sub>d</sub> × ρ × v² × A**
-
-| Symbol | Meaning | Value |
-|--------|---------|-------|
-| C<sub>d</sub> | Drag coefficient | **0.4** for block surfaces |
-| ρ | Fluid density (kg/m³) | Depends on environment |
-| v | Relative speed at the surface (m/s) | Vehicle speed + rotational speed at that point |
-| A | Exposed frontal area (m²) | Perpendicular to velocity, scaled by occupancy ratio |
-
-Key points:
-- Drag grows with the **square** of speed — doubling your speed quadruples the drag
-- Only **exposed surfaces** contribute to drag (see [Occlusion](#occlusion-and-exposed-surfaces))
-- The force is computed **per surface**, at each surface's position, which means drag can also induce **torque** (rotation) if applied off-center
+> Only the **outer shell** is scanned. Interior blocks are never exposed to the airflow, so they add **zero** aerodynamic drag or cost — and because the model reads the **solid thickness** behind a surface (a sealed cavity counts as solid body), a **hollow shape flies exactly like its solid version**. Fill, or hollow out, your interiors freely; it never changes how the craft flies.
 
 ### Lift
 
-Lift is generated automatically by **thin, flat structures** — such as wings or fins — that the physics engine detects based on geometry.
+A surface generates **lift** (acts like a wing) when its **cross-section is thin** — the **solid** front-to-back depth at that surface is small compared to the vehicle's size. A wing is thin top-to-bottom but broad in span and chord, so it lifts. A fuselage is deep in every direction, so it only drags.
 
-A surface is classified as a **lift surface** when all of the following conditions are met:
+- Lift follows a **realistic lift curve**: it rises with angle of attack, then **stalls** past roughly **15°**, after which lift drops and drag climbs sharply — just like a real airfoil.
+- Lift is **two-sided**: a wing exposed to the air on both faces produces full lift; a wing whose underside is buried against the fuselage still lifts, at reduced strength.
+- **Separate surfaces each lift on their own.** A twin tail, stacked (biplane) wings, or a fin lined up behind another along the same axis are read as the distinct thin surfaces they are — the air gap between them is *not* counted as solid body, so every one of them works.
+- Lift is computed **at each surface's location**, so it naturally produces the right **pitch, roll, and yaw moments** about your center of mass.
 
-| Condition | Threshold |
-|-----------|-----------|
-| Thickness (shortest dimension) | < **0.3 m** |
-| Width (medium dimension) | ≥ **length / 4** |
-| Length (longest dimension) | ≥ **4 m** |
+> **To make a wing, make it geometrically thin.** A broad, flat planform only a block or two thick will lift. A chunky, deep wing will mostly drag. How it is subdivided or what it is made of does not matter — only the cross-section.
 
-When a lift surface is detected:
-- The **lift coefficient** depends on the angle of attack: `C_l = sin(|angle_of_attack| × π/2)`
-- The **drag coefficient** is very low: only **0.01** (compared to 0.4 for regular surfaces)
-- Lift force is perpendicular to the velocity, pushing the vehicle in the direction of the surface normal
+### Drag
 
-> To build wings that generate lift, use flat arrangements of blocks at least **4 meters long** and **less than 0.3 meters thick**. Slopes can be used to shape the leading and trailing edges.
+Drag comes from several physical sources, combined automatically:
+
+| Source | What it is |
+|--------|-----------|
+| **Form (pressure) drag** | The push of air on surfaces facing the flow. Grows with the **square of speed**. |
+| **Skin friction** | The rubbing of air along surfaces parallel to the flow (Reynolds-number based). Dominant for large, slow bodies. |
+| **Induced drag** | The unavoidable drag that comes *with* lift — more lift means more induced drag. |
+
+The key new behavior is **fineness-based streamlining**. The engine measures how **slender** each surface is — how far the body extends *along* the flow versus how thin it is *across* it:
+
+- A **slender** shape (a pointed nose, a wing's sharp leading edge, a long thin fuselage moving forward) keeps the airflow attached and has **very low** form drag.
+- A **bluff** shape (a cube, a flat plate held broadside like an airbrake, a blunt nose) has **full** form drag.
+
+This is purely geometric — it reads your build's actual cross-section, so streamlining your nose and edges genuinely pays off.
+
+> Use slopes, corners, and bevels to taper noses and leading/trailing edges. A streamlined shape can have **a tenth** of the form drag of a blunt one at the same frontal size.
+
+### Compressibility (high speed)
+
+The model is regime-aware. As you approach and exceed the **speed of sound** (which depends on air temperature), pressure on forward-facing surfaces rises through the transonic and supersonic range, and **wing lift fades supersonically** (you rely more on body lift and control deflection). This makes high-Mach flight feel distinctly heavier and less responsive, as it should.
+
+### Stability — emergent, not scripted
+
+There is **no artificial "keep it pointing forward" damping**. Stability is a real, emergent result of where your surfaces are:
+
+- A **horizontal stabilizer** mounted behind the center of mass meets the airflow at an angle whenever the nose pitches up or down, generating a **restoring force** that pushes the nose back. This is automatic **pitch stability**.
+- A **vertical stabilizer** (tail fin) does the same for **yaw** whenever the vehicle sideslips.
+- **Rotational damping** (resistance to tumbling) also emerges naturally — surfaces far from the center of mass move fast through the air when the vehicle spins, and the resulting forces oppose the spin.
+
+Because it is real physics, **static stability depends on your center of mass**. An aircraft is stable when its **center of mass sits at or slightly ahead of the wing's lift center**, and unstable when the mass is too far aft — exactly like a real plane (and a real RC model). See [Flying Well](#flying-well) below.
+
+> The old artificial high-speed angular stabilization is **gone** for builds using this model. If your plane feels twitchy or won't settle, it is a **balance** problem, not the engine fighting you — move mass forward or add tail area.
+
+### Control surfaces & authority
+
+Control surfaces ([Ailerons](components/miscellaneous/Aileron.md) used as ailerons, elevators, or rudders) are mounted on hinges and **deflect in real time**. The engine re-evaluates a deflected surface's aerodynamics **at its current angle every frame**, so:
+
+- A deflected elevator immediately changes the airflow over the tail and pitches the aircraft.
+- Authority scales with the surface's **area**, its **distance from the center of mass** (lever arm), and **air density × speed²**.
+
+> **For strong control:** make control surfaces **large** and mount them **far from the center of mass**. An elevator at the very tail has far more pitch authority than one near the wing. Faster, denser air gives more authority — controls go soft at low speed and high altitude.
+
+### Damage-aware aerodynamics
+
+Battle damage changes how a surface flies. As a panel is deformed or holed (and increasingly as it is destroyed):
+
+- It **sheds lift** — a wrecked wing stops flying.
+- It **loses streamlining and pressure recovery**, and **drags more** (it sheds a turbulent wake).
+
+Because lift and drag are computed per-surface, **asymmetric damage** has the right effect: a wing shot up on one side both **rolls** the aircraft (lift loss on that side) and **yaws** it (extra drag on that side). Symmetric, redundant designs survive combat better.
 
 ### Buoyancy
 
-Buoyancy is the upward force exerted on a submerged or partially submerged object. It opposes gravity and depends on how much fluid the vehicle's blocks displace.
+Buoyancy is the upward force on submerged blocks, computed per collider from the volume of fluid each block displaces.
 
 **F<sub>buoyancy</sub> = V<sub>displaced</sub> × ρ<sub>fluid</sub> × g**
 
-| Symbol | Meaning |
-|--------|---------|
-| V<sub>displaced</sub> | Displaced volume (block volume × `volumeDisplacementRatio`) |
-| ρ<sub>fluid</sub> | Fluid density at sample point |
-| g | Gravitational acceleration (opposing direction) |
+- Each block's displaced volume = its volume × its material's **volume displacement ratio** (see [Materials](#materials)).
+- Damaged blocks lose almost all of their buoyancy.
+- Buoyancy is applied where the blocks actually are, so uneven submersion tilts the vessel — a self-righting effect for well-shaped hulls.
 
-- The engine samples **at least 16 random points** across all colliders to handle **partial submersion** smoothly
-- Each block's contribution depends on its material's `volumeDisplacementRatio` (see [Materials](#materials))
-- Buoyancy is applied at each sample point, so a vehicle can tilt based on uneven submersion
+### Water
 
-## Blocks and Shapes
+Water is **not a special case**. The model samples the **fluid density at every surface** — air above the waterline, water below, blended smoothly across it — so the *same* lift-and-drag model simply produces much larger forces underwater, where the fluid is **~800× denser** than air. Nothing is hard-coded for "being in water":
 
-### Block Shapes
+- A wing becomes a **hydrofoil**: it lifts and drags underwater exactly as it does in air, only far more strongly. **Control surfaces keep working underwater**, so a submarine steers with the same fins and ailerons a plane uses.
+- **Drag is enormous** and grows with the square of speed, so a body entering water decelerates hard and a buoyant hull is naturally held back instead of rocketing out — no artificial damping required.
+- **Rotational damping** comes straight from the same model: surfaces far from the center of mass move fast through the dense fluid when the craft turns or tumbles, so boats and submarines settle naturally.
 
-Different block shapes have different **occupancy ratios**, which directly affect drag calculations:
+> Because the forces scale with density, **hitting water at speed is a real impact**. A fast belly-flop loads the whole contacting face far past what the structure can take and **crumples or destroys** it, exactly like hitting solid ground — so enter the water at a shallow angle and slow down first.
 
-| Shape | Occupancy Ratio | Mass Multiplier |
-|-------|----------------|-----------------|
-| **Cube** | 1.0 | 1.0× |
-| **Slope** | 0.5 | 0.5× |
-| **Corner** | 0.5 | 0.5× |
-| **Pyramid** | 0.5 | 0.5× |
-| **Inverse Corner** | 0.5 | 0.5× |
+### Re-entry heating
 
-The occupancy ratio scales the calculated drag area — a slope block facing the wind produces roughly **half the drag** of a cube in the same position.
+Moving fast through air heats forward-facing surfaces toward the **stagnation (recovery) temperature**, which rises with the square of speed. It is gentle at supersonic speeds but **explosive at re-entry speeds**, and each material burns up past its own thermal limit — so a heat shield, a steep-but-survivable re-entry angle, and bleeding off speed high up all matter.
+
+## Blocks and Materials
 
 ### Materials
 
-Each block material has different physical properties that affect aerodynamics, buoyancy, and mass:
+Material choice affects **mass** and **buoyancy** — and therefore **balance** — but **not lift or drag**:
 
-| Material | Mass (kg/block unit) | Volume Displacement Ratio | Friction |
-|----------|---------------------|--------------------------|----------|
-| **Composite** | 0.25 | 0.20 × occupancy | 0.05 |
-| **Concrete** | 10.0 | 0.25 × occupancy | 0.50 |
-| **Steel** | 1.0 | 0.01 × occupancy | 0.20 |
-| **Aluminium** | 0.5 | 0.01 × occupancy | 0.20 |
-| **Glass** | 1.0 | 0.02 × occupancy | 0.10 |
-| **Lead** | 150.0 | 1.00 × occupancy | 0.20 |
+| Material | Mass (per block unit) | Volume Displacement (buoyancy) |
+|----------|----------------------|--------------------------------|
+| **Composite** | 0.25 | 0.20 × occupancy |
+| **Concrete** | 10.0 | 0.25 × occupancy |
+| **Steel** | 1.0 | 0.01 × occupancy |
+| **Aluminium** | 0.5 | 0.01 × occupancy |
+| **Glass** | 1.0 | 0.02 × occupancy |
+| **Lead** | 150.0 | 1.00 × occupancy |
+| **Titanium** | 0.6 | 0.01 × occupancy |
 
-The **volume displacement ratio** determines how much a block contributes to buoyancy and how visible it is to the aerodynamic surface detection:
-- **Lead** (1.0) fully displaces fluid — maximum buoyancy force but also very heavy, so it sinks
-- **Steel/Aluminium** (0.01) barely displace fluid — they contribute almost no buoyancy
-- **Composite** (0.2) offers a moderate balance between buoyancy and light weight
+- **Lead** is dense and fully displacing — ideal as **nose ballast** to move your center of mass forward (or as keel weight in a boat), but it sinks.
+- **Composite** is light with moderate displacement — the best general floater.
+- **Steel/Aluminium/Titanium** barely displace fluid — strong and light, but contribute almost no buoyancy.
 
-### Occlusion and Exposed Surfaces
+> Because material does not change aerodynamics, you choose materials for **strength, weight, heat resistance, and balance** — not for flight performance.
 
-The aerodynamic system uses **raycasting** to determine which surfaces are actually exposed to the airflow:
+### Block shapes
 
-1. For each block collider, the engine identifies the surface facing the velocity direction
-2. A ray is cast from that surface outward in the velocity direction
-3. If the ray hits another block of the same vehicle, that surface is considered **occluded** and does **not** contribute to drag or lift
-4. Only truly exposed surfaces generate aerodynamic forces
+Slopes, corners, and pyramids occupy half a cube and are lighter. Aerodynamically they matter because they let you **taper** surfaces — turning a blunt, draggy face into a slender, streamlined one. Use them on noses and wing edges.
 
-This means:
-- **Internal blocks** inside a hull add no drag — only the outer shell matters
-- A **compact vehicle** with fewer exposed faces has less drag than a spread-out structure
-- When a group of blocks has an occupancy ratio below **0.9**, the system recursively examines the individual child blocks to find the actual exposed surfaces
+### Frame beams
 
-> This is an important optimization point: two vehicles with the same outer shape but different internal structures will experience the **same** aerodynamic drag. Fill interiors freely without worrying about added drag.
-
-### Frame Beams
-
-Frame beams (the structural bars at the edges of frames) have a **volume displacement ratio of 0**. This means:
-
-- They produce **no drag**
-- They produce **no lift**
-- They produce **no buoyancy**
-- They only serve as structural collision geometry
-
-> Frame beams are aerodynamically invisible. Use them freely for internal structure without affecting your vehicle's aerodynamic performance.
+Frame beams (the structural bars at frame edges) are **aerodynamically invisible** — no lift, no drag, no buoyancy. Use them freely for internal structure.
 
 ## Aerodynamic Components
 
 ### Aileron
 
-The [Aileron](components/miscellaneous/Aileron.md) is a control surface that deflects to create forces perpendicular to the airflow. It is used to steer aircraft and watercraft.
+The [Aileron](components/miscellaneous/Aileron.md) is a hinged control surface used as an aileron, elevator, or rudder. Input is a value from `-1.0` to `+1.0` (rotation −45° to +45°) via its data port.
 
-- **Input**: a value between `-1.0` and `+1.0` through its data port, controlling rotation from -45° to +45°
-- **Force**: proportional to fluid density × speed² × deflection angle
-- **Does not compute occlusion** — unlike blocks, the aileron always generates its full force regardless of surrounding geometry
-
-> Because ailerons ignore occlusion, you can **hide them inside wings** made of blocks. The blocks will have their surfaces occluded (reducing drag), while the ailerons still produce their full control force.
+- It computes its **own** control force and is **excluded from the main shape field**, so it never double-counts and always delivers full authority even when surrounded by structure.
+- You can build the fixed part of a wing or tail from blocks (which the field handles) and put **ailerons at the trailing edge** for control.
 
 ### Propeller
 
-The [Propeller](components/propulsion/Propeller.md) generates thrust by spinning blades through a fluid medium. It works in both air and water.
-
-Key physics:
-- **Thrust** = ½ × ρ × A<sub>disc</sub> × v<sub>effective</sub>² × 0.4
-- **Drag on blades** = ½ × ρ × viscosity × A<sub>disc</sub> × v<sub>effective</sub>² × 10.0
-- **Ground effect**: when a propeller is near the ground and pointing downward, thrust increases by up to **+50%** (within 3× blade radius of terrain)
-- **Gyroscopic precession**: spinning propellers resist changes in orientation, creating a torque perpendicular to the rotation axis — just like real gyroscopes
-- Maximum thrust is capped at **100,000 N**
+The [Propeller](components/propulsion/Propeller.md) generates thrust in air or water and is excluded from the shape field (it has its own model). Key behaviors: thrust scales with fluid density and disc area; **ground effect** boosts thrust up to **+50%** near terrain; spinning blades create **gyroscopic** resistance to reorientation; thrust is capped at **100,000 N**.
 
 ### Thruster & RCS
 
-Chemical [Thrusters](components/propulsion/thruster/SmallThruster.md) generate thrust through fuel combustion and are **not affected** by external aerodynamics for their thrust output — they work the same in atmosphere and in vacuum.
+Chemical [Thrusters](components/propulsion/thruster/SmallThruster.md) are unaffected by aerodynamics and work the same in atmosphere and vacuum. [RCS](components/propulsion/RCS.md) thrusters lose nearly all effectiveness in dense fluids (attenuation ≈ e<sup>−ρ×4</sup>) — they are for space.
 
-[RCS](components/propulsion/RCS.md) (Reaction Control System) thrusters, however, experience **atmospheric attenuation**:
+## Flying Well
 
-**attenuation = max(e<sup>-ρ×4</sup>, 0.01)**
+### Building wings
 
-| Environment | Density (ρ) | Attenuation | Effective Thrust |
-|-------------|-------------|-------------|-----------------|
-| Vacuum | 0 | 100% | Full thrust |
-| Air (sea level) | ~1.2 | ~99.2% | Nearly full |
-| Water | ~1000 | ~1% | Almost no thrust |
+- Make the wing **geometrically thin** — a broad, flat planform a block or two thick. Thinner cross-section = cleaner lift.
+- Give it **span and chord**; a long, broad wing lifts more and stalls more gently.
+- **Material and block count don't matter** for lift — build for strength and weight.
+- Taper the **leading and trailing edges** with slopes to cut drag.
 
-> RCS thrusters are designed for space maneuvering. In dense atmospheres or water, their effectiveness drops dramatically.
+### Balancing for stable flight
 
-## Water Physics
+This is the single most important thing for a plane that flies well:
 
-When a vehicle enters water, the physics engine applies additional damping effects beyond standard drag:
+- Keep the **center of mass at or slightly ahead of the wings**. Add dense mass (e.g. **lead** or heavy components) toward the **nose** to pull it forward — real aircraft carry their engine up front for exactly this reason.
+- A **tail-heavy** aircraft (mass too far aft) is unstable: it pitches and yaws divergently and is exhausting to fly.
+- Mount **horizontal stabilizers** well behind the center of mass for pitch stability, and a **vertical fin** for yaw stability. More tail area and a longer tail boom = more stability.
+- If a build won't settle down, **move mass forward** or **add tail area** before blaming the controls.
 
-### Water Detection
+### Control authority
 
-The engine detects water by measuring the environment's **viscosity**. A viscosity between **0.0000151** and **0.000999** kg/(m·s) is classified as water.
+- Bigger control surfaces, mounted **farther from the center of mass**, give more authority.
+- Put **elevators at the extreme tail** for pitch, **rudders on the fin** for yaw, **ailerons at the wingtips** for roll.
+- Authority falls at **low speed** and **high altitude** (thin air) — keep speed up on approach.
 
-### Water Damping Effects
+### Reducing drag
 
-| Effect | Description |
-|--------|-------------|
-| **Vertical velocity suppression** | Vertical speed is reduced over time, simulating water resistance to vertical movement |
-| **Pitch & roll damping** | Rotation around horizontal axes is dampened proportionally to how submerged the vehicle is |
-| **Yaw damping** | Rotation around the vertical axis is dampened at **half** the rate of pitch/roll |
+- **Streamline** noses and edges with slopes — slender shapes have dramatically less drag.
+- Keep the vehicle **compact**; spread-out structures present more frontal area.
+- **Interior blocks are free** — only the outer shell is scanned, so internal layout never adds drag.
 
-The **submersion factor** is calculated from the average viscosity: `submerged = clamp(pow(viscosity × 1000, 0.1), 0.5, 1.0)`
+### Watercraft
 
-> Water naturally stabilizes vehicles. A partially submerged vehicle will resist tipping over due to the pitch/roll damping. This makes boats inherently more stable than aircraft.
+- Use **composite** for the hull (best buoyancy-to-weight); use **lead low in the keel** for stability.
+- **Wide, flat hulls** are the most stable — water damping does the rest.
+- **Steel/aluminium** barely float; use them above the waterline.
 
-## High-Speed Angular Stability
+### Surviving combat
 
-At speeds above **10 m/s**, the physics engine applies an artificial angular damping that simulates pressure buildup on the vehicle's surfaces:
+- **Symmetry and redundancy:** asymmetric wing damage rolls *and* yaws you, so duplicate critical lifting and control surfaces across both sides.
+- Expect a damaged wing to **lose lift and drag more** — keep speed and altitude in reserve.
 
-**ω -= ω × min(1, ρ) × clamp(Δt × |v| / 25, 0, 0.025)**
+### Performance
 
-This means:
-- **Faster vehicles** are more rotationally stable
-- **Denser fluids** (water > air) provide stronger stabilization
-- This prevents vehicles from tumbling uncontrollably at high speeds
-- In water at high viscosity, an additional angular damping factor is applied
-
-## Design Tips
-
-### Reducing Drag
-- **Minimize exposed surface area** — a compact, streamlined shape creates less drag
-- Use **slopes, corners, and bevels** on leading edges and noses instead of flat cube faces
-- **Internal blocks don't add drag** — only the outer shell matters, so fill interiors as needed
-- Frame beams are aerodynamically invisible — use them freely for internal structure
-
-### Building Effective Wings
-- Wings must be **at least 4 meters long**, **less than 0.3 meters thick**
-- A wider wingspan (width ≥ length/4) ensures the surface is classified as a lift surface rather than a drag surface
-
-### Watercraft Design
-- **Composite blocks** (ratio 0.2) offer the best buoyancy-to-weight balance for floating
-- **Steel and Aluminium** (ratio 0.01) barely contribute to buoyancy — use them sparingly in boats
-- **Lead** (ratio 1.0) displaces the most fluid, but at 150 kg per unit it will sink rapidly
-- Water damping naturally stabilizes your vessel — wide, flat hulls are most stable
-
-### Propeller Placement
-- **Ground effect** boosts thrust by up to 50% when close to terrain — useful for hovercraft designs
-- Propellers generate **gyroscopic torque** — counter-rotating propeller pairs cancel this effect
-- Propellers work in both air and water, adapting their thrust based on fluid density and viscosity
+The shape field is cached and only rebuilt when the build changes or takes damage, and its cost is bounded regardless of size or block count. You never pay a per-frame penalty for detail or interior fill — so build as large and as detailed as you like.

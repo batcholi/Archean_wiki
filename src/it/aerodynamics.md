@@ -1,230 +1,199 @@
 # Aerodinamica
 
-Archean simula forze aerodinamiche che si applicano automaticamente a qualsiasi veicolo in movimento attraverso un mezzo fluido, che sia aria o acqua. Queste forze includono la **resistenza** (opposizione al movimento), la **portanza** (forza perpendicolare dalle superfici sottili) e la **galleggiabilita** (forza verso l'alto dallo spostamento del fluido). Comprendere come funzionano questi sistemi e fondamentale per progettare aerei, barche, sottomarini e qualsiasi altra creazione in movimento.
+Archean simula forze aerodinamiche realistiche, da simulatore di volo, su qualsiasi veicolo in movimento attraverso un fluido, aria o acqua. Il motore produce **portanza**, **resistenza**, **stabilita**, **autorita di controllo**, **galleggiabilita** e persino **riscaldamento da rientro**, tutto a partire dalla **forma** reale della tua costruzione. Non esistono "blocchi ala" speciali ne statistiche nascoste: se sembra un'ala ed e posizionato come un'ala, vola come un'ala.
 
 ## Come funziona
 
-### Mezzo fluido
+### Il campo di forma (modello a sezione trasversale)
 
-Il motore fisico interroga l'ambiente in ogni punto rilevante del tuo veicolo per determinare le proprieta locali del fluido:
+Quando finisci di modificare una costruzione, il motore ne cattura un'**istantanea della forma esterna** scandagliandola dalle sei direzioni degli assi (come una cubemap), poi trasforma il risultato in un insieme di piccole superfici. Ogni superficie conosce la propria posizione, la direzione che espone, la propria area e, soprattutto, **quanto e profondo il corpo dietro di essa** (la sua sezione trasversale).
 
-| Proprieta | Descrizione | Valori di esempio |
-|----------|-------------|----------------|
-| **Densita** (kg/m³) | Massa per volume del fluido | Aria al livello del mare: ~1,2, Acqua: ~1000 |
-| **Viscosita** (kg/(m·s)) | Resistenza allo scorrimento all'interno del fluido | Usata per il rilevamento dell'acqua e lo smorzamento |
+Questa istantanea viene **memorizzata in cache** e ricostruita solo quando la costruzione cambia (aggiungi/rimuovi blocchi, una superficie di controllo si muove, o la costruzione subisce danni). La fisica di volo per fotogramma si limita a leggere le superfici in cache, quindi il costo resta **limitato indipendentemente dalla complessita del veicolo**: un aereo di linea da 300 metri con centinaia di collider si pilota con la stessa efficienza di un piccolo caccia. La risoluzione della scansione si adatta automaticamente alle dimensioni del veicolo.
 
-- Nell'**aria**, la densita diminuisce con l'altitudine. Maggiore l'altitudine, minori la resistenza e la portanza.
-- Nell'**acqua**, la densita e circa 800× maggiore rispetto all'aria — le forze aerodinamiche sono drasticamente piu forti.
-- Nello **spazio** (vuoto), la densita e 0 — nessuna forza aerodinamica si applica.
+Ne derivano tre promesse — e il motore le mantiene **esattamente**, non in modo approssimato:
 
-> Le forze aerodinamiche si attivano solo quando la velocita di un veicolo supera **0,1 m/s**. Sotto questa soglia, le forze non vengono calcolate.
+- **Il modo in cui costruisci una forma non cambia mai come vola — conta solo la forma finale.** Un'ala di 10 × 10 × 1 fatta da un unico grande blocco o da cento piccoli da un risultato **identico bit per bit**: le stesse forze e gli stessi momenti, fino all'ultima cifra. La suddivisione, il numero di blocchi e il modo in cui la geometria viene divisa o unita sono del tutto invisibili al flusso: contano solo la sagoma esterna e la sezione trasversale.
+- **Aria e acqua sono la stessa fisica — non esiste un "percorso acqua" separato.** Il modello campiona la **densita del fluido a ogni superficie** e la inserisce nelle *stesse* equazioni di portanza e resistenza. Aria, linea di galleggiamento e acqua profonda sono solo punti su un'unica scala continua di densita, cosicche un'ala diventa gradualmente un'idroala mentre si immerge: nulla viene commutato.
+- **Il materiale e invisibile al volo.** Acciaio, alluminio, composito: una lastra piatta resta una lastra piatta. **Il materiale influisce solo su massa e galleggiabilita, mai su portanza o resistenza** — cambia il *bilanciamento* dell'aereo, non il suo *modo di volare*.
 
-### Resistenza
-
-La resistenza e la forza che si oppone al movimento di un veicolo attraverso un fluido. Agisce nella **direzione opposta** alla velocita.
-
-La forza di resistenza su ogni superficie esposta segue l'equazione aerodinamica standard:
-
-**F = ½ × C<sub>d</sub> × ρ × v² × A**
-
-| Simbolo | Significato | Valore |
-|--------|---------|-------|
-| C<sub>d</sub> | Coefficiente di resistenza | **0,4** per le superfici dei blocchi |
-| ρ | Densita del fluido (kg/m³) | Dipende dall'ambiente |
-| v | Velocita relativa alla superficie (m/s) | Velocita del veicolo + velocita rotazionale in quel punto |
-| A | Area frontale esposta (m²) | Perpendicolare alla velocita, scalata dal rapporto di occupazione |
-
-Punti chiave:
-- La resistenza cresce con il **quadrato** della velocita — raddoppiare la velocita quadruplica la resistenza
-- Solo le **superfici esposte** contribuiscono alla resistenza (vedi [Occlusione](#occlusione-e-superfici-esposte))
-- La forza e calcolata **per superficie**, nella posizione di ogni superficie, il che significa che la resistenza puo anche indurre **coppia** (rotazione) se applicata fuori centro
+> Viene scandagliato solo il **guscio esterno**. I blocchi interni non sono mai esposti al flusso d'aria, quindi non aggiungono **alcuna** resistenza aerodinamica ne alcun costo - e poiche il modello legge lo spessore solido dietro una superficie (una cavita sigillata conta come corpo solido), una forma cava vola esattamente come la sua versione piena. Riempi, o svuota, gli interni liberamente; non cambia mai il modo in cui vola la costruzione.
 
 ### Portanza
 
-La portanza e generata automaticamente da **strutture sottili e piatte** — come ali o pinne — che il motore fisico rileva in base alla geometria.
+Una superficie genera **portanza** (si comporta come un'ala) quando la sua **sezione trasversale e sottile**: la profondita avanti-dietro di materiale solido in quel punto e piccola rispetto alle dimensioni del veicolo. Un'ala e sottile dall'alto in basso ma ampia in apertura e corda, quindi porta. Una fusoliera e profonda in ogni direzione, quindi crea solo resistenza.
 
-Una superficie e classificata come **superficie portante** quando tutte le seguenti condizioni sono soddisfatte:
+- La portanza segue una **curva di portanza realistica**: cresce con l'angolo di attacco, poi **stalla** oltre circa **15°**, dopodiche la portanza crolla e la resistenza sale bruscamente, proprio come un vero profilo alare.
+- La portanza e **a due facce**: un'ala esposta all'aria su entrambe le facce produce piena portanza; un'ala il cui ventre e schiacciato contro la fusoliera porta comunque, a potenza ridotta.
+- **Superfici separate generano portanza ciascuna per conto proprio.** Una doppia deriva, ali sovrapposte (biplano), o una deriva allineata dietro un'altra lungo lo stesso asse vengono lette come le superfici sottili distinte che sono: lo spazio d'aria tra di esse non e conteggiato come corpo solido, quindi ognuna di esse funziona.
+- La portanza e calcolata **nella posizione di ciascuna superficie**, quindi produce naturalmente i giusti momenti di **beccheggio, rollio e imbardata** attorno al tuo centro di massa.
 
-| Condizione | Soglia |
-|-----------|-----------|
-| Spessore (dimensione piu corta) | < **0,3 m** |
-| Larghezza (dimensione media) | ≥ **lunghezza / 4** |
-| Lunghezza (dimensione piu lunga) | ≥ **4 m** |
+> **Per fare un'ala, falla geometricamente sottile.** Una superficie ampia e piatta spessa solo uno o due blocchi portera. Un'ala spessa e profonda creera soprattutto resistenza. Il modo in cui e suddivisa o il materiale non contano: conta solo la sezione trasversale.
 
-Quando viene rilevata una superficie portante:
-- Il **coefficiente di portanza** dipende dall'angolo di attacco: `C_l = sin(|angolo_di_attacco| × π/2)`
-- Il **coefficiente di resistenza** e molto basso: solo **0,01** (rispetto a 0,4 per le superfici normali)
-- La forza di portanza e perpendicolare alla velocita, spingendo il veicolo nella direzione della normale alla superficie
+### Resistenza
 
-> Per costruire ali che generano portanza, usa disposizioni piatte di blocchi lunghe almeno **4 metri** e spesse **meno di 0,3 metri**. Le pendenze possono essere usate per modellare i bordi d'attacco e d'uscita.
+La resistenza proviene da diverse fonti fisiche, combinate automaticamente:
+
+| Fonte | Descrizione |
+|-------|-------------|
+| **Resistenza di forma (pressione)** | La spinta dell'aria sulle superfici rivolte al flusso. Cresce con il **quadrato della velocita**. |
+| **Attrito superficiale** | Lo sfregamento dell'aria lungo le superfici parallele al flusso (basato sul numero di Reynolds). Dominante per i corpi grandi e lenti. |
+| **Resistenza indotta** | La resistenza inevitabile che accompagna la portanza: piu portanza significa piu resistenza indotta. |
+
+Il nuovo comportamento chiave e il **profilamento basato sulla snellezza**. Il motore misura quanto e **affusolata** ogni superficie: quanto il corpo si estende *lungo* il flusso rispetto alla sua sottigliezza *in trasversale*:
+
+- Una forma **affusolata** (un muso a punta, il bordo d'attacco affilato di un'ala, una lunga fusoliera sottile in avanzamento) mantiene il flusso aderente e ha una resistenza di forma **molto bassa**.
+- Una forma **tozza** (un cubo, una lastra piatta tenuta di traverso come un aerofreno, un muso smussato) ha la **piena** resistenza di forma.
+
+E puramente geometrico: legge la sezione trasversale reale della tua costruzione, quindi profilare muso e bordi ripaga davvero.
+
+> Usa pendenze, angoli e smussi per affusolare musi e bordi d'attacco/uscita. Una forma profilata puo avere **un decimo** della resistenza di forma di una tozza con la stessa dimensione frontale.
+
+### Comprimibilita (alta velocita)
+
+Il modello tiene conto dei regimi. All'avvicinarsi e oltre la **velocita del suono** (che dipende dalla temperatura dell'aria), la pressione sulle superfici rivolte in avanti aumenta nel regime transonico e supersonico, e **la portanza delle ali svanisce in supersonico** (ti affidi di piu alla portanza del corpo e alla deflessione dei comandi). Il volo ad alto Mach diventa nettamente piu pesante e meno reattivo, come dovrebbe.
+
+### Stabilita: emergente, non programmata
+
+Non c'e **alcun smorzamento artificiale** del tipo "tieni il muso in avanti". La stabilita e un risultato reale ed emergente di dove si trovano le tue superfici:
+
+- Uno **stabilizzatore orizzontale** montato dietro il centro di massa incontra il flusso d'aria con un'angolazione ogni volta che il muso si alza o si abbassa, generando una **forza di richiamo** che riporta indietro il muso. E **stabilita di beccheggio** automatica.
+- Uno **stabilizzatore verticale** (deriva) fa lo stesso per l'**imbardata** ogni volta che il veicolo derapa.
+- Lo **smorzamento rotazionale** (resistenza al ribaltamento) emerge anch'esso naturalmente: le superfici lontane dal centro di massa si muovono velocemente nell'aria quando il veicolo ruota, e le forze risultanti si oppongono alla rotazione.
+
+Essendo fisica reale, **la stabilita statica dipende dal tuo centro di massa**. Un aereo e stabile quando il suo **centro di massa si trova in corrispondenza o leggermente davanti al centro di portanza dell'ala**, e instabile quando la massa e troppo arretrata, esattamente come un vero aereo (e un vero aeromodello). Vedi [Volare bene](#volare-bene) piu sotto.
+
+> La vecchia stabilizzazione angolare artificiale ad alta velocita e **scomparsa** per le costruzioni che usano questo modello. Se il tuo aereo sembra nervoso o non si assesta, e un problema di **bilanciamento**, non il motore che ti combatte: sposta massa in avanti o aggiungi superficie di coda.
+
+### Superfici di controllo e autorita
+
+Le superfici di controllo (gli [Aileron](components/miscellaneous/Aileron.md) usati come alettoni, equilibratori o timoni) sono montate su cerniere e **si deflettono in tempo reale**. Il motore rivaluta l'aerodinamica di una superficie deflessa **al suo angolo corrente a ogni fotogramma**, quindi:
+
+- Un equilibratore deflesso cambia immediatamente il flusso d'aria sulla coda e fa beccheggiare l'aereo.
+- L'autorita dipende dall'**area** della superficie, dalla sua **distanza dal centro di massa** (braccio di leva) e da **densita dell'aria × velocita²**.
+
+> **Per un controllo potente:** rendi le superfici di controllo **grandi** e montale **lontano dal centro di massa**. Un equilibratore all'estremita della coda ha molta piu autorita di beccheggio di uno vicino all'ala. Aria piu veloce e piu densa danno piu autorita: i comandi si ammorbidiscono a bassa velocita e ad alta quota.
+
+### Aerodinamica sensibile ai danni
+
+I danni da combattimento cambiano il modo in cui una superficie vola. Man mano che un pannello viene deformato o bucato (e sempre piu man mano che viene distrutto):
+
+- **Perde portanza**: un'ala distrutta smette di volare.
+- **Perde profilamento e recupero di pressione**, e **crea piu resistenza** (genera una scia turbolenta).
+
+Poiche portanza e resistenza sono calcolate per superficie, i **danni asimmetrici** hanno l'effetto giusto: un'ala crivellata su un lato fa sia **rollare** l'aereo (perdita di portanza su quel lato) sia **imbardare** (resistenza aggiuntiva su quel lato). I progetti simmetrici e ridondanti sopravvivono meglio al combattimento.
 
 ### Galleggiabilita
 
-La galleggiabilita e la forza verso l'alto esercitata su un oggetto sommerso o parzialmente sommerso. Si oppone alla gravita e dipende da quanto fluido i blocchi del veicolo spostano.
+La galleggiabilita e la forza verso l'alto sui blocchi immersi, calcolata per collider dal volume di fluido che ciascun blocco sposta.
 
-**F<sub>galleggiamento</sub> = V<sub>spostato</sub> × ρ<sub>fluido</sub> × g**
+**F<sub>galleggiabilita</sub> = V<sub>spostato</sub> × ρ<sub>fluido</sub> × g**
 
-| Simbolo | Significato |
-|--------|---------|
-| V<sub>spostato</sub> | Volume spostato (volume del blocco × `volumeDisplacementRatio`) |
-| ρ<sub>fluido</sub> | Densita del fluido nel punto di campionamento |
-| g | Accelerazione gravitazionale (direzione opposta) |
+- Il volume spostato di ogni blocco = il suo volume × il **rapporto di spostamento volumetrico** del suo materiale (vedi [Materiali](#materiali)).
+- I blocchi danneggiati perdono quasi tutta la loro galleggiabilita.
+- La galleggiabilita e applicata dove i blocchi si trovano davvero, quindi un'immersione disuniforme inclina l'imbarcazione: un effetto di autoraddrizzamento per gli scafi ben sagomati.
 
-- Il motore campiona **almeno 16 punti casuali** su tutti i collider per gestire la **sommersione parziale** in modo fluido
-- Il contributo di ogni blocco dipende dal `volumeDisplacementRatio` del suo materiale (vedi [Materiali](#materiali))
-- La galleggiabilita e applicata in ogni punto di campionamento, quindi un veicolo puo inclinarsi in base a una sommersione non uniforme
+### Acqua
 
-## Blocchi e forme
+L'acqua non e **un caso speciale**. Il modello campiona la **densita del fluido a ogni superficie** — aria sopra la linea di galleggiamento, acqua sotto, con una transizione continua — cosicche lo *stesso* modello di portanza e resistenza produce semplicemente forze molto maggiori sott'acqua, dove il fluido e **~800× piu denso** dell'aria. Nulla e codificato in modo fisso per il fatto di "essere in acqua":
 
-### Forme dei blocchi
+- Un'ala diventa un'**idroala**: porta e oppone resistenza sott'acqua esattamente come nell'aria, solo molto piu intensamente. **Le superfici di controllo continuano a funzionare sott'acqua**, percio un sottomarino sterza con gli stessi alettoni ed impennaggi di un aereo.
+- **La resistenza e enorme** e cresce con il quadrato della velocita: un corpo che entra in acqua decelera bruscamente e uno scafo galleggiante e trattenuto in modo naturale invece di schizzare fuori — senza alcuno smorzamento artificiale.
+- **Lo smorzamento rotazionale** proviene direttamente dallo stesso modello: le superfici lontane dal centro di massa si muovono rapidamente nel fluido denso quando il mezzo vira o ruota, cosicche barche e sottomarini si stabilizzano naturalmente.
 
-Diverse forme di blocchi hanno diversi **rapporti di occupazione**, che influenzano direttamente i calcoli della resistenza:
+> Poiche le forze crescono con la densita, **colpire l'acqua ad alta velocita e un vero impatto**. Una spanciata ad alta velocita carica l'intera faccia di contatto ben oltre cio che la struttura puo reggere e la **deforma o distrugge**, esattamente come urtare un terreno solido — quindi entra in acqua con un angolo basso e rallenta prima.
 
-| Forma | Rapporto di occupazione | Moltiplicatore di massa |
-|-------|----------------|-----------------|
-| **Cubo** | 1,0 | 1,0× |
-| **Pendenza** | 0,5 | 0,5× |
-| **Angolo** | 0,5 | 0,5× |
-| **Piramide** | 0,5 | 0,5× |
-| **Angolo inverso** | 0,5 | 0,5× |
+### Riscaldamento da rientro
 
-Il rapporto di occupazione scala l'area di resistenza calcolata — un blocco a pendenza rivolto verso il vento produce circa **la meta della resistenza** di un cubo nella stessa posizione.
+Muoversi velocemente nell'aria riscalda le superfici rivolte in avanti verso la **temperatura di ristagno (di recupero)**, che cresce con il quadrato della velocita. E lieve a velocita supersoniche ma **esplosivo alle velocita di rientro**, e ogni materiale si consuma oltre il proprio limite termico: quindi uno scudo termico, un angolo di rientro ripido ma sopravvivibile e la perdita di velocita in alta quota contano tutti.
+
+## Blocchi e materiali
 
 ### Materiali
 
-Ogni materiale dei blocchi ha proprieta fisiche diverse che influenzano l'aerodinamica, la galleggiabilita e la massa:
+La scelta del materiale influisce su **massa** e **galleggiabilita** (e quindi sul **bilanciamento**) ma **non su portanza o resistenza**:
 
-| Materiale | Massa (kg/unita blocco) | Rapporto di spostamento del volume | Attrito |
-|----------|---------------------|--------------------------|----------|
-| **Composite** | 0,25 | 0,20 × occupazione | 0,05 |
-| **Concrete** | 10,0 | 0,25 × occupazione | 0,50 |
-| **Steel** | 1,0 | 0,01 × occupazione | 0,20 |
-| **Aluminium** | 0,5 | 0,01 × occupazione | 0,20 |
-| **Glass** | 1,0 | 0,02 × occupazione | 0,10 |
-| **Lead** | 150,0 | 1,00 × occupazione | 0,20 |
+| Materiale | Massa (per unita di blocco) | Spostamento volumetrico (galleggiabilita) |
+|-----------|-----------------------------|-------------------------------------------|
+| **Composite** | 0,25 | 0,20 × occupazione |
+| **Concrete** | 10,0 | 0,25 × occupazione |
+| **Steel** | 1,0 | 0,01 × occupazione |
+| **Aluminium** | 0,5 | 0,01 × occupazione |
+| **Glass** | 1,0 | 0,02 × occupazione |
+| **Lead** | 150,0 | 1,00 × occupazione |
+| **Titanium** | 0,6 | 0,01 × occupazione |
 
-Il **rapporto di spostamento del volume** determina quanto un blocco contribuisce alla galleggiabilita e quanto e visibile al rilevamento delle superfici aerodinamiche:
-- **Lead** (1,0) sposta completamente il fluido — forza di galleggiamento massima ma anche molto pesante, quindi affonda
-- **Steel/Aluminium** (0,01) spostano appena il fluido — contribuiscono quasi zero alla galleggiabilita
-- **Composite** (0,2) offre un equilibrio moderato tra galleggiabilita e leggerezza
+- Il **Lead** e denso e sposta tutto: ideale come **zavorra di prua** per portare il centro di massa in avanti (o come zavorra di chiglia in una barca), ma affonda.
+- Il **Composite** e leggero con spostamento moderato: il miglior galleggiante generico.
+- **Steel/Aluminium/Titanium** spostano appena il fluido: resistenti e leggeri, ma non contribuiscono quasi nulla alla galleggiabilita.
 
-### Occlusione e superfici esposte
+> Poiche il materiale non cambia l'aerodinamica, scegli i materiali per **resistenza, peso, resistenza al calore e bilanciamento**, non per le prestazioni di volo.
 
-Il sistema aerodinamico usa il **raycasting** per determinare quali superfici sono effettivamente esposte al flusso d'aria:
+### Forme dei blocchi
 
-1. Per ogni collider di blocco, il motore identifica la superficie rivolta verso la direzione della velocita
-2. Un raggio viene proiettato da quella superficie verso l'esterno nella direzione della velocita
-3. Se il raggio colpisce un altro blocco dello stesso veicolo, quella superficie e considerata **occlusa** e **non** contribuisce alla resistenza o alla portanza
-4. Solo le superfici realmente esposte generano forze aerodinamiche
-
-Questo significa:
-- I **blocchi interni** all'interno di uno scafo non aggiungono resistenza — conta solo il guscio esterno
-- Un **veicolo compatto** con meno facce esposte ha meno resistenza di una struttura allargata
-- Quando un gruppo di blocchi ha un rapporto di occupazione inferiore a **0,9**, il sistema esamina ricorsivamente i singoli blocchi figli per trovare le superfici effettivamente esposte
-
-> Questo e un punto di ottimizzazione importante: due veicoli con la stessa forma esterna ma strutture interne diverse subiranno la **stessa** resistenza aerodinamica. Riempi gli interni liberamente senza preoccuparti della resistenza aggiuntiva.
+Pendenze, angoli e piramidi occupano mezzo cubo e sono piu leggeri. Aerodinamicamente contano perche permettono di **affusolare** le superfici, trasformando una faccia tozza e resistente in una affusolata e profilata. Usali su musi e bordi d'ala.
 
 ### Travi del telaio
 
-Le travi del telaio (le barre strutturali ai bordi dei telai) hanno un **rapporto di spostamento del volume pari a 0**. Questo significa:
-
-- Non producono **resistenza**
-- Non producono **portanza**
-- Non producono **galleggiabilita**
-- Servono solo come geometria di collisione strutturale
-
-> Le travi del telaio sono aerodinamicamente invisibili. Usale liberamente per la struttura interna senza influenzare le prestazioni aerodinamiche del tuo veicolo.
+Le travi del telaio (le barre strutturali ai bordi dei telai) sono **aerodinamicamente invisibili**: niente portanza, niente resistenza, niente galleggiabilita. Usale liberamente come struttura interna.
 
 ## Componenti aerodinamici
 
 ### Aileron
 
-L'[Aileron](components/miscellaneous/Aileron.md) e una superficie di controllo che si deflette per creare forze perpendicolari al flusso d'aria. E usato per governare aerei e imbarcazioni.
+L'[Aileron](components/miscellaneous/Aileron.md) e una superficie di controllo a cerniera usata come alettone, equilibratore o timone. L'ingresso e un valore da `-1.0` a `+1.0` (rotazione da −45° a +45°) tramite la sua porta dati.
 
-- **Input**: un valore tra `-1.0` e `+1.0` attraverso la sua porta dati, che controlla la rotazione da -45° a +45°
-- **Forza**: proporzionale alla densita del fluido × velocita² × angolo di deflessione
-- **Non calcola l'occlusione** — a differenza dei blocchi, l'Aileron genera sempre la sua forza completa indipendentemente dalla geometria circostante
-
-> Poiche gli Aileron ignorano l'occlusione, puoi **nasconderli all'interno delle ali** fatte di blocchi. I blocchi avranno le loro superfici occluse (riducendo la resistenza), mentre gli Aileron producono comunque la loro piena forza di controllo.
+- Calcola la **propria** forza di controllo ed e **escluso dal campo di forma principale**, quindi non viene mai conteggiato due volte e fornisce sempre la piena autorita anche se circondato da struttura.
+- Puoi costruire la parte fissa di un'ala o di una coda con blocchi (gestiti dal campo) e mettere **alettoni sul bordo d'uscita** per il controllo.
 
 ### Propeller
 
-Il [Propeller](components/propulsion/Propeller.md) genera spinta facendo ruotare le pale attraverso un mezzo fluido. Funziona sia in aria che in acqua.
-
-Fisica chiave:
-- **Spinta** = ½ × ρ × A<sub>disco</sub> × v<sub>effettiva</sub>² × 0,4
-- **Resistenza sulle pale** = ½ × ρ × viscosita × A<sub>disco</sub> × v<sub>effettiva</sub>² × 10,0
-- **Effetto suolo**: quando un Propeller e vicino al suolo e punta verso il basso, la spinta aumenta fino al **+50%** (entro 3× il raggio delle pale dal terreno)
-- **Precessione giroscopica**: i Propeller in rotazione resistono ai cambiamenti di orientamento, creando una coppia perpendicolare all'asse di rotazione — proprio come i veri giroscopi
-- La spinta massima e limitata a **100.000 N**
+Il [Propeller](components/propulsion/Propeller.md) (elica) genera spinta in aria o acqua ed e escluso dal campo di forma (ha un proprio modello). Comportamenti chiave: la spinta dipende dalla densita del fluido e dall'area del disco; l'**effetto suolo** aumenta la spinta fino a **+50%** vicino al terreno; le pale rotanti creano una resistenza **giroscopica** al riorientamento; la spinta e limitata a **100.000 N**.
 
 ### Thruster e RCS
 
-I [Thruster](components/propulsion/thruster/SmallThruster.md) chimici generano spinta tramite la combustione del carburante e **non sono influenzati** dall'aerodinamica esterna per la loro produzione di spinta — funzionano allo stesso modo in atmosfera e nel vuoto.
+I [Thruster](components/propulsion/thruster/SmallThruster.md) chimici non sono influenzati dall'aerodinamica e funzionano allo stesso modo in atmosfera e nel vuoto. Gli [RCS](components/propulsion/RCS.md) perdono quasi tutta l'efficacia nei fluidi densi (attenuazione ≈ e<sup>−ρ×4</sup>): sono per lo spazio.
 
-I propulsori [RCS](components/propulsion/RCS.md) (Reaction Control System), tuttavia, subiscono un'**attenuazione atmosferica**:
+## Volare bene
 
-**attenuazione = max(e<sup>-ρ×4</sup>, 0,01)**
+### Costruire ali
 
-| Ambiente | Densita (ρ) | Attenuazione | Spinta effettiva |
-|-------------|-------------|-------------|-----------------|
-| Vuoto | 0 | 100% | Spinta piena |
-| Aria (livello del mare) | ~1,2 | ~99,2% | Quasi piena |
-| Acqua | ~1000 | ~1% | Quasi nessuna spinta |
+- Rendi l'ala **geometricamente sottile**: una superficie ampia e piatta spessa uno o due blocchi. Sezione piu sottile = portanza piu pulita.
+- Dalle **apertura e corda**; un'ala lunga e ampia porta di piu e stalla in modo piu dolce.
+- **Materiale e numero di blocchi non contano** per la portanza: costruisci per resistenza e peso.
+- Affusola i **bordi d'attacco e d'uscita** con pendenze per ridurre la resistenza.
 
-> I propulsori RCS sono progettati per le manovre spaziali. In atmosfere dense o in acqua, la loro efficacia diminuisce drasticamente.
+### Bilanciare per un volo stabile
 
-## Fisica dell'acqua
+E la cosa piu importante per un aereo che vola bene:
 
-Quando un veicolo entra in acqua, il motore fisico applica effetti di smorzamento aggiuntivi oltre alla resistenza standard:
+- Mantieni il **centro di massa in corrispondenza o leggermente davanti alle ali**. Aggiungi massa densa (ad es. **lead** o componenti pesanti) verso il **muso** per portarlo in avanti: i veri aerei portano il motore davanti esattamente per questo motivo.
+- Un aereo **appesantito in coda** (massa troppo arretrata) e instabile: beccheggia e imbarda in modo divergente ed e estenuante da pilotare.
+- Monta **stabilizzatori orizzontali** ben dietro il centro di massa per la stabilita di beccheggio, e una **deriva** per la stabilita di imbardata. Piu superficie di coda e una coda piu lunga = piu stabilita.
+- Se una costruzione non si calma, **sposta massa in avanti** o **aggiungi superficie di coda** prima di incolpare i comandi.
 
-### Rilevamento dell'acqua
+### Autorita di controllo
 
-Il motore rileva l'acqua misurando la **viscosita** dell'ambiente. Una viscosita tra **0,0000151** e **0,000999** kg/(m·s) e classificata come acqua.
-
-### Effetti di smorzamento in acqua
-
-| Effetto | Descrizione |
-|--------|-------------|
-| **Soppressione della velocita verticale** | La velocita verticale viene ridotta nel tempo, simulando la resistenza dell'acqua al movimento verticale |
-| **Smorzamento di beccheggio e rollio** | La rotazione attorno agli assi orizzontali e smorzata proporzionalmente a quanto il veicolo e sommerso |
-| **Smorzamento di imbardata** | La rotazione attorno all'asse verticale e smorzata alla **meta** della velocita del beccheggio/rollio |
-
-Il **fattore di sommersione** e calcolato dalla viscosita media: `sommerso = clamp(pow(viscosita × 1000, 0,1), 0,5, 1,0)`
-
-> L'acqua stabilizza naturalmente i veicoli. Un veicolo parzialmente sommerso resistera al ribaltamento grazie allo smorzamento di beccheggio/rollio. Questo rende le barche intrinsecamente piu stabili degli aerei.
-
-## Stabilita angolare ad alta velocita
-
-A velocita superiori a **10 m/s**, il motore fisico applica uno smorzamento angolare artificiale che simula l'accumulo di pressione sulle superfici del veicolo:
-
-**ω -= ω × min(1, ρ) × clamp(Δt × |v| / 25, 0, 0,025)**
-
-Questo significa:
-- I **veicoli piu veloci** sono piu stabili rotazionalmente
-- I **fluidi piu densi** (acqua > aria) forniscono una stabilizzazione piu forte
-- Questo impedisce ai veicoli di ribaltarsi in modo incontrollabile ad alte velocita
-- In acqua ad alta viscosita, viene applicato un fattore di smorzamento angolare aggiuntivo
-
-## Consigli di progettazione
+- Superfici di controllo piu grandi, montate **piu lontano dal centro di massa**, danno piu autorita.
+- Metti gli **equilibratori all'estremita della coda** per il beccheggio, i **timoni sulla deriva** per l'imbardata, gli **alettoni alle estremita alari** per il rollio.
+- L'autorita cala a **bassa velocita** e ad **alta quota** (aria rarefatta): mantieni la velocita in avvicinamento.
 
 ### Ridurre la resistenza
-- **Minimizza l'area superficiale esposta** — una forma compatta e aerodinamica crea meno resistenza
-- Usa **pendenze, angoli e smussi** sui bordi d'attacco e sui musi invece di facce piatte di cubi
-- I **blocchi interni non aggiungono resistenza** — conta solo il guscio esterno, quindi riempi gli interni come necessario
-- Le travi del telaio sono aerodinamicamente invisibili — usale liberamente per la struttura interna
 
-### Costruire ali efficaci
-- Le ali devono essere lunghe **almeno 4 metri**, spesse **meno di 0,3 metri**
-- Un'apertura alare piu ampia (larghezza ≥ lunghezza/4) assicura che la superficie sia classificata come superficie portante piuttosto che come superficie di resistenza
+- **Profila** musi e bordi con pendenze: le forme affusolate creano molta meno resistenza.
+- Mantieni il veicolo **compatto**; le strutture sparse presentano piu area frontale.
+- I **blocchi interni sono gratuiti**: viene scandagliato solo il guscio esterno, quindi la disposizione interna non aggiunge mai resistenza.
 
-### Progettazione di imbarcazioni
-- I blocchi **Composite** (rapporto 0,2) offrono il miglior equilibrio galleggiabilita-peso per il galleggiamento
-- **Steel e Aluminium** (rapporto 0,01) contribuiscono appena alla galleggiabilita — usali con parsimonia nelle barche
-- **Lead** (rapporto 1,0) sposta la maggior quantita di fluido, ma a 150 kg per unita affondera rapidamente
-- Lo smorzamento dell'acqua stabilizza naturalmente la tua imbarcazione — scafi larghi e piatti sono i piu stabili
+### Imbarcazioni
 
-### Posizionamento dei Propeller
-- L'**effetto suolo** aumenta la spinta fino al 50% quando si e vicini al terreno — utile per i design di hovercraft
-- I Propeller generano **coppia giroscopica** — coppie di Propeller contro-rotanti annullano questo effetto
-- I Propeller funzionano sia in aria che in acqua, adattando la loro spinta in base alla densita e alla viscosita del fluido
+- Usa il **composite** per lo scafo (miglior rapporto galleggiabilita/peso); usa il **lead in fondo alla chiglia** per la stabilita.
+- Gli scafi **larghi e piatti** sono i piu stabili: lo smorzamento dell'acqua fa il resto.
+- **Steel/aluminium** galleggiano appena; usali sopra la linea di galleggiamento.
+
+### Sopravvivere al combattimento
+
+- **Simmetria e ridondanza:** un danno alare asimmetrico ti fa *rollare* e *imbardare*, quindi duplica le superfici portanti e di controllo critiche su entrambi i lati.
+- Aspettati che un'ala danneggiata **perda portanza e crei piu resistenza**: tieni velocita e quota in riserva.
+
+### Prestazioni
+
+Il campo di forma e in cache e viene ricostruito solo quando la costruzione cambia o subisce danni, e il suo costo e limitato indipendentemente da dimensioni o numero di blocchi. Non paghi mai una penalita per fotogramma per il dettaglio o il riempimento interno, quindi costruisci grande e dettagliato quanto vuoi.

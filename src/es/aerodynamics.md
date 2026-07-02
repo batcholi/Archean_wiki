@@ -1,230 +1,199 @@
-# Aerodynamics
+# Aerodinamica
 
-Archean simula fuerzas aerodinamicas que se aplican automaticamente a cualquier vehiculo que se mueva a traves de un medio fluido, ya sea aire o agua. Estas fuerzas incluyen **resistencia** (resistencia al movimiento), **sustentacion** (fuerza perpendicular de superficies delgadas) y **flotabilidad** (fuerza ascendente por desplazamiento de fluido). Comprender como funcionan estos sistemas es clave para disenar aviones, barcos, submarinos y cualquier otra creacion en movimiento de manera eficiente.
+Archean simula fuerzas aerodinamicas realistas, de nivel simulador de vuelo, sobre cualquier vehiculo que se mueva a traves de un fluido, aire o agua. El motor produce **sustentacion**, **resistencia**, **estabilidad**, **autoridad de control**, **flotabilidad** e incluso **calentamiento de reentrada**, todo a partir de la **forma** real de tu construccion. No hay "bloques de ala" especiales ni estadisticas ocultas: si parece un ala y esta colocado como un ala, vuela como un ala.
 
 ## Como funciona
 
-### Medio fluido
+### El campo de forma (modelo de seccion transversal)
 
-El motor de fisica consulta el entorno en cada punto relevante de tu vehiculo para determinar las propiedades locales del fluido:
+Cuando terminas de editar una construccion, el motor toma una **instantanea de su forma exterior** escaneandola desde las seis direcciones de los ejes (como un mapa de cubo) y luego convierte el resultado en un conjunto de pequenos parches de superficie. Cada parche conoce su posicion, la direccion que encara, su area y -lo mas importante- **que tan profundo es el cuerpo detras de el** (su seccion transversal).
 
-| Propiedad | Descripcion | Valores de ejemplo |
-|-----------|-------------|-------------------|
-| **Densidad** (kg/m3) | Masa por volumen del fluido | Aire al nivel del mar: ~1.2, Agua: ~1000 |
-| **Viscosidad** (kg/(m*s)) | Resistencia al flujo dentro del fluido | Utilizada para deteccion de agua y amortiguacion |
+Esta instantanea se **almacena en cache** y solo se reconstruye cuando la construccion cambia (agregas/quitas bloques, una superficie de control se mueve, o la construccion recibe dano). La fisica de vuelo por fotograma solo lee los parches en cache, asi que el coste se mantiene **acotado sin importar la complejidad del vehiculo**: un avion de pasajeros de 300 metros con cientos de colisionadores se pilota con la misma eficiencia que un pequeno caza. La resolucion del escaneo se ajusta automaticamente al tamano del vehiculo.
 
-- En el **aire**, la densidad disminuye con la altitud. Mayor altitud significa menos resistencia y sustentacion.
-- En el **agua**, la densidad es aproximadamente 800 veces mayor que la del aire - las fuerzas aerodinamicas son dramaticamente mas fuertes.
-- En el **espacio** (vacio), la densidad es 0 - no se aplican fuerzas aerodinamicas.
+De esto se derivan tres promesas — y el motor las cumple **exactamente**, no de forma aproximada:
 
-> Las fuerzas aerodinamicas solo se activan cuando la velocidad de un vehiculo supera los **0.1 m/s**. Por debajo de ese umbral, las fuerzas no se calculan.
+- **Como construyes una forma nunca cambia como vuela — solo importa la forma final.** Un ala de 10 × 10 × 1 hecha de un solo bloque grande o de cien pequenos da un resultado **identico bit a bit**: las mismas fuerzas y los mismos momentos, hasta el ultimo digito. La subdivision, el numero de bloques y como se divide o fusiona la geometria son completamente invisibles para el flujo: solo importan la silueta exterior y la seccion transversal.
+- **El aire y el agua son la misma fisica — no hay una "via de agua" separada.** El modelo muestrea la **densidad del fluido en cada superficie** y la introduce en las *mismas* ecuaciones de sustentacion y resistencia. Aire, linea de flotacion y agua profunda son solo puntos de una unica escala continua de densidad, de modo que un ala se convierte suavemente en un hidroala al sumergirse: nada conmuta.
+- **El material es invisible para el vuelo.** Acero, aluminio, composite: una placa plana sigue siendo una placa plana. **El material solo afecta a la masa y la flotabilidad, nunca a la sustentacion ni a la resistencia** — cambia el *equilibrado* del avion, no su *forma de volar*.
 
-### Drag
+> Solo se escanea el **casco exterior**. Los bloques internos nunca quedan expuestos al flujo de aire, asi que no anaden **ninguna** resistencia aerodinamica ni coste -y como el modelo lee el grosor de material solido que hay detras de una superficie (una cavidad sellada cuenta como cuerpo solido), una forma hueca vuela exactamente igual que su version maciza. Rellena, o vacia, los interiores con libertad; eso nunca cambia como vuela la nave.
 
-La resistencia es la fuerza que se opone al movimiento de un vehiculo a traves de un fluido. Actua en la **direccion opuesta** a la velocidad.
+### Sustentacion
 
-La fuerza de resistencia en cada superficie expuesta sigue la ecuacion aerodinamica estandar:
+Una superficie genera **sustentacion** (se comporta como un ala) cuando su **seccion transversal es delgada**: la profundidad de material solido delante-detras en esa superficie es pequena respecto al tamano del vehiculo. Un ala es delgada de arriba abajo pero amplia en envergadura y cuerda, asi que sustenta. Un fuselaje es profundo en todas las direcciones, asi que solo genera resistencia.
 
-**F = 1/2 x C<sub>d</sub> x p x v2 x A**
+- La sustentacion sigue una **curva de sustentacion realista**: crece con el angulo de ataque, luego **entra en perdida** pasados unos **15°**, tras lo cual la sustentacion cae y la resistencia sube bruscamente, igual que un perfil aerodinamico real.
+- La sustentacion es **de dos caras**: un ala expuesta al aire por ambas caras produce sustentacion plena; un ala cuyo intrados esta pegado al fuselaje sigue sustentando, con menor intensidad.
+- Cada superficie separada sustenta por su cuenta. Una doble deriva, alas superpuestas (biplano) o un plano alineado detras de otro a lo largo del mismo eje se leen como las superficies delgadas distintas que son: el espacio de aire entre ellas no se cuenta como cuerpo solido, asi que cada una de ellas funciona.
+- La sustentacion se calcula **en la ubicacion de cada superficie**, asi que produce de forma natural los momentos correctos de **cabeceo, alabeo y guinada** en torno a tu centro de masa.
 
-| Simbolo | Significado | Valor |
-|---------|-------------|-------|
-| C<sub>d</sub> | Coeficiente de resistencia | **0.4** para superficies de bloques |
-| p | Densidad del fluido (kg/m3) | Depende del entorno |
-| v | Velocidad relativa en la superficie (m/s) | Velocidad del vehiculo + velocidad rotacional en ese punto |
-| A | Area frontal expuesta (m2) | Perpendicular a la velocidad, escalada por ratio de ocupacion |
+> **Para hacer un ala, hazla geometricamente delgada.** Una superficie amplia y plana de solo uno o dos bloques de grosor sustentara. Un ala gruesa y profunda generara sobre todo resistencia. Como este subdividida o de que este hecha no importa: solo importa la seccion transversal.
 
-Puntos clave:
-- La resistencia crece con el **cuadrado** de la velocidad - duplicar tu velocidad cuadruplica la resistencia
-- Solo las **superficies expuestas** contribuyen a la resistencia (ver [Oclusion](#occlusion-and-exposed-surfaces))
-- La fuerza se calcula **por superficie**, en la posicion de cada superficie, lo que significa que la resistencia tambien puede inducir **torque** (rotacion) si se aplica fuera del centro
+### Resistencia
 
-### Lift
+La resistencia proviene de varias fuentes fisicas, combinadas automaticamente:
 
-La sustentacion se genera automaticamente por **estructuras delgadas y planas**, como alas o aletas, que el motor de fisica detecta basandose en la geometria.
+| Fuente | Descripcion |
+|--------|-------------|
+| **Resistencia de forma (presion)** | El empuje del aire sobre las superficies que encaran el flujo. Crece con el **cuadrado de la velocidad**. |
+| **Friccion superficial** | El rozamiento del aire a lo largo de superficies paralelas al flujo (basado en el numero de Reynolds). Dominante en cuerpos grandes y lentos. |
+| **Resistencia inducida** | La resistencia inevitable que acompana a la sustentacion: mas sustentacion significa mas resistencia inducida. |
 
-Una superficie se clasifica como **superficie de sustentacion** cuando se cumplen todas las siguientes condiciones:
+El comportamiento nuevo clave es el **perfilado basado en la esbeltez**. El motor mide que tan **esbelta** es cada superficie: cuanto se extiende el cuerpo *a lo largo* del flujo frente a lo delgado que es *en sentido transversal*:
 
-| Condicion | Umbral |
-|-----------|--------|
-| Grosor (dimension mas corta) | < **0.3 m** |
-| Ancho (dimension media) | >= **longitud / 4** |
-| Longitud (dimension mas larga) | >= **4 m** |
+- Una forma **esbelta** (un morro puntiagudo, el borde de ataque afilado de un ala, un fuselaje largo y delgado avanzando) mantiene el flujo adherido y tiene una resistencia de forma **muy baja**.
+- Una forma **roma** (un cubo, una placa plana puesta de lado como un aerofreno, un morro chato) tiene la resistencia de forma **completa**.
 
-Cuando se detecta una superficie de sustentacion:
-- El **coeficiente de sustentacion** depende del angulo de ataque: `C_l = sin(|angulo_de_ataque| x pi/2)`
-- El **coeficiente de resistencia** es muy bajo: solo **0.01** (comparado con 0.4 para superficies regulares)
-- La fuerza de sustentacion es perpendicular a la velocidad, empujando el vehiculo en la direccion de la normal de la superficie
+Es puramente geometrico: lee la seccion transversal real de tu construccion, asi que perfilar el morro y los bordes de verdad compensa.
 
-> Para construir alas que generen sustentacion, usa disposiciones planas de bloques de al menos **4 metros de largo** y **menos de 0.3 metros de grosor**. Se pueden usar pendientes para dar forma a los bordes de ataque y de fuga.
+> Usa rampas, esquinas y biseles para afilar morros y bordes de ataque/salida. Una forma perfilada puede tener **una decima parte** de la resistencia de forma de una roma del mismo tamano frontal.
 
-### Buoyancy
+### Compresibilidad (alta velocidad)
 
-La flotabilidad es la fuerza ascendente ejercida sobre un objeto sumergido o parcialmente sumergido. Se opone a la gravedad y depende de cuanto fluido desplazan los bloques del vehiculo.
+El modelo distingue los regimenes. Al aproximarse y superar la **velocidad del sonido** (que depende de la temperatura del aire), la presion sobre las superficies orientadas hacia delante aumenta en el rango transonico y supersonico, y **la sustentacion de las alas se desvanece en supersonico** (dependes mas de la sustentacion del cuerpo y de la deflexion de los mandos). El vuelo a alto Mach se vuelve claramente mas pesado y menos reactivo, como debe ser.
 
-**F<sub>buoyancy</sub> = V<sub>desplazado</sub> x p<sub>fluido</sub> x g**
+### Estabilidad: emergente, no programada
 
-| Simbolo | Significado |
-|---------|-------------|
-| V<sub>desplazado</sub> | Volumen desplazado (volumen del bloque x `volumeDisplacementRatio`) |
-| p<sub>fluido</sub> | Densidad del fluido en el punto de muestreo |
-| g | Aceleracion gravitacional (direccion opuesta) |
+No hay **ningun amortiguamiento artificial** del tipo "manten el morro hacia delante". La estabilidad es un resultado real y emergente de donde estan tus superficies:
 
-- El motor muestrea **al menos 16 puntos aleatorios** a traves de todos los colisionadores para manejar la **sumersion parcial** de forma fluida
-- La contribucion de cada bloque depende del `volumeDisplacementRatio` de su material (ver [Materiales](#materials))
-- La flotabilidad se aplica en cada punto de muestreo, por lo que un vehiculo puede inclinarse segun la sumersion desigual
+- Un **estabilizador horizontal** montado detras del centro de masa encara el flujo de aire con cierto angulo cada vez que el morro sube o baja, generando una **fuerza de recuperacion** que devuelve el morro. Es **estabilidad de cabeceo** automatica.
+- Un **estabilizador vertical** (deriva) hace lo mismo para la **guinada** cada vez que el vehiculo derrapa.
+- El **amortiguamiento rotacional** (resistencia a tumbar) tambien emerge de forma natural: las superficies alejadas del centro de masa se mueven rapido por el aire cuando el vehiculo gira, y las fuerzas resultantes se oponen al giro.
 
-## Bloques y formas
+Como es fisica real, **la estabilidad estatica depende de tu centro de masa**. Un avion es estable cuando su **centro de masa se situa en el centro de sustentacion del ala o ligeramente por delante**, e inestable cuando la masa esta demasiado atras, exactamente como un avion real (y un aeromodelo real). Ver [Volar bien](#volar-bien) mas abajo.
 
-### Formas de bloques
+> La antigua estabilizacion angular artificial a alta velocidad ha **desaparecido** para las construcciones que usan este modelo. Si tu avion se siente nervioso o no se asienta, es un problema de **equilibrado**, no el motor peleando contigo: mueve masa hacia delante o anade superficie de cola.
 
-Las diferentes formas de bloques tienen diferentes **ratios de ocupacion**, que afectan directamente los calculos de resistencia:
+### Superficies de control y autoridad
 
-| Forma | Ratio de ocupacion | Multiplicador de masa |
-|-------|--------------------|-----------------------|
-| **Cube** | 1.0 | 1.0x |
-| **Slope** | 0.5 | 0.5x |
-| **Corner** | 0.5 | 0.5x |
-| **Pyramid** | 0.5 | 0.5x |
-| **Inverse Corner** | 0.5 | 0.5x |
+Las superficies de control (los [Aileron](components/miscellaneous/Aileron.md) usados como alerones, timones de profundidad o de direccion) van montadas en bisagras y **se deflectan en tiempo real**. El motor reevalua la aerodinamica de una superficie deflectada **a su angulo actual en cada fotograma**, asi que:
 
-El ratio de ocupacion escala el area de resistencia calculada - un bloque Slope de cara al viento produce aproximadamente **la mitad de la resistencia** de un Cube en la misma posicion.
+- Un timon de profundidad deflectado cambia de inmediato el flujo de aire sobre la cola y hace cabecear al avion.
+- La autoridad depende del **area** de la superficie, de su **distancia al centro de masa** (brazo de palanca) y de **densidad del aire × velocidad²**.
 
-### Materials
+> **Para un control potente:** haz las superficies de control **grandes** y montalas **lejos del centro de masa**. Un timon de profundidad en el extremo de la cola tiene mucha mas autoridad de cabeceo que uno cerca del ala. Aire mas rapido y mas denso da mas autoridad: los mandos se ablandan a baja velocidad y gran altitud.
 
-Cada material de bloque tiene diferentes propiedades fisicas que afectan la aerodinamica, la flotabilidad y la masa:
+### Aerodinamica sensible al dano
 
-| Material | Masa (kg/unidad de bloque) | Ratio de desplazamiento de volumen | Friccion |
-|----------|---------------------------|-----------------------------------|----------|
-| **Composite** | 0.25 | 0.20 x ocupacion | 0.05 |
-| **Concrete** | 10.0 | 0.25 x ocupacion | 0.50 |
-| **Steel** | 1.0 | 0.01 x ocupacion | 0.20 |
-| **Aluminium** | 0.5 | 0.01 x ocupacion | 0.20 |
-| **Glass** | 1.0 | 0.02 x ocupacion | 0.10 |
-| **Lead** | 150.0 | 1.00 x ocupacion | 0.20 |
+El dano de combate cambia como vuela una superficie. A medida que un panel se deforma o se agujerea (y cada vez mas a medida que se destruye):
 
-El **ratio de desplazamiento de volumen** determina cuanto contribuye un bloque a la flotabilidad y cuan visible es para la deteccion de superficies aerodinamicas:
-- **Lead** (1.0) desplaza completamente el fluido - maxima fuerza de flotabilidad pero tambien muy pesado, por lo que se hunde
-- **Steel/Aluminium** (0.01) apenas desplazan fluido - casi no contribuyen a la flotabilidad
-- **Composite** (0.2) ofrece un equilibrio moderado entre flotabilidad y peso ligero
+- **Pierde sustentacion**: un ala destrozada deja de volar.
+- **Pierde perfilado y recuperacion de presion**, y **genera mas resistencia** (suelta una estela turbulenta).
 
-### Occlusion and Exposed Surfaces
+Como la sustentacion y la resistencia se calculan por superficie, el **dano asimetrico** tiene el efecto correcto: un ala acribillada por un lado hace que el avion **alabee** (perdida de sustentacion en ese lado) y **guine** (resistencia extra en ese lado). Los disenos simetricos y redundantes sobreviven mejor al combate.
 
-El sistema aerodinamico usa **raycasting** para determinar que superficies estan realmente expuestas al flujo de aire:
+### Flotabilidad
 
-1. Para cada colisionador de bloque, el motor identifica la superficie que mira hacia la direccion de la velocidad
-2. Se lanza un rayo desde esa superficie hacia afuera en la direccion de la velocidad
-3. Si el rayo golpea otro bloque del mismo vehiculo, esa superficie se considera **ocluida** y **no** contribuye a la resistencia ni a la sustentacion
-4. Solo las superficies verdaderamente expuestas generan fuerzas aerodinamicas
+La flotabilidad es la fuerza ascendente sobre los bloques sumergidos, calculada por colisionador a partir del volumen de fluido que desplaza cada bloque.
 
-Esto significa:
-- Los **bloques internos** dentro de un casco no anaden resistencia - solo importa la capa exterior
-- Un **vehiculo compacto** con menos caras expuestas tiene menos resistencia que una estructura dispersa
-- Cuando un grupo de bloques tiene un ratio de ocupacion inferior a **0.9**, el sistema examina recursivamente los bloques hijos individuales para encontrar las superficies realmente expuestas
+**F<sub>flotabilidad</sub> = V<sub>desplazado</sub> × ρ<sub>fluido</sub> × g**
 
-> Este es un punto de optimizacion importante: dos vehiculos con la misma forma exterior pero diferentes estructuras internas experimentaran la **misma** resistencia aerodinamica. Llena los interiores libremente sin preocuparte por resistencia adicional.
+- El volumen desplazado de cada bloque = su volumen × el **ratio de desplazamiento volumetrico** de su material (ver [Materiales](#materiales)).
+- Los bloques danados pierden casi toda su flotabilidad.
+- La flotabilidad se aplica donde estan realmente los bloques, asi que una inmersion desigual inclina la embarcacion: un efecto de autoenderezamiento para cascos bien formados.
 
-### Frame Beams
+### Agua
 
-Los frame beams (las barras estructurales en los bordes de los marcos) tienen un **ratio de desplazamiento de volumen de 0**. Esto significa:
+El agua **no es un caso especial**. El modelo muestrea la **densidad del fluido en cada superficie** — aire por encima de la linea de flotacion, agua por debajo, con una transicion continua — de modo que el *mismo* modelo de sustentacion y resistencia simplemente produce fuerzas mucho mayores bajo el agua, donde el fluido es **~800× mas denso** que el aire. Nada esta codificado de forma fija para "estar en el agua":
 
-- No producen **resistencia**
-- No producen **sustentacion**
-- No producen **flotabilidad**
-- Solo sirven como geometria de colision estructural
+- Un ala se convierte en un **hidroala**: sustenta y ofrece resistencia bajo el agua igual que en el aire, solo que mucho mas intensamente. **Las superficies de control siguen funcionando bajo el agua**, por lo que un submarino se gobierna con los mismos alerones y empenajes que un avion.
+- **La resistencia es enorme** y crece con el cuadrado de la velocidad, de modo que un cuerpo que entra en el agua frena con fuerza y un casco flotante se retiene de forma natural en lugar de salir disparado — sin ningun amortiguamiento artificial.
+- **El amortiguamiento rotacional** proviene directamente del mismo modelo: las superficies alejadas del centro de masa se mueven rapido por el fluido denso cuando la nave gira o vuelca, de modo que barcos y submarinos se estabilizan de forma natural.
 
-> Los frame beams son aerodinamicamente invisibles. Usalos libremente para estructura interna sin afectar el rendimiento aerodinamico de tu vehiculo.
+> Como las fuerzas crecen con la densidad, **golpear el agua a gran velocidad es un impacto real**. Una panzada a gran velocidad carga toda la cara de contacto muy por encima de lo que la estructura puede soportar y la **abolla o destruye**, igual que chocar contra suelo solido — asi que entra en el agua con un angulo bajo y reduce la velocidad primero.
+
+### Calentamiento de reentrada
+
+Moverse rapido por el aire calienta las superficies orientadas hacia delante hacia la **temperatura de estancamiento (de recuperacion)**, que crece con el cuadrado de la velocidad. Es suave a velocidades supersonicas pero **explosivo a velocidades de reentrada**, y cada material se consume al superar su propio limite termico: por eso importan un escudo termico, un angulo de reentrada empinado pero sobrevivible y perder velocidad en altura.
+
+## Bloques y materiales
+
+### Materiales
+
+La eleccion del material afecta a la **masa** y la **flotabilidad** -y por tanto al **equilibrado**- pero **no a la sustentacion ni a la resistencia**:
+
+| Material | Masa (por unidad de bloque) | Desplazamiento volumetrico (flotabilidad) |
+|----------|-----------------------------|-------------------------------------------|
+| **Composite** | 0.25 | 0.20 × ocupacion |
+| **Concrete** | 10.0 | 0.25 × ocupacion |
+| **Steel** | 1.0 | 0.01 × ocupacion |
+| **Aluminium** | 0.5 | 0.01 × ocupacion |
+| **Glass** | 1.0 | 0.02 × ocupacion |
+| **Lead** | 150.0 | 1.00 × ocupacion |
+| **Titanium** | 0.6 | 0.01 × ocupacion |
+
+- **Lead** es denso y desplaza por completo: ideal como **lastre de morro** para llevar tu centro de masa hacia delante (o como lastre de quilla en un barco), pero se hunde.
+- **Composite** es ligero con desplazamiento moderado: el mejor flotador de uso general.
+- **Steel/Aluminium/Titanium** apenas desplazan fluido: resistentes y ligeros, pero casi no aportan flotabilidad.
+
+> Como el material no cambia la aerodinamica, eliges materiales por **resistencia, peso, resistencia al calor y equilibrado**, no por las prestaciones de vuelo.
+
+### Formas de bloque
+
+Las rampas, esquinas y piramides ocupan medio cubo y son mas ligeras. Aerodinamicamente importan porque te permiten **afilar** superficies, convirtiendo una cara roma y resistente en una esbelta y perfilada. Usalas en morros y bordes de ala.
+
+### Vigas de marco
+
+Las vigas de marco (las barras estructurales en los bordes de los marcos) son **aerodinamicamente invisibles**: sin sustentacion, sin resistencia, sin flotabilidad. Usalas con libertad como estructura interna.
 
 ## Componentes aerodinamicos
 
 ### Aileron
 
-El [Aileron](components/miscellaneous/Aileron.md) es una superficie de control que se deflecta para crear fuerzas perpendiculares al flujo de aire. Se usa para dirigir aeronaves y embarcaciones.
+El [Aileron](components/miscellaneous/Aileron.md) es una superficie de control con bisagra usada como aleron, timon de profundidad o de direccion. La entrada es un valor de `-1.0` a `+1.0` (rotacion de −45° a +45°) a traves de su puerto de datos.
 
-- **Entrada**: un valor entre `-1.0` y `+1.0` a traves de su puerto de datos, controlando la rotacion de -45 grados a +45 grados
-- **Fuerza**: proporcional a la densidad del fluido x velocidad al cuadrado x angulo de deflexion
-- **No calcula oclusion** - a diferencia de los bloques, el Aileron siempre genera su fuerza completa independientemente de la geometria circundante
-
-> Debido a que los Ailerons ignoran la oclusion, puedes **ocultarlos dentro de las alas** hechas de bloques. Los bloques tendran sus superficies ocluidas (reduciendo la resistencia), mientras que los Ailerons siguen produciendo su fuerza de control completa.
+- Calcula su **propia** fuerza de control y queda **excluido del campo de forma principal**, asi que nunca se cuenta dos veces y siempre entrega autoridad plena aun rodeado de estructura.
+- Puedes construir la parte fija de un ala o una cola con bloques (gestionados por el campo) y poner **alerones en el borde de salida** para el control.
 
 ### Propeller
 
-El [Propeller](components/propulsion/Propeller.md) genera empuje haciendo girar aspas a traves de un medio fluido. Funciona tanto en aire como en agua.
-
-Fisica clave:
-- **Empuje** = 1/2 x p x A<sub>disco</sub> x v<sub>efectiva</sub>2 x 0.4
-- **Resistencia en las aspas** = 1/2 x p x viscosidad x A<sub>disco</sub> x v<sub>efectiva</sub>2 x 10.0
-- **Efecto suelo**: cuando un Propeller esta cerca del suelo y apuntando hacia abajo, el empuje aumenta hasta un **+50%** (dentro de 3x el radio de las aspas del terreno)
-- **Precesion giroscopica**: los Propellers girando resisten cambios de orientacion, creando un torque perpendicular al eje de rotacion - igual que los giroscopios reales
-- El empuje maximo esta limitado a **100,000 N**
+El [Propeller](components/propulsion/Propeller.md) (helice) genera empuje en aire o agua y queda excluido del campo de forma (tiene su propio modelo). Comportamientos clave: el empuje depende de la densidad del fluido y del area del disco; el **efecto suelo** aumenta el empuje hasta un **+50%** cerca del terreno; las palas en giro crean una resistencia **giroscopica** a la reorientacion; el empuje esta limitado a **100.000 N**.
 
 ### Thruster y RCS
 
-Los [Thrusters](components/propulsion/thruster/SmallThruster.md) quimicos generan empuje mediante la combustion de combustible y **no se ven afectados** por la aerodinamica externa para su generacion de empuje - funcionan igual en la atmosfera y en el vacio.
+Los [Thruster](components/propulsion/thruster/SmallThruster.md) quimicos no se ven afectados por la aerodinamica y funcionan igual en atmosfera y en vacio. Los [RCS](components/propulsion/RCS.md) pierden casi toda su eficacia en fluidos densos (atenuacion ≈ e<sup>−ρ×4</sup>): son para el espacio.
 
-Los propulsores [RCS](components/propulsion/RCS.md) (Reaction Control System), sin embargo, experimentan **atenuacion atmosferica**:
+## Volar bien
 
-**atenuacion = max(e<sup>-p*4</sup>, 0.01)**
+### Construir alas
 
-| Entorno | Densidad (p) | Atenuacion | Empuje efectivo |
-|---------|-------------|------------|-----------------|
-| Vacio | 0 | 100% | Empuje completo |
-| Aire (nivel del mar) | ~1.2 | ~99.2% | Casi completo |
-| Agua | ~1000 | ~1% | Casi sin empuje |
+- Haz el ala **geometricamente delgada**: una superficie amplia y plana de uno o dos bloques de grosor. Seccion mas delgada = sustentacion mas limpia.
+- Dale **envergadura y cuerda**; un ala larga y amplia sustenta mas y entra en perdida de forma mas suave.
+- La sustentacion es **independiente del material y del numero de bloques**: construye por resistencia y peso.
+- Afila los **bordes de ataque y de salida** con rampas para reducir la resistencia.
 
-> Los propulsores RCS estan disenados para maniobras espaciales. En atmosferas densas o agua, su efectividad cae drasticamente.
+### Equilibrar para un vuelo estable
 
-## Fisica del agua
+Es lo mas importante para un avion que vuela bien:
 
-Cuando un vehiculo entra en el agua, el motor de fisica aplica efectos de amortiguacion adicionales mas alla de la resistencia estandar:
+- Manten el **centro de masa en las alas o ligeramente por delante**. Anade masa densa (p. ej. **lead** o componentes pesados) hacia el **morro** para llevarlo adelante: los aviones reales llevan el motor delante por exactamente esta razon.
+- Un avion **pesado de cola** (masa demasiado atras) es inestable: cabecea y guina de forma divergente y es agotador de pilotar.
+- Monta **estabilizadores horizontales** bien por detras del centro de masa para la estabilidad de cabeceo, y una **deriva** para la estabilidad de guinada. Mas superficie de cola y un brazo de cola mas largo = mas estabilidad.
+- Si una construccion no se calma, **mueve masa hacia delante** o **anade superficie de cola** antes de culpar a los mandos.
 
-### Deteccion de agua
+### Autoridad de control
 
-El motor detecta el agua midiendo la **viscosidad** del entorno. Una viscosidad entre **0.0000151** y **0.000999** kg/(m*s) se clasifica como agua.
-
-### Efectos de amortiguacion del agua
-
-| Efecto | Descripcion |
-|--------|-------------|
-| **Supresion de velocidad vertical** | La velocidad vertical se reduce con el tiempo, simulando la resistencia del agua al movimiento vertical |
-| **Amortiguacion de cabeceo y alabeo** | La rotacion alrededor de los ejes horizontales se amortigua proporcionalmente a cuanto esta sumergido el vehiculo |
-| **Amortiguacion de guinada** | La rotacion alrededor del eje vertical se amortigua a **la mitad** de la tasa de cabeceo/alabeo |
-
-El **factor de sumersion** se calcula a partir de la viscosidad promedio: `sumergido = clamp(pow(viscosidad x 1000, 0.1), 0.5, 1.0)`
-
-> El agua estabiliza naturalmente los vehiculos. Un vehiculo parcialmente sumergido resistira volcarse debido a la amortiguacion de cabeceo/alabeo. Esto hace que los barcos sean inherentemente mas estables que las aeronaves.
-
-## Estabilidad angular a alta velocidad
-
-A velocidades superiores a **10 m/s**, el motor de fisica aplica una amortiguacion angular artificial que simula la acumulacion de presion en las superficies del vehiculo:
-
-**w -= w x min(1, p) x clamp(dt x |v| / 25, 0, 0.025)**
-
-Esto significa:
-- Los **vehiculos mas rapidos** son mas estables rotacionalmente
-- Los **fluidos mas densos** (agua > aire) proporcionan una estabilizacion mas fuerte
-- Esto previene que los vehiculos giren descontroladamente a altas velocidades
-- En agua con alta viscosidad, se aplica un factor de amortiguacion angular adicional
-
-## Consejos de diseno
+- Superficies de control mas grandes, montadas **mas lejos del centro de masa**, dan mas autoridad.
+- Pon los **timones de profundidad en el extremo de la cola** para el cabeceo, los **timones de direccion en la deriva** para la guinada, los **alerones en las puntas de ala** para el alabeo.
+- La autoridad cae a **baja velocidad** y **gran altitud** (aire enrarecido): manten la velocidad en aproximacion.
 
 ### Reducir la resistencia
-- **Minimiza el area de superficie expuesta** - una forma compacta y aerodinamica crea menos resistencia
-- Usa **pendientes, esquinas y biseles** en los bordes de ataque y las narices en lugar de caras planas de cubos
-- **Los bloques internos no anaden resistencia** - solo importa la capa exterior, asi que llena los interiores segun sea necesario
-- Los frame beams son aerodinamicamente invisibles - usalos libremente para estructura interna
 
-### Construir alas efectivas
-- Las alas deben tener **al menos 4 metros de largo**, **menos de 0.3 metros de grosor**
-- Una mayor envergadura (ancho >= longitud/4) asegura que la superficie se clasifique como superficie de sustentacion en lugar de superficie de resistencia
+- **Perfila** morros y bordes con rampas: las formas esbeltas generan mucha menos resistencia.
+- Manten el vehiculo **compacto**; las estructuras extendidas presentan mas area frontal.
+- Los **bloques internos son gratis**: solo se escanea el casco exterior, asi que la distribucion interna nunca anade resistencia.
 
-### Diseno de embarcaciones
-- Los bloques **Composite** (ratio 0.2) ofrecen el mejor equilibrio flotabilidad-peso para flotar
-- **Steel y Aluminium** (ratio 0.01) apenas contribuyen a la flotabilidad - usalos con moderacion en barcos
-- **Lead** (ratio 1.0) desplaza la mayor cantidad de fluido, pero a 150 kg por unidad se hundira rapidamente
-- La amortiguacion del agua estabiliza naturalmente tu embarcacion - los cascos anchos y planos son los mas estables
+### Embarcaciones
 
-### Colocacion de Propellers
-- El **efecto suelo** aumenta el empuje hasta un 50% cuando esta cerca del terreno - util para disenos de hovercrafts
-- Los Propellers generan **torque giroscopico** - pares de Propellers contra-rotantes cancelan este efecto
-- Los Propellers funcionan tanto en aire como en agua, adaptando su empuje segun la densidad y viscosidad del fluido
+- Usa **composite** para el casco (mejor relacion flotabilidad/peso); usa **lead en la parte baja de la quilla** para la estabilidad.
+- Los cascos **anchos y planos** son los mas estables: el amortiguamiento del agua hace el resto.
+- **Steel/aluminium** apenas flotan; usalos por encima de la linea de flotacion.
+
+### Sobrevivir al combate
+
+- **Simetria y redundancia:** el dano asimetrico de ala te hace *alabear* y *guinar*, asi que duplica las superficies sustentadoras y de control criticas en ambos lados.
+- Espera que un ala danada **pierda sustentacion y genere mas resistencia**: manten velocidad y altitud en reserva.
+
+### Rendimiento
+
+El campo de forma se almacena en cache y solo se reconstruye cuando la construccion cambia o recibe dano, y su coste es acotado sin importar el tamano o el numero de bloques. Nunca pagas una penalizacion por fotograma por el detalle o el relleno interno, asi que construye tan grande y detallado como quieras.
