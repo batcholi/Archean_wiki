@@ -64,6 +64,30 @@ reboot() ; 重启计算机（调用 shutdown 入口点并加载 BIOS 或主程�
 $text_value = device_type(aliasOrIoNumber) ; 返回给定 IO 索引的设备类型
 ```
 
+### 组件检查
+Computer 可以检查它能够寻址的任何组件，包括位于路由器之后的组件。
+
+```xc
+$num_value = device_count() ; 该计算机可访问的组件数量
+$text_value = device(aliasOrIoNumber) ; 描述某个组件的键值对象，若不存在则返回空文本。数字表示 IO 端口，与 device_type() 一致，而不是索引
+$text_value = device_at(index) ; 同上，按扫描索引访问，范围 0 到 device_count()-1。仅在一次扫描期间有效，记录 .id 以保留引用
+```
+
+返回的键值对象包含：
+
+| 成员 | 说明 |
+|---|---|
+| `.id` | 组件的唯一 id，只要组件存在就保持不变 |
+| `.alias` | 它的别名，若没有则为空文本 |
+| `.port` | 它所连接的 IO 端口，若位于路由器之后则为 `-1` |
+| `.type` | 它的组件类型 |
+| `.temp` | 它的当前温度，单位开尔文 |
+| `.damage` | 它的损伤程度，0 到 100 |
+| `.broken` | 若已完全损坏且不再工作则为 `1`，否则为 `0` |
+| `.x` `.y` `.z` | 它的位置，单位米，相对于它所安装的 build |
+| `.size_x` `.size_y` `.size_z` | 它的尺寸，单位米 |
+| `.mass` | 它的质量，单位千克 |
+
 ### Screen Override
 Computer 可以覆盖连接到它的任何组件的屏幕。这允许你用 XenonCode 程序渲染的自定义图形替换组件的默认显示。
 

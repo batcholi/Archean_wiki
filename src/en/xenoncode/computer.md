@@ -64,6 +64,30 @@ reboot() ; reboots the computer (calls the shutdown entry point and loads the bi
 $text_value = device_type(aliasOrIoNumber) ; returns the type of the device with the given IO index
 ```
 
+### Component Inspection
+A computer can inspect any component it can address, including the ones behind routers.
+
+```xc
+$num_value = device_count() ; the number of components reachable from this computer
+$text_value = device(aliasOrIoNumber) ; a key-value object describing one component, or an empty text if there is none. A number is an IO port, like in device_type(), not an index
+$text_value = device_at(index) ; the same, by scan index from 0 to device_count()-1. Only valid during a scan, store .id to keep a reference
+```
+
+The returned key-value object contains:
+
+| Member | Description |
+|---|---|
+| `.id` | unique id of the component, stable for as long as it exists |
+| `.alias` | its alias, or an empty text if it has none |
+| `.port` | the IO port it is connected to, or `-1` if it is behind a router |
+| `.type` | its component type |
+| `.temp` | its current temperature, in kelvin |
+| `.damage` | its damage level, from 0 to 100 |
+| `.broken` | `1` if it is fully damaged and no longer functions, otherwise `0` |
+| `.x` `.y` `.z` | its position in meters, relative to the build it is mounted on |
+| `.size_x` `.size_y` `.size_z` | its size in meters |
+| `.mass` | its mass in kilograms |
+
 ### Screen Override
 A Computer can override the screen of any component connected to it. This allows you to replace the default display of a component with custom graphics rendered by your XenonCode program.
 

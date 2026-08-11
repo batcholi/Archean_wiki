@@ -64,6 +64,30 @@ reboot() ; reboots the computer (calls the shutdown entry point and loads the bi
 $text_value = device_type(aliasOrIoNumber) ; returns the type of the device with the given IO index
 ```
 
+### Component Inspection
+Computer может опрашивать любой компонент, к которому он может обратиться, включая те, что находятся за роутерами.
+
+```xc
+$num_value = device_count() ; the number of components reachable from this computer
+$text_value = device(aliasOrIoNumber) ; a key-value object describing one component, or an empty text if there is none. A number is an IO port, like in device_type(), not an index
+$text_value = device_at(index) ; the same, by scan index from 0 to device_count()-1. Only valid during a scan, store .id to keep a reference
+```
+
+Возвращаемый объект «ключ-значение» содержит:
+
+| Член | Описание |
+|---|---|
+| `.id` | уникальный идентификатор компонента, неизменный пока компонент существует |
+| `.alias` | его алиас, или пустой текст, если алиаса нет |
+| `.port` | порт IO, к которому он подключён, или `-1`, если он находится за роутером |
+| `.type` | тип компонента |
+| `.temp` | текущая температура, в кельвинах |
+| `.damage` | уровень повреждения, от 0 до 100 |
+| `.broken` | `1`, если компонент полностью повреждён и больше не работает, иначе `0` |
+| `.x` `.y` `.z` | положение в метрах, относительно build, на котором он установлен |
+| `.size_x` `.size_y` `.size_z` | размер в метрах |
+| `.mass` | масса в килограммах |
+
 ### Screen Override
 Computer может переопределить экран любого подключённого к нему компонента. Это позволяет заменить стандартный дисплей компонента пользовательской графикой, отрисованной вашей программой на XenonCode.
 

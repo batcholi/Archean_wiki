@@ -64,6 +64,30 @@ reboot() ; reboots the computer (calls the shutdown entry point and loads the bi
 $text_value = device_type(aliasOrIoNumber) ; returns the type of the device with the given IO index
 ```
 
+### Komponenten-Inspektion
+Ein Computer kann jede Komponente inspizieren, die er adressieren kann, einschließlich derer hinter Routern.
+
+```xc
+$num_value = device_count() ; the number of components reachable from this computer
+$text_value = device(aliasOrIoNumber) ; a key-value object describing one component, or an empty text if there is none. A number is an IO port, like in device_type(), not an index
+$text_value = device_at(index) ; the same, by scan index from 0 to device_count()-1. Only valid during a scan, store .id to keep a reference
+```
+
+Das zurückgegebene Key-Value-Objekt enthält:
+
+| Member | Beschreibung |
+|---|---|
+| `.id` | eindeutige id der Komponente, stabil solange sie existiert |
+| `.alias` | ihr Alias, oder ein leerer Text, wenn sie keinen hat |
+| `.port` | der IO-Port, an dem sie angeschlossen ist, oder `-1`, wenn sie hinter einem Router liegt |
+| `.type` | ihr Komponententyp |
+| `.temp` | ihre aktuelle Temperatur, in Kelvin |
+| `.damage` | ihr Schadensgrad, von 0 bis 100 |
+| `.broken` | `1`, wenn sie vollständig beschädigt ist und nicht mehr funktioniert, sonst `0` |
+| `.x` `.y` `.z` | ihre Position in Metern, relativ zum Build, auf dem sie montiert ist |
+| `.size_x` `.size_y` `.size_z` | ihre Größe in Metern |
+| `.mass` | ihre Masse in Kilogramm |
+
 ### Screen Override
 Ein Computer kann den Bildschirm jeder angeschlossenen Komponente übernehmen. Dies ermöglicht es dir, die Standardanzeige einer Komponente durch benutzerdefinierte Grafiken zu ersetzen, die von deinem XenonCode-Programm gerendert werden.
 
