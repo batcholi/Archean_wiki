@@ -25,6 +25,8 @@ Il motore richiede:
 
 Non ha regolazione interna: la valvola del carburante è direttamente il comando di spinta.
 
+> **Suggerimento:** per trasformare l'Oil Shale in carburante utilizzabile, cuocilo in un Chemical Furnace tra **600 K e 700 K**. Questo greggio è un carburante provvisorio in attesa della raffinazione: la sua acqua e i suoi idrocarburi pesanti usurano il motore.
+
 ## Avviamento
 1. Motorino a 1: l'albero sale fino a circa il 24 % di N1. Il motorino assorbe 125 kW finché gira.
 2. Accenditori a 1 (400 watt) e valvola moderatamente aperta: la combustione parte appena il carburante arriva in camera.

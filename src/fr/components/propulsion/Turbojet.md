@@ -25,6 +25,8 @@ Le réacteur nécessite :
 
 Il n'a pas de régulation interne : la vanne de carburant est directement la commande de poussée.
 
+> **Astuce :** pour transformer l'Oil Shale en carburant exploitable, cuisez-le dans un Chemical Furnace entre **600 K et 700 K**. Ce brut est un carburant provisoire en attendant le raffinage : son eau et ses hydrocarbures lourds usent la turbine.
+
 ## Démarrage
 1. Démarreur à 1 : l'arbre monte jusqu'à environ 24 % de N1. Le démarreur consomme 125 kW tant qu'il tourne.
 2. Allumeurs à 1 (400 watts) et vanne ouverte modérément : la combustion démarre dès que le carburant arrive dans la chambre.

@@ -28,6 +28,8 @@ Der Motor stirbt ab, wenn ihm der Sauerstoff ausgeht, sein Auspuff blockiert ist
 
 Er verträgt bis zu 55 % Kraftstoffverunreinigung (Wasser, schwere Kohlenwasserstoffe) ohne Verschleiß. Darüber hinaus verschleißt er.
 
+> **Tipp:** Um Oil Shale in brauchbaren Kraftstoff zu verwandeln, in einem Chemical Furnace zwischen **600 K und 700 K** erhitzen.
+
 ### List of inputs
 |Channel|Function|Range|
 |---|---|---|

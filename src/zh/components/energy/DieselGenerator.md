@@ -28,6 +28,8 @@ Diesel Generator 是一种燃烧液体燃料以产生高压电力的发电机组
 
 它可承受最高 55 % 的燃料污染（水、重质烃）而不磨损。超过此值则会磨损。
 
+> **提示：** 要把 Oil Shale 变成可用燃料，请在 Chemical Furnace 中以 **600 K 至 700 K** 加热。
+
 ### List of inputs
 |Channel|Function|Range|
 |---|---|---|

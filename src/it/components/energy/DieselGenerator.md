@@ -28,6 +28,8 @@ Il motore si spegne se manca l'ossigeno, se lo scarico è bloccato o se il carbu
 
 Tollera fino al 55 % di contaminazione del carburante (acqua, idrocarburi pesanti) senza usura. Oltre, si usura.
 
+> **Suggerimento:** per trasformare l'Oil Shale in carburante utilizzabile, cuocilo in un Chemical Furnace tra **600 K e 700 K**.
+
 ### List of inputs
 |Channel|Function|Range|
 |---|---|---|

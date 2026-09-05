@@ -28,6 +28,8 @@ El motor se cala si le falta oxígeno, si su escape está bloqueado o si el comb
 
 Tolera hasta un 55 % de contaminación del combustible (agua, hidrocarburos pesados) sin desgaste. Por encima de eso, se desgasta.
 
+> **Consejo:** para convertir el Oil Shale en combustible utilizable, cocínalo en un Chemical Furnace entre **600 K y 700 K**.
+
 ### List of inputs
 |Channel|Function|Range|
 |---|---|---|

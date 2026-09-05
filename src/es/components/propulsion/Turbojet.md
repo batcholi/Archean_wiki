@@ -25,6 +25,8 @@ El reactor necesita:
 
 No tiene regulación interna: la válvula de combustible es directamente el mando de empuje.
 
+> **Consejo:** para convertir el Oil Shale en combustible utilizable, cocínalo en un Chemical Furnace entre **600 K y 700 K**. Este crudo es un combustible provisional hasta que el refinado esté disponible: su agua y sus hidrocarburos pesados desgastan el reactor.
+
 ## Arranque
 1. Motor de arranque a 1: el eje sube hasta un 24 % de N1 aproximadamente. El motor de arranque consume 125 kW mientras gira.
 2. Encendedores a 1 (400 vatios) y válvula moderadamente abierta: la combustión empieza en cuanto el combustible llega a la cámara.

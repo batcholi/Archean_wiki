@@ -28,6 +28,8 @@ The engine stalls if it runs out of oxygen, if its exhaust is blocked, or if fue
 
 It tolerates up to 55 % fuel contamination (water, heavy hydrocarbons) without wear. Beyond that, it wears out.
 
+> **Tip:** to turn Oil Shale into usable fuel, cook it in a Chemical Furnace between **600 K and 700 K**.
+
 ### List of inputs
 |Channel|Function|Range|
 |---|---|---|

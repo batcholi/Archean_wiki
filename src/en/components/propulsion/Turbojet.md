@@ -25,6 +25,8 @@ The engine requires:
 
 It has no internal regulation: the fuel valve is directly the thrust control.
 
+> **Tip:** to turn Oil Shale into usable fuel, cook it in a Chemical Furnace between **600 K and 700 K**. This crude oil is a stopgap until refining is available: its water and heavy hydrocarbons wear the turbojet out.
+
 ## Start-up
 1. Starter at 1: the shaft spins up to about 24 % N1. The starter draws 125 kW as long as it runs.
 2. Igniters at 1 (400 watts) and valve moderately open: combustion starts as soon as fuel reaches the chamber.

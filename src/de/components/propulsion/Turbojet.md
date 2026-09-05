@@ -25,6 +25,8 @@ Das Triebwerk benötigt:
 
 Es hat keine interne Regelung: Das Kraftstoffventil ist unmittelbar die Schubsteuerung.
 
+> **Tipp:** Um Oil Shale in brauchbaren Kraftstoff zu verwandeln, in einem Chemical Furnace zwischen **600 K und 700 K** erhitzen. Dieses Rohöl ist ein Notkraftstoff, bis die Raffination verfügbar ist: sein Wasser und seine schweren Kohlenwasserstoffe verschleißen das Triebwerk.
+
 ## Start
 1. Anlasser auf 1: Die Welle läuft auf etwa 24 % N1 hoch. Der Anlasser zieht 125 kW, solange er läuft.
 2. Zünder auf 1 (400 Watt) und Ventil mäßig geöffnet: Die Verbrennung beginnt, sobald Kraftstoff in die Brennkammer gelangt.

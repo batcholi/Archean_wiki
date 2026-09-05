@@ -28,6 +28,8 @@ Le moteur cale s'il manque d'oxygène, si son échappement est bouché ou si le 
 
 Il tolère jusqu'à 55 % de contamination du carburant (eau, hydrocarbures lourds) sans usure. Au-delà, il s'use.
 
+> **Astuce :** pour transformer l'Oil Shale en carburant exploitable, cuisez-le dans un Chemical Furnace entre **600 K et 700 K**.
+
 ### Liste des entrées
 |Canal|Fonction|Plage|
 |---|---|---|
