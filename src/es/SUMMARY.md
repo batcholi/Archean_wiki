@@ -65,6 +65,7 @@
 			- [Low Voltage Relay](components/energy/junctionRelayConverter/LowVoltageRelay.md)
 			- [High Voltage Relay](components/energy/junctionRelayConverter/HighVoltageRelay.md)
 			- [Power Converter](components/energy/junctionRelayConverter/PowerConverter.md)
+		- [Diesel Generator](components/energy/DieselGenerator.md)
 		- [Fission Reactor](components/energy/FissionReactor.md)
 		- [RTG](components/energy/RTG.md)
 		- [Solar Panel](components/energy/SolarPanel.md)
@@ -133,6 +134,7 @@
 			- [Big Wheel](components/propulsion/wheel/BigWheel.md)
 		- [Propeller](components/propulsion/Propeller.md)
 		- [RCS](components/propulsion/RCS.md)
+		- [Turbojet](components/propulsion/Turbojet.md)
 
 	- [Sensores]()
 		- [Altitude Sensor](components/sensors/AltitudeSensor.md)
@@ -144,6 +146,7 @@
 		- [Solar Sensor](components/sensors/SolarSensor.md)
 		- [Speed Sensor](components/sensors/SpeedSensor.md)
 		- [Temperature Sensor](components/sensors/TemperatureSensor.md)
+		- [Temperature Probe](components/sensors/TemperatureProbe.md)
 		- [Tilt Sensor](components/sensors/TiltSensor.md)
 		- [Vehicle Physics Sensor](components/sensors/VehiclePhysicsSensor.md)
 

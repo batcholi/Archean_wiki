@@ -34,7 +34,7 @@ click.$screen ($x:number, $y:number)
 
 scroll.$screen ($delta:number)
 ; This entry point is executed whenever a user scrolls with the mouse wheel while aiming at the screen.
-; The $delta parameter indicates the scroll direction and amount (positive for scroll up, negative for scroll down).
+; The $delta parameter is 1 for scroll up or -1 for scroll down: one call per wheel notch, never an amount.
 ; Multiple 'scroll' entry points may be defined in a single program and they will all be executed in the order they are defined.
 ```
 
@@ -49,7 +49,7 @@ $num_value = $screen.height ; the height of the virtual monitor in pixels
 $num_value = $screen.clicked ; whether the mouse button was pressed while aiming at the virtual monitor
 $num_value = $screen.click_x ; the x coordinate of the mouse cursor on the virtual monitor when the mouse button was pressed
 $num_value = $screen.click_y ; the y coordinate of the mouse cursor on the virtual monitor when the mouse button was pressed
-$num_value = $screen.scroll ; the scroll wheel delta value (positive for scroll up, negative for scroll down, 0 if no scroll happened on this cycle)
+$num_value = $screen.scroll ; 1 for scroll up, -1 for scroll down, 0 if no scroll happened on this cycle
 ```
     
 ### Bildschirm-Renderfunktionen

@@ -76,7 +76,7 @@ $myPanel.scroll ; 返回鼠标滚动值（-1、0 或 1）
 
 ; 入口点
 click.$myPanel ($x:number, $y:number) ; 返回面板内的点击位置
-scroll.$myPanel ($delta:number) ; 当用户在瞄准面板时滚动鼠标滚轮时调用
+scroll.$myPanel ($delta:number) ; 当用户在瞄准面板时滚动鼠标滚轮时调用（$delta 向上为 1，向下为 -1）
 ```
 注意：在面板上绘制的方式类似于 [dashboard screen](../xenoncode/dashboard.md#screen-rendering-functions)
 

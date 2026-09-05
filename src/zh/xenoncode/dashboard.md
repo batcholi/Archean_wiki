@@ -34,7 +34,7 @@ click.$screen ($x:number, $y:number)
 
 scroll.$screen ($delta:number)
 ; 当用户在瞄准屏幕时使用鼠标滚轮滚动时执行此入口点。
-; $delta 参数表示滚动方向和数量（向上滚动为正，向下滚动为负）。
+; $delta 参数为 1（向上滚动）或 -1（向下滚动）：每格滚轮触发一次，不表示幅度。
 ; 一个程序中可以定义多个 'scroll' 入口点，它们将按定义顺序执行。
 ```
 
@@ -49,7 +49,7 @@ $num_value = $screen.height ; 虚拟显示器的高度（像素）
 $num_value = $screen.clicked ; 瞄准虚拟显示器时鼠标按钮是否被按下
 $num_value = $screen.click_x ; 鼠标按钮按下时鼠标光标在虚拟显示器上的 x 坐标
 $num_value = $screen.click_y ; 鼠标按钮按下时鼠标光标在虚拟显示器上的 y 坐标
-$num_value = $screen.scroll ; 鼠标滚轮的滚动值（向上滚动为正，向下滚动为负，本周期没有滚动则为 0）
+$num_value = $screen.scroll ; 1（向上滚动）、-1（向下滚动），本周期没有滚动则为 0
 ```
     
 ### 屏幕渲染函数
