@@ -11,9 +11,9 @@
 ---
 
 # Description
-The solar panel generates low voltage energy. It has an efficiency of 99.9% and a surface area of 4 square meters (2x2 meters).
+The solar panel generates low voltage energy. It has an efficiency of 25% and a surface area of 4 square meters (2x2 meters).
 The power output will be limited based on its distance and orientation to the sun(s).
-With the default solar system configuration in Archean, the sun is only about 25% as bright as our actual sun. On Archean's Earth inside the atmosphere in the best circumstances, you might be able to generate up to ~ 980 watts per panel.
+The sun has a realistic irradiance (about 1390 W/m² at Earth's orbit). On Archean's Earth inside the atmosphere in the best circumstances, you can generate up to ~1350 watts per panel, and ~1390 watts on the airless Moon. A submerged panel generates nothing.
 
 # Usage
 Connect the solar panel to the component that requires low voltage energy to function.

@@ -11,9 +11,9 @@
 ---
 
 # Description
-Das Solar Panel erzeugt Niederspannungsenergie. Es hat einen Wirkungsgrad von 99,9% und eine Fläche von 4 Quadratmetern (2x2 Meter).
+Das Solar Panel erzeugt Niederspannungsenergie. Es hat einen Wirkungsgrad von 25% und eine Fläche von 4 Quadratmetern (2x2 Meter).
 Die Ausgangsleistung wird basierend auf seiner Entfernung und Ausrichtung zur Sonne(n) begrenzt.
-Mit der Standard-Sonnensystemkonfiguration in Archean ist die Sonne nur etwa 25% so hell wie unsere tatsächliche Sonne. Auf Archeans Erde innerhalb der Atmosphäre können Sie unter besten Umständen bis zu ~980 Watt pro Panel erzeugen.
+Die Sonne hat eine realistische Bestrahlungsstärke (etwa 1390 W/m² in der Erdumlaufbahn). Auf Archeans Erde innerhalb der Atmosphäre können Sie unter besten Umständen bis zu ~1350 Watt pro Panel erzeugen, auf dem atmosphärelosen Mond ~1390 Watt. Ein untergetauchtes Panel erzeugt nichts.
 
 # Usage
 Verbinden Sie das Solar Panel mit der Komponente, die Niederspannungsenergie zum Betrieb benötigt.

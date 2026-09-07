@@ -11,9 +11,9 @@
 ---
 
 # Description
-El Solar Panel genera energía de bajo voltaje. Tiene una eficiencia del 99.9% y una superficie de 4 metros cuadrados (2x2 metros).
+El Solar Panel genera energía de bajo voltaje. Tiene una eficiencia del 25% y una superficie de 4 metros cuadrados (2x2 metros).
 La potencia de salida estará limitada según su distancia y orientación respecto al sol o soles.
-Con la configuración predeterminada del sistema solar en Archean, el sol es solo un 25% tan brillante como nuestro sol real. En la Tierra de Archean dentro de la atmósfera en las mejores circunstancias, podrías generar hasta ~980 vatios por panel.
+El sol tiene una irradiancia realista (unos 1390 W/m² en la órbita terrestre). En la Tierra de Archean dentro de la atmósfera en las mejores circunstancias, podrías generar hasta ~1350 vatios por panel, y ~1390 vatios en la Luna sin atmósfera. Un panel sumergido no genera nada.
 
 # Usage
 Conecta el Solar Panel al componente que requiere energía de bajo voltaje para funcionar.

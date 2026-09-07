@@ -11,9 +11,9 @@
 ---
 
 # Description
-Le SolarPanel génère de l'énergie basse tension. Il a un rendement de 99,9% et une surface de 4 mètres carrés (2x2 mètres).
+Le SolarPanel génère de l'énergie basse tension. Il a un rendement de 25% et une surface de 4 mètres carrés (2x2 mètres).
 La puissance de sortie sera limitée en fonction de sa distance et de son orientation par rapport au(x) soleil(s).
-Avec la configuration par défaut du système solaire dans Archean, le soleil n'est qu'environ 25% aussi lumineux que notre vrai soleil. Sur la Terre d'Archean à l'intérieur de l'atmosphère dans les meilleures conditions, vous pouvez générer jusqu'à environ 980 watts par panneau.
+Le soleil a une irradiance réaliste (environ 1390 W/m² à l'orbite terrestre). Sur la Terre d'Archean à l'intérieur de l'atmosphère dans les meilleures conditions, vous pouvez générer jusqu'à environ 1350 watts par panneau, et environ 1390 watts sur la Lune sans atmosphère. Un panneau immergé ne génère rien.
 
 # Usage
 Connectez le SolarPanel au composant qui nécessite de l'énergie basse tension pour fonctionner.
