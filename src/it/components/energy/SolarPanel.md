@@ -11,9 +11,9 @@
 ---
 
 # Description
-Il Solar Panel genera energia a bassa tensione. Ha un'efficienza del 25% e una superficie di 4 metri quadrati (2x2 metri).
+Il Solar Panel genera energia a bassa tensione. Ha un'efficienza del 50% e una superficie di 4 metri quadrati (2x2 metri).
 La potenza in uscita sarà limitata in base alla distanza e all'orientamento rispetto al/ai sole/i.
-Il sole ha un'irradianza realistica (circa 1390 W/m² all'orbita terrestre). Sulla Terra di Archean all'interno dell'atmosfera nelle migliori circostanze, è possibile generare fino a circa 1350 watt per pannello, e circa 1390 watt sulla Luna priva di atmosfera. Un pannello sommerso non genera nulla.
+Il sole ha un'irradianza realistica (circa 1390 W/m² all'orbita terrestre). Sulla Terra di Archean all'interno dell'atmosfera nelle migliori circostanze, è possibile generare fino a circa 2700 watt per pannello, e circa 2780 watt sulla Luna priva di atmosfera. Un pannello sommerso non genera nulla.
 
 # Usage
 Collegare il Solar Panel al componente che richiede energia a bassa tensione per funzionare.
