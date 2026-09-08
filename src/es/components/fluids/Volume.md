@@ -42,4 +42,7 @@ En modo Creativo, aparecen botones adicionales para permitir llenar o vaciar el 
 |0|Level|0 to 1|
 |1|Volume (m³)|number|
 |2|State|text|
+|3|Composition (mass)|text|
+|4|Pressure (Pa)|number|
+|5|Temperature (K)|number|
 
