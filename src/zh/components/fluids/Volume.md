@@ -42,4 +42,7 @@ Volume 屏幕仅显示密封舱室的体积，单位为立方米（m³）。如�
 |0|Level|0 to 1|
 |1|Volume (m³)|number|
 |2|State|text|
+|3|Composition (mass)|text|
+|4|Pressure (Pa)|number|
+|5|Temperature (K)|number|
 

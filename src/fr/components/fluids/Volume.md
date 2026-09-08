@@ -42,4 +42,7 @@ En mode Creatif, des boutons supplementaires apparaissent pour permettre de remp
 |0|Level|0 to 1|
 |1|Volume (m³)|number|
 |2|State|text|
+|3|Composition (mass)|text|
+|4|Pressure (Pa)|number|
+|5|Temperature (K)|number|
 
