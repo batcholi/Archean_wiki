@@ -108,15 +108,25 @@ Shared Values — это функция, позволяющая получать
 Список Shared Values доступен нативно, чтобы позволить вам получать информацию об окружении игрока.
 
 ```xc
+; Position and orientation (empty when the player is not in an environment, for example in orbit)
+var $lat = get("avatar_sensor_latitude") ; returns the player's latitude in degrees (-90 south pole, +90 north pole)
+var $lon = get("avatar_sensor_longitude") ; returns the player's longitude in degrees (-180 to 180, positive eastward)
+var $hdg = get("avatar_sensor_heading") ; returns the camera heading in degrees (0 = north, 90 = east, 180 = south, 270 = west)
+var $pitch = get("avatar_sensor_pitch") ; returns the camera pitch in degrees relative to the horizon (positive = looking up)
+var $roll = get("avatar_sensor_roll") ; returns the camera roll in degrees relative to the horizon (positive = tilted right)
+
+; Environment and motion (always set, ambient values keep their last reading when the player leaves an environment)
+var $env = get("avatar_environment_name") ; returns the name of the current environment ("earth", "moon")
+var $alt = get("avatar_sensor_altitude") ; returns the player's altitude in meters
+var $alt = get("avatar_sensor_altitude_absolute") ; returns the player's absolute altitude in meters
+var $speed = get("avatar_sensor_speed") ; returns the player's speed in m/s
 var $comp = get("avatar_sensor_environment_composition") ; returns the composition of the player's environment
 var $density = get("avatar_sensor_density") ; returns the density of the player's environment
 var $temp = get("avatar_sensor_temperature") ; returns the temperature of the player's environment in Kelvin
 var $gravity = get("avatar_sensor_gravity") ; returns the gravity of the player's environment
-var $speed = get("avatar_sensor_speed") ; returns the player's speed in m/s
-var $alt = get("avatar_sensor_altitude") ; returns the player's altitude in meters
-var $alt = get("avatar_sensor_altitude_absolute") ; returns the player's absolute altitude in meters
-var $view = get("avatar_is_3rd_person") ; returns whether the player is in third person view
 
+; Avatar
+var $view = get("avatar_is_3rd_person") ; returns whether the player is in third person view
 var $inv = get("avatar_inventory") ; returns the player's inventory as a string of key values
 var $belt = get("avatar_belt") ; returns the content of the belt as a string of key values
 var $mass = get("avatar_mass") ; returns the mass of the avatar including inventory in kg (Avatar base mass is 100kg)

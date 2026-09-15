@@ -108,15 +108,25 @@ Shared Values 是一项允许检索和设置玩家客户端中信息的功能。
 原生提供了一系列共享值，允许你检索有关玩家环境的信息。
 
 ```xc
+; 位置与朝向（玩家不在环境中时为空，例如在轨道上）
+var $lat = get("avatar_sensor_latitude") ; 返回玩家的纬度（度，-90 南极，+90 北极）
+var $lon = get("avatar_sensor_longitude") ; 返回玩家的经度（度，-180 到 180，向东为正）
+var $hdg = get("avatar_sensor_heading") ; 返回摄像机的航向（度，0 = 北，90 = 东，180 = 南，270 = 西）
+var $pitch = get("avatar_sensor_pitch") ; 返回摄像机相对地平线的俯仰角（度，正值 = 向上看）
+var $roll = get("avatar_sensor_roll") ; 返回摄像机相对地平线的横滚角（度，正值 = 向右倾斜）
+
+; 环境与运动（始终有值，玩家离开环境后环境值保持最后一次读数）
+var $env = get("avatar_environment_name") ; 返回当前环境的名称（"earth"、"moon"）
+var $alt = get("avatar_sensor_altitude") ; 返回玩家的海拔（米）
+var $alt = get("avatar_sensor_altitude_absolute") ; 返回玩家的绝对海拔（米）
+var $speed = get("avatar_sensor_speed") ; 返回玩家的速度（m/s）
 var $comp = get("avatar_sensor_environment_composition") ; 返回玩家环境的成分
 var $density = get("avatar_sensor_density") ; 返回玩家环境的密度
 var $temp = get("avatar_sensor_temperature") ; 返回玩家环境的温度（开尔文）
 var $gravity = get("avatar_sensor_gravity") ; 返回玩家环境的重力
-var $speed = get("avatar_sensor_speed") ; 返回玩家的速度（m/s）
-var $alt = get("avatar_sensor_altitude") ; 返回玩家的海拔（米）
-var $alt = get("avatar_sensor_altitude_absolute") ; 返回玩家的绝对海拔（米）
-var $view = get("avatar_is_3rd_person") ; 返回玩家是否处于第三人称视角
 
+; 角色
+var $view = get("avatar_is_3rd_person") ; 返回玩家是否处于第三人称视角
 var $inv = get("avatar_inventory") ; 以键值字符串返回玩家的背包内容
 var $belt = get("avatar_belt") ; 以键值字符串返回腰带内容
 var $mass = get("avatar_mass") ; 返回包含背包的角色质量（kg）（角色基础质量为 100kg）
