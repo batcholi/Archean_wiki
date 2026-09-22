@@ -27,4 +27,9 @@ Das Gyroscope ermöglicht die manuelle Ausrichtung eines Fahrzeugs über seinen 
 |0|Speed| 0.0 to 1.0|
 |1|Control| -1.0 to +1.0|
 
+### List of outputs
+|Channel|Function|range|
+|---|---|---|
+|0|Rotation Speed| 0.0 to 10.0 rot/s|
+
 >Ein Gyroscope hat einen begrenzten Effekt relativ zum Gewicht des Builds. Sie können die Anzahl der Gyroscopes erhöhen, um den stabilisierenden Effekt zu verstärken.

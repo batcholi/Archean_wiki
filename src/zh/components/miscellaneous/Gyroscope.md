@@ -27,4 +27,9 @@ Gyroscope 允许通过利用内部惯性轮产生的力矩，通过数据端口�
 |0|Speed| 0.0 to 1.0|
 |1|Control| -1.0 to +1.0|
 
+### List of outputs
+|Channel|Function|range|
+|---|---|---|
+|0|Rotation Speed| 0.0 to 10.0 rot/s|
+
 >Gyroscope 的效果相对于建筑重量是有限的。您可以增加 Gyroscope 的数量来增强稳定效果。

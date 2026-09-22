@@ -27,4 +27,9 @@ Il Gyroscope consente di orientare manualmente un veicolo tramite la sua porta d
 |0|Speed| 0.0 to 1.0|
 |1|Control| -1.0 to +1.0|
 
+### List of outputs
+|Channel|Function|range|
+|---|---|---|
+|0|Rotation Speed| 0.0 to 10.0 rot/s|
+
 >Un Gyroscope ha un effetto limitato rispetto al peso della costruzione. E' possibile aumentare il numero di Gyroscope per aumentare l'effetto stabilizzante.
